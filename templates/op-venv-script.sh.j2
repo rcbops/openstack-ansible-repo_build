@@ -13,7 +13,7 @@ function venv_create {
     [[ -d "/tmp/${VENV_FILE}" ]] && rm -rf "/tmp/${VENV_FILE}"
 
     # Create the virtualenv shell
-    {{ repo_build_venv_command_options }} "${VENV_PATH}"
+    {{ repo_build_venv_command_options.split() | join(' ') }} "${VENV_PATH}"
 
     # Create the pip build directory
     mkdir -p "/tmp/${VENV_FILE}"
@@ -23,7 +23,7 @@ function venv_create {
 
     # Run the pip install within the venv and specify a specific build directory which
     #  resolves pip locking issues when run in parallel.
-    ${VENV_PATH}/bin/pip install --build "/tmp/${VENV_FILE}" {{ repo_build_venv_pip_install_options }} $3
+    ${VENV_PATH}/bin/pip install --build "/tmp/${VENV_FILE}" {{ repo_build_venv_pip_install_options.split() | join(' ') }} $3
 
     # Deactivate the venv for good measure
     deactivate
