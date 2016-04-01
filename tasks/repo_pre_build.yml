@@ -49,17 +49,10 @@
   tags:
     - repo-create-release-links-location
 
-- name: Build global package requirements file
+- name: Build package requirements file
   template:
-    src: "requirements_global_requirements.txt.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_global_requirements.txt"
-  tags:
-    - repo-build-global-package-files
-
-- name: Build filtered package requirements file
-  template:
-    src: "requirements_local_filtered.txt.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_local_filtered.txt"
+    src: "requirements.txt.j2"
+    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt"
   tags:
     - repo-build-filtered-package-files
 
