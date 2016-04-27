@@ -1,0 +1,22 @@
+## APT Cache options
+cache_timeout: 600
+
+repo_build_apt_packages:
+  - build-essential
+  - cmake
+  - git
+  - liberasurecode-dev      # required to build pyeclib
+  - libffi-dev              # required to build xattr
+  - libjpeg-dev             # required to build pillow
+  - libkrb5-dev             # required to build pykerberos
+  - libldap2-dev            # required to build python-ldap
+  - libmariadbclient-dev    # required to build MySQL-python
+  - libpq-dev               # required to build psycopg2
+  - libsasl2-dev            # required to build python-ldap
+  - libsqlite3-dev          # required to build pysqlite
+  - libssl-dev              # required to build cryptography
+  - libvirt-dev             # required to build libvirt-python
+  - libxslt1-dev            # required to build lxml
+  - lxc-dev                 # required to build lxc-python2
+  - python-dev
+  - swig
