@@ -1,2 +1,9 @@
 [all]
 localhost ansible_connection=local ansible_become=True
+container1 ansible_ssh_host=10.100.102.101 ansible_host=10.100.102.101 ansible_become=True ansible_user=root
+
+[repo_all]
+container1
+
+[all_containers:children]
+repo_all

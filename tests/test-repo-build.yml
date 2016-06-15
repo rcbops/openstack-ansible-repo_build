@@ -13,14 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Prepare the user ssh keys
-- include: test-prepare-keys.yml
-
-# Prepare the host
-- include: test-prepare-host.yml
-
-# Run container clean up and build
-- include: test-prepare-containers.yml
-
-# Build repo
-- include: test-repo-build.yml
+- name: Build repo
+  hosts: repo_all
+  user: root
+  roles:
+    - "repo_server"
+    - "{{ rolename | basename }}"
+  vars_files:
+    - test-vars.yml
