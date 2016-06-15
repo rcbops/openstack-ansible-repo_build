@@ -22,7 +22,7 @@
   until: install_packages|success
   retries: 5
   delay: 5
-  with_items: repo_pip_packages
+  with_items: "{{ repo_pip_packages }}"
   tags:
     - repo-pip-packages
 
