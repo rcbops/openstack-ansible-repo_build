@@ -18,5 +18,6 @@ repo_build_apt_packages:
   - libvirt-dev             # required to build libvirt-python
   - libxslt1-dev            # required to build lxml
   - lxc-dev                 # required to build lxc-python2
+  - pkg-config
   - python-dev
   - swig
