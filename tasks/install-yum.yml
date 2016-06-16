@@ -13,14 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: install-apt.yml
-  when:
-    - ansible_pkg_mgr == 'apt'
+- name: Install RDO package
+  yum:
+    pkg: "{{ repo_build_rdo_package }}"
+    state: present
+  register: install_cloud_rdo_package
+  until: install_cloud_rdo_package | success
+  retries: 5
+  delay: 2
   tags:
-    - install-apt
+    - repo-build-yum-packages
 
-- include: install-yum.yml
-  when:
-    - ansible_pkg_mgr == 'yum'
+- name: Install yum packages
+  yum:
+    pkg: "{{ item }}"
+    state: present
+  register: install_packages
+  until: install_packages | success
+  retries: 5
+  delay: 2
+  with_items: "{{ repo_build_packages }}"
   tags:
-    - install-yum
+    - repo-build-yum-packages
