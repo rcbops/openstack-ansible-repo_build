@@ -46,6 +46,7 @@
   with_items:
     - "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
     - "{{ repo_build_global_links_path }}"
+    - "{{ repo_build_output }}"
   tags:
     - repo-create-release-links-location
 

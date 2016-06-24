@@ -56,3 +56,4 @@ repo_pip_packages:
   - virtualenv
   - virtualenv-tools
 
+repo_build_store_pip_sources: false
