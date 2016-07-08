@@ -38,7 +38,7 @@
     path: "{{ item }}"
     state: "directory"
     owner: "{{ repo_build_service_user_name }}"
-    mode: "2755"
+    mode: "02755"
   with_items:
     - "{{ repo_build_venv_build_dir }}/venvs"
     - "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
