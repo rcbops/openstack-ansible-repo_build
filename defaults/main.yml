@@ -67,6 +67,12 @@ repo_build_apt_packages:
 #repo_build_pip_extra_indexes:
 #  - "https://pypi.python.org/simple"
 
+# Optionally set this to a list of packages which must always have the wheel
+# compiled from source. This will ensure that a pre-compiled wheel is not
+# downloaded from any of the indexes.
+#repo_build_pip_no_binary:
+#  - libvirt-python
+
 # TODO(odyssey4me): Deprecate this var for Mitaka & mark for removal
 #                   in Newton.
 # repo_build_pip_extra_index: "https://pypi.python.org/simple"
