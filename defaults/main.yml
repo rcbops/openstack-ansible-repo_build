@@ -37,6 +37,11 @@ repo_build_release_tag: "untagged"
 #                   in Newton.
 # repo_build_pip_extra_index: "https://pypi.python.org/simple"
 
+# Toggle the use of Ubuntu Cloud Archive
+repo_build_uca_enable: True
+# Ubuntu Cloud Archive mirror URL
+uca_apt_repo_url: "http://ubuntu-cloud.archive.canonical.com/ubuntu"
+
 repo_build_timeout: 120
 repo_build_concurrency: "{{ ansible_processor_count if ansible_processor_count > 0 else 5}}"
 repo_build_venv_build_dir: "/tmp/openstack-venv-builder"

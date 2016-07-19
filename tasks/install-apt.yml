@@ -13,6 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Add Ubuntu Cloud Archive keyring
+  apt:
+    pkg: ubuntu-cloud-keyring
+    state: latest
+  register: add_uca_keys
+  when: repo_build_uca_enable | bool
+
+- name: Add Ubuntu Cloud Archive Repository
+  apt_repository:
+    repo: "{{ uca_repo }}"
+    state: present
+  register: add_uca_repo
+  when: repo_build_uca_enable | bool
+
 - name: Drop lxc-net override file
   template:
     src: manual-init.override.j2
@@ -36,7 +50,8 @@
 - name: Update apt if needed
   apt:
     update_cache: yes
-  when: "ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > {{cache_timeout}}"
+  when: ("ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > {{cache_timeout}}" or
+        add_uca_keys | changed or add_uca_repo | changed)
   tags:
     - repo-build-apt-packages
 
