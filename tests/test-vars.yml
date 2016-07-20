@@ -14,7 +14,6 @@
 # limitations under the License.
 
 openstack_release: testing
-repo_build_release_tag: "{{ openstack_release }}"
 galera_client_drop_config_file: false
 local_packages:
   results:

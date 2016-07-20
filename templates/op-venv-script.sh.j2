@@ -47,8 +47,7 @@ function venv_create {
 #        purposes the group data will be rendered as a comment.
 {% set os_group = {} %}
 {% for key, value in local_packages.results.0.item.role_packages.items() %}
-{% set _host_group = key | replace('os_', '') + '_all' %}
-{% if ("os_" in key) and (not repo_build_venv_selective | bool) or ((groups[_host_group] is defined) and (groups[_host_group] | length > 0)) %}
+{% if "os_" in key %}
 # venv to build {{ key }}
 #   * packages within the {{ key }} venv: {{ value }}
 {% set _ = os_group.update({key: value}) %}

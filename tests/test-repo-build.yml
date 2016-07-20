@@ -39,15 +39,5 @@
   roles:
     - "repo_server"
     - "{{ rolename | basename }}"
-  post_tasks:
-    - name: List the files in the venv folder
-      command: ls -1 /var/www/repo/venvs/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/
-      register: venv_folder_content
-    - name: Ensure that the keystone venv is present
-      assert:
-        that: "'keystone-{{ repo_build_release_tag }}.tgz' in venv_folder_content.stdout"
-    - name: Ensure that the nova venv is NOT present
-      assert:
-        that: "'nova-{{ repo_build_release_tag }}.tgz' not in venv_folder_content.stdout"
   vars_files:
     - test-vars.yml
