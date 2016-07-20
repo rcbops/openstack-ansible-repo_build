@@ -26,6 +26,9 @@ repo_build_pool_dir: "/var/www/repo/pools"
 
 repo_build_release_tag: "untagged"
 
+# Toggle whether venvs should be built selectively or not
+repo_build_venv_selective: yes
+
 # Optionally set this to change the default index from pypi to an alternative
 #repo_build_pip_default_index: "https://pypi.python.org/simple"
 
