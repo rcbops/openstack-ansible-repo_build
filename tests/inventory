@@ -7,3 +7,11 @@ container1
 
 [all_containers:children]
 repo_all
+
+# This is here to validate the venv build inclusion
+[keystone_all]
+container1
+
+# This is here to validate the venv build inclusion
+[utility_all]
+container1
