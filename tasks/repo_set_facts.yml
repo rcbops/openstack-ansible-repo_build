@@ -49,7 +49,7 @@
 
 - name: Set upper constraints
   set_fact:
-    upper_constraints: "{{ _upper_constraints | pip_constraint_update(local_requirement_normalized) }}"
+    upper_constraints: "{{ local_requirement_normalized | pip_constraint_update(_upper_constraints) }}"
   when: slurp_upper_constraints | success
   tags:
     - repo-set-constraints
