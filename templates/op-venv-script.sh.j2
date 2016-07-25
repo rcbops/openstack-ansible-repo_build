@@ -62,12 +62,12 @@ function venv_create {
 PID=()
 # Run the venv create. This will loop over all of the os_group role packages and create a python virtual env.
 #  Venv creation is done parallel at a count of the known "ansible_processor_count" or using a default of 5.
-#  This loop will enter the venv build directory and craete tagged venvs in a distrobution directory
+#  This loop will enter the venv build directory and create tagged venvs in a distribution directory
 #  If the venv archive already exists the creation process will be skipped
 pushd "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
 {% for key, value in os_group.items() %}
 ROLE_VENV_PATH="{{ repo_build_venv_build_dir }}/venvs/{{ key | replace('os_', '') }}"
-ROLE_VENV_FILE="{{ key | replace('os_', '') }}-{{ repo_build_release_tag }}"
+ROLE_VENV_FILE="{{ key | replace('os_', '') }}-{{ repo_build_release_tag }}-{{ ansible_architecture | lower }}"
 if [ ! -f "${ROLE_VENV_FILE}.tgz" ];then
     venv_create "${ROLE_VENV_PATH}" "${ROLE_VENV_FILE}" "{{ value | join(' ') }}" &
     pid[{{ loop.index }}]=$!

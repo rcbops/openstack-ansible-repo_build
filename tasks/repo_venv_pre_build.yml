@@ -24,10 +24,21 @@
     - repo-venv-compress-archive
     - repo-create-venv-archive
 
+- name: Register arch base venvs
+  command: "find {{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/ -name '*{{ ansible_architecture | lower }}*'"
+  args:
+    removes: "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+  register: base_venvs
+  tags:
+    - repo-create-venv-location
+    - repo-venv-compress-archive
+    - repo-create-venv-archive
+
 - name: Destroy base venvs to rebuild them
   file:
-    path: "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+    path: "{{ item }}"
     state: "absent"
+  with_items: "{{ base_venvs.stdout_lines }}"
   tags:
     - repo-create-venv-location
     - repo-venv-compress-archive
