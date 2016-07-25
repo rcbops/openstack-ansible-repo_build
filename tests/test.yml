@@ -22,5 +22,8 @@
 # Run container clean up and build
 - include: test-prepare-containers.yml
 
+# Install repo server
+- include: test-install-server.yml
+
 # Build repo
 - include: test-repo-build.yml
