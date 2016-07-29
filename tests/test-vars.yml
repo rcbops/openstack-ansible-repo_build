@@ -16,6 +16,12 @@
 openstack_release: testing
 repo_build_release_tag: "{{ openstack_release }}"
 galera_client_drop_config_file: false
+
+# Test data input for upper constraints validation
+repo_build_upper_constraints_overrides:
+  - elasticsearch<2.1.0
+
+# Test data output from the py_pkgs lookup
 local_packages:
   results:
     -
