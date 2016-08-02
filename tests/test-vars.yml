@@ -447,3 +447,19 @@ local_packages:
             - virtualenv
             - virtualenv-tools
             - wheel
+        role_requirement_files:
+          default:
+            txt_file_packages:
+              - "netaddr!=0.7.16,>=0.7.12"
+              - "prettytable<0.8,>=0.7"
+              - "pycrypto>=2.6"
+              - "pyyaml>=3.1.0"
+              - "virtualenv"
+              - "pip==8.1.2"
+              - "setuptools==25.1.0"
+              - "wheel==0.29.0"
+            global_pins:
+              pinned_packages:
+                - "pip==8.1.2"
+                - "setuptools==25.1.0"
+                - "wheel==0.29.0"

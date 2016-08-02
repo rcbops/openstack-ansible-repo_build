@@ -13,18 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Install pip packages
-  pip:
-    name: "{{ repo_pip_packages | join(' ') }}"
-    state: latest
-    extra_args: "--constraint {{ repo_build_git_dir }}/requirements/upper-constraints.txt {{ pip_install_options|default('') }}"
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 5
-  tags:
-    - repo-pip-packages
-
 - name: Ensure workspace files are cleaned up
   file:
     path: "{{ item }}"
@@ -62,3 +50,15 @@
     dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt"
   tags:
     - repo-build-constraints-file
+
+- name: Install pip packages
+  pip:
+    name: "{{ repo_pip_packages | join(' ') }}"
+    state: latest
+    extra_args: "--constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt {{ pip_install_options|default('') }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 5
+  tags:
+    - repo-pip-packages

@@ -62,14 +62,16 @@
     - name: Set fact for requirements constraints content
       set_fact:
          requirements_constraints_content: "{{ slurp_requirements_constraints.content | b64decode }}"
-    - name: Set fact for upper constraints dictionary
+    - name: Set fact for upper constraints content
       set_fact:
-        upper_constraints_dict: >
-          {%- set constraints = {} %}
-          {%- for package in slurp_upper_constraints.content | b64decode | splitlines %}
-          {%-    set name = package | regex_replace('===.*$','') %}
-          {%-    set version = package | regex_replace('^.*===','') %}
-          {%-    set _ = constraints.update({name: version}) %}
+        upper_constraints_list: >
+          {%- set constraints = [] %}
+          {%- for constraint_raw in slurp_upper_constraints.content | b64decode | splitlines %}
+          {%-   set constraint_name = constraint_raw | regex_replace('===.*', '') %}
+          {%-   set constraint_data = constraint_raw | regex_replace('.*===', '') %}
+          {%-   set constraint_name_normalized = constraint_name | replace('-', '_') | lower %}
+          {%-   set constraint = constraint_name_normalized + '<=' + constraint_data %}
+          {%-   set _ = constraints.append(constraint) %}
           {%- endfor %}
           {{- constraints -}}
     - name: Set fact for upper constraints override
@@ -78,19 +80,37 @@
           {%- set override_packages = [] %}
           {%- for override in repo_build_upper_constraints_overrides %}
           {%-   set name = override | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
-          {%-    set _ = override_packages.append(name) %}
+          {%-   set name_normalized = name | replace('-', '_') | lower %}
+          {%-   set _ = override_packages.append(name_normalized) %}
           {%- endfor %}
           {{- override_packages -}}
-    - name: Ensure that requirements constraints is applying upper constraints
+    - name: Set fact for global pins
+      set_fact:
+        global_pins_list: >
+          {%- set global_pins = [] %}
+          {%- for pin in local_packages.results.0.item.role_requirement_files.default.global_pins.pinned_packages %}
+          {%-   set name = pin | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+          {%-   set name_normalized = name | replace('-', '_') | lower %}
+          {%-   set _ = global_pins.append(name_normalized) %}
+          {%- endfor %}
+          {{- global_pins -}}
+    - name: Ensure that upper constraints from the OpenStack requirements repo are complete
       assert:
-       that: requirements_constraints_content.find( "{{ item.key }}<={{ item.value }}" ) != -1
-      with_dict: upper_constraints_dict
+        that: item in requirements_constraints_content
+      with_items: upper_constraints_list
       when:
-        - item.key not in upper_constraints_override_list
-        - requirements_constraints_content.find(item.key) != -1
+        - repo_build_use_upper_constraints | bool
+        - item | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') not in upper_constraints_override_list
+        - item | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') not in global_pins_list
+    - name: Ensure that global pins have been applied
+      assert:
+        that: item in requirements_constraints_content
+      with_items: "{{ local_packages.results.0.item.role_requirement_files.default.global_pins.pinned_packages }}"
+      when:
+        - item | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') not in upper_constraints_override_list
     - name: Ensure that upper constraints overrides are applied
       assert:
-       that: requirements_constraints_content.find( "{{ item }}" ) != -1
+        that: item in requirements_constraints_content
       with_items: "{{ repo_build_upper_constraints_overrides }}"
   vars_files:
     - test-vars.yml
