@@ -29,6 +29,27 @@
           results: [
               {
                   "item": {
+                      "role_requirement_files": {
+                          "default": {
+                              "txt_file_packages": [
+                                  "netaddr>=0.7.12",
+                                  "prettytable>=0.7,<0.8",
+                                  "pycrypto>=2.6",
+                                  "pyyaml>=3.1.0",
+                                  "virtualenv",
+                                  "pip==8.1.1",
+                                  "setuptools==20.3.1",
+                                  "wheel==0.29.0"
+                              ]
+                          },
+                          "global_pins": {
+                              "pinned_packages": [
+                                  "pip==8.1.1",
+                                  "setuptools==20.3.1",
+                                  "wheel==0.29.0"
+                              ]
+                          }
+                      },
                       "packages": [
                           "ansible-lint<=2.3.9",
                           "ansible>1.9,<2.0",
