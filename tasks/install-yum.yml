@@ -16,7 +16,7 @@
 - name: Install RDO package
   yum:
     pkg: "{{ repo_build_rdo_package }}"
-    state: present
+    state: "{{ repo_build_package_state }}"
   register: install_cloud_rdo_package
   until: install_cloud_rdo_package | success
   retries: 5
@@ -27,7 +27,7 @@
 - name: Install yum packages
   yum:
     pkg: "{{ item }}"
-    state: present
+    state: "{{ repo_build_package_state }}"
   register: install_packages
   until: install_packages | success
   retries: 5

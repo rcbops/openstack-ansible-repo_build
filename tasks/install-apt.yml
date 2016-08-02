@@ -16,7 +16,7 @@
 - name: Add Ubuntu Cloud Archive keyring
   apt:
     pkg: ubuntu-cloud-keyring
-    state: latest
+    state: "{{ repo_build_package_state }}"
   register: add_uca_keys
   when: repo_build_uca_enable | bool
 
@@ -58,7 +58,7 @@
 - name: Install apt packages
   apt:
     pkg: "{{ item }}"
-    state: present
+    state: "{{ repo_build_package_state }}"
   register: install_packages
   until: install_packages|success
   retries: 5

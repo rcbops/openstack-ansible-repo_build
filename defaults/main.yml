@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Set the package install state for distribution packages
+# Options are 'present' and 'latest'
+repo_build_package_state: "latest"
+
 # Use OpenStack's upper-constraints
 repo_build_use_upper_constraints: true
 
