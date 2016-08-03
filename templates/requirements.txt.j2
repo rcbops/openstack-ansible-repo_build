@@ -1,3 +1,63 @@
-{% for item in local_requirement_normalized %}
-{{ item }}
-{% endfor %}
+{% if not repo_build_wheel_selective | bool %}
+{%   for requirement in local_packages.results.0.item.packages %}
+{{ requirement.split('#')[0].strip().replace('-', '_') }}
+{%   endfor %}
+{% else %}
+{#                                                                    #}
+{#   We can't have duplicated requirements (pip wheel will fail).     #}
+{#   To combat this we will use the overall package list requirements #}
+{#   as a reference set, and pull from there for whatever each role   #}
+{#   needs.                                                           #}
+{#                                                                    #}
+{%   set all_requirements={} %}
+{%   for requirement_raw in local_packages.results.0.item.packages %}
+{%     set name = requirement_raw | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+{%     set data = requirement_raw | regex_replace(name,'') %}
+{%     set name_normalized = name | replace('-', '_') | lower %}
+{%     set requirement_normalized = name_normalized + data %}
+{%     set _ = all_requirements.update({name_normalized: requirement_normalized}) %}
+{%   endfor %}
+{#                                                                    #}
+{#   Now we have a complete reference set to work with. We now need   #}
+{#   to build a set of the packages we actually want to build which   #}
+{#   we need to ensure is a unique set. We will use a key:value       #}
+{#   mechanism to do this.                                            #}
+{#                                                                    #}
+{%   set selected_requirements={} %}
+{#                                                                    #}
+{#   These are files which are in the root repo requirements and must #}
+{#   always be built.                                                 #}
+{#                                                                    #}
+{%   for requirement_raw in local_packages.results.0.item.role_requirement_files.default.txt_file_packages %}
+{%     set name = requirement_raw | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+{%     set name_normalized = name | replace('-', '_') | lower %}
+{%     set requirement_normalized = all_requirements[name_normalized] %}
+{%     set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
+{%   endfor %}
+{#                                                                    #}
+{#   These are files which are in the roles. We only select them if   #}
+{#   their project_groups are populated.                              #}
+{#                                                                    #}
+{%   for role_name, role_requirements in local_packages.results.0.item.role_packages.items() %}
+{%     set _host_group = local_packages.results.0.item.role_project_groups[role_name] %}
+{%     if ((groups[_host_group] is defined) and (groups[_host_group] | length > 0)) %}
+{%       set _build_wheel = True %}
+{%     else %}
+{%       set _build_wheel = False %}
+{%     endif %}
+{%     if (_build_wheel | bool) %}
+{%       for requirement_raw in role_requirements %}
+{%         set name = requirement_raw | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+{%         set name_normalized = name | replace('-', '_') | lower %}
+{%         set requirement_normalized = all_requirements[name_normalized] %}
+{%         set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
+{%       endfor %}
+{%     endif %}
+{%   endfor %}
+{#                                                                    #}
+{#   Now that we have a complete set of requirements, we output them. #}
+{#                                                                    #}
+{%   for requirement_name, requirement in selected_requirements.iteritems() | sort %}
+{{ requirement }}
+{%   endfor %}
+{% endif %}

@@ -26,6 +26,24 @@ local_packages:
   results:
     -
       item:
+        role_project_groups:
+          os_heat: heat_all
+          os_nova: nova_all
+          os_keystone: keystone_all
+          galera_client: all
+          galera_server: all
+          os_ironic: ironic_all
+          os_aodh: aodh_all
+          os_neutron: neutron_all
+          lxc_hosts: all
+          os_cinder: cinder_all
+          os_glance: glance_all
+          os_swift: swift_all
+          repo_build: all
+          pip_install: all
+          os_tempest: utility_all
+          os_horizon: horizon_all
+          os_ceilometer: ceilometer_all
         packages:
           - ansible-lint<=2.3.9
           - "ansible>1.9,<2.0"
@@ -118,139 +136,156 @@ local_packages:
             egg_name: aodh
             fragment: ~
             name: aodh
-            original: "git+https://git.openstack.org/openstack/aodh@9d71ae4f4f7a30beb001e867ad688bf60fc23ece#egg=aodh&gitname=aodh"
+            original: "git+https://git.openstack.org/openstack/aodh@9d71ae4f4f7a30beb001e867ad688bf60fc23ece#egg=aodh&gitname=aodh&projectgroup=aodh_all"
             url: "https://git.openstack.org/openstack/aodh"
             version: 9d71ae4f4f7a30beb001e867ad688bf60fc23ece
+            project_group: aodh_all
           -
             egg_name: ceilometer
             fragment: ~
             name: ceilometer
-            original: "git+https://git.openstack.org/openstack/ceilometer@04d91aad6315cfb1679b7a3d18474e9ebe033329#egg=ceilometer&gitname=ceilometer"
+            original: "git+https://git.openstack.org/openstack/ceilometer@04d91aad6315cfb1679b7a3d18474e9ebe033329#egg=ceilometer&gitname=ceilometer&projectgroup=ceilometer_all"
             url: "https://git.openstack.org/openstack/ceilometer"
             version: 04d91aad6315cfb1679b7a3d18474e9ebe033329
+            project_group: ceilometer_all
           -
             egg_name: cinder
             fragment: ~
             name: cinder
-            original: "git+https://git.openstack.org/openstack/cinder@545b8c4435469c72920d54e4a3ca3c74cbc66b95#egg=cinder&gitname=cinder"
+            original: "git+https://git.openstack.org/openstack/cinder@545b8c4435469c72920d54e4a3ca3c74cbc66b95#egg=cinder&gitname=cinder&projectgroup=cinder_all"
             url: "https://git.openstack.org/openstack/cinder"
             version: 545b8c4435469c72920d54e4a3ca3c74cbc66b95
+            project_group: cinder_all
           -
             egg_name: glance
             fragment: ~
             name: glance
-            original: "git+https://git.openstack.org/openstack/glance@e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe#egg=glance&gitname=glance"
+            original: "git+https://git.openstack.org/openstack/glance@e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe#egg=glance&gitname=glance&projectgroup=glance_all"
             url: "https://git.openstack.org/openstack/glance"
             version: e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe
+            project_group: glance_all
           -
             egg_name: heat
             fragment: ~
             name: heat
-            original: "git+https://git.openstack.org/openstack/heat@e3f3f749a905aba302e9f0c457782d979440ee0c#egg=heat&gitname=heat"
+            original: "git+https://git.openstack.org/openstack/heat@e3f3f749a905aba302e9f0c457782d979440ee0c#egg=heat&gitname=heat&projectgroup=heat_all"
             url: "https://git.openstack.org/openstack/heat"
             version: e3f3f749a905aba302e9f0c457782d979440ee0c
+            project_group: heat_all
           -
             egg_name: horizon
             fragment: ~
             name: horizon
-            original: "git+https://git.openstack.org/openstack/horizon@4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116#egg=horizon&gitname=horizon"
+            original: "git+https://git.openstack.org/openstack/horizon@4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116#egg=horizon&gitname=horizon&project_group=horizon_all"
             url: "https://git.openstack.org/openstack/horizon"
             version: 4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116
+            project_group: horizon_all
           -
             egg_name: keystone
             fragment: ~
             name: keystone
-            original: "git+https://git.openstack.org/openstack/keystone@8a56c161ee29e34e70c6334b048881e8fbbd7514#egg=keystone&gitname=keystone"
+            original: "git+https://git.openstack.org/openstack/keystone@8a56c161ee29e34e70c6334b048881e8fbbd7514#egg=keystone&gitname=keystone&projectgroup=keystone_all"
             url: "https://git.openstack.org/openstack/keystone"
             version: 8a56c161ee29e34e70c6334b048881e8fbbd7514
+            project_group: keystone_all
           -
             egg_name: neutron
             fragment: ~
             name: neutron
-            original: "git+https://git.openstack.org/openstack/neutron@5e48499a385b7c7e4a8384c02ae6aa0f856b24eb#egg=neutron&gitname=neutron"
+            original: "git+https://git.openstack.org/openstack/neutron@5e48499a385b7c7e4a8384c02ae6aa0f856b24eb#egg=neutron&gitname=neutron&projectgroup=neutron_all"
             url: "https://git.openstack.org/openstack/neutron"
             version: 5e48499a385b7c7e4a8384c02ae6aa0f856b24eb
+            project_group: neutron_all
           -
             egg_name: neutron_fwaas
             fragment: ~
             name: neutron-fwaas
-            original: "git+https://git.openstack.org/openstack/neutron-fwaas@3605570ecae8ef7f84a84627569386acc6a75e11#egg=neutron_fwaas&gitname=neutron-fwaas"
+            original: "git+https://git.openstack.org/openstack/neutron-fwaas@3605570ecae8ef7f84a84627569386acc6a75e11#egg=neutron_fwaas&gitname=neutron-fwaas*projectgroup=neutron_agent"
             url: "https://git.openstack.org/openstack/neutron-fwaas"
             version: 3605570ecae8ef7f84a84627569386acc6a75e11
+            project_group: neutron_agent
           -
             egg_name: neutron_lbaas
             fragment: ~
             name: neutron-lbaas
-            original: "git+https://git.openstack.org/openstack/neutron-lbaas@e7ec75f61cce871c8bedff9c04345bbb14b9fda5#egg=neutron_lbaas&gitname=neutron-lbaas"
+            original: "git+https://git.openstack.org/openstack/neutron-lbaas@e7ec75f61cce871c8bedff9c04345bbb14b9fda5#egg=neutron_lbaas&gitname=neutron-lbaas&projectgroup=neutron_agent"
             url: "https://git.openstack.org/openstack/neutron-lbaas"
             version: e7ec75f61cce871c8bedff9c04345bbb14b9fda5
+            project_group: neutron_agent
           -
             egg_name: neutron_vpnaas
             fragment: ~
             name: neutron-vpnaas
-            original: "git+https://git.openstack.org/openstack/neutron-vpnaas@0067e2671d1c33e630dff947ac7090c370152225#egg=neutron_vpnaas&gitname=neutron-vpnaas"
+            original: "git+https://git.openstack.org/openstack/neutron-vpnaas@0067e2671d1c33e630dff947ac7090c370152225#egg=neutron_vpnaas&gitname=neutron-vpnaas&projectgroup=neutron_agent"
             url: "https://git.openstack.org/openstack/neutron-vpnaas"
             version: 0067e2671d1c33e630dff947ac7090c370152225
+            project_group: neutron_agent
           -
             egg_name: nova
             fragment: ~
             name: nova
-            original: "git+https://git.openstack.org/openstack/nova@2bc8128d7793cc72ca2e146de3a092e1fef5033b#egg=nova&gitname=nova"
+            original: "git+https://git.openstack.org/openstack/nova@2bc8128d7793cc72ca2e146de3a092e1fef5033b#egg=nova&gitname=nova&projectgroup=nova_all"
             url: "https://git.openstack.org/openstack/nova"
             version: 2bc8128d7793cc72ca2e146de3a092e1fef5033b
+            project_group: nova_all
           -
             egg_name: novnc
             fragment: ~
             name: novnc
-            original: "git+https://github.com/kanaka/novnc@670dbddb54264fd0082d0aca1b3acb0f1814b1d2#egg=novnc&gitname=novnc"
+            original: "git+https://github.com/kanaka/novnc@670dbddb54264fd0082d0aca1b3acb0f1814b1d2#egg=novnc&gitname=novnc&projectname=nova_all"
             url: "https://github.com/kanaka/novnc"
             version: 670dbddb54264fd0082d0aca1b3acb0f1814b1d2
+            project_group: nova_all
           -
             egg_name: requirements
             fragment: ~
             name: requirements
-            original: "git+https://git.openstack.org/openstack/requirements@f8cf7eba898a1424549c730d6692ec4e9573c0ed#egg=requirements&gitname=requirements"
+            original: "git+https://git.openstack.org/openstack/requirements@f8cf7eba898a1424549c730d6692ec4e9573c0ed#egg=requirements&gitname=requirements&projectgroup=all"
             url: "https://git.openstack.org/openstack/requirements"
             version: f8cf7eba898a1424549c730d6692ec4e9573c0ed
+            project_group: all
           -
             egg_name: spice_html5
             fragment: ~
             name: spice-html5
-            original: "git+https://github.com/SPICE/spice-html5@ab73d009487c8afd4def39b54a422499b4c13c40#egg=spice_html5&gitname=spice-html5"
+            original: "git+https://github.com/SPICE/spice-html5@ab73d009487c8afd4def39b54a422499b4c13c40#egg=spice_html5&gitname=spice-html5&projectgroup=nova_all"
             url: "https://github.com/SPICE/spice-html5"
             version: ab73d009487c8afd4def39b54a422499b4c13c40
+            project_group: nova_all
           -
             egg_name: swift
             fragment: ~
             name: swift
-            original: "git+https://git.openstack.org/openstack/swift@62fb544224178377990752b16956ee2e13d9207c#egg=swift&gitname=swift"
+            original: "git+https://git.openstack.org/openstack/swift@62fb544224178377990752b16956ee2e13d9207c#egg=swift&gitname=swift&projectgroup=swift_all"
             url: "https://git.openstack.org/openstack/swift"
             version: 62fb544224178377990752b16956ee2e13d9207c
+            project_group: swift_all
           -
             egg_name: tempest
             fragment: ~
             name: tempest
-            original: "git+https://git.openstack.org/openstack/tempest@5cc7ef78b4233444a4dcea1b1eb8f213c1548491#egg=tempest&gitname=tempest"
+            original: "git+https://git.openstack.org/openstack/tempest@5cc7ef78b4233444a4dcea1b1eb8f213c1548491#egg=tempest&gitname=tempest&projectgroup=utility_all"
             url: "https://git.openstack.org/openstack/tempest"
             version: 5cc7ef78b4233444a4dcea1b1eb8f213c1548491
+            project_group: utility_all
         remote_packages:
-          - "git+https://git.openstack.org/openstack/aodh@9d71ae4f4f7a30beb001e867ad688bf60fc23ece#egg=aodh&gitname=aodh"
-          - "git+https://git.openstack.org/openstack/ceilometer@04d91aad6315cfb1679b7a3d18474e9ebe033329#egg=ceilometer&gitname=ceilometer"
-          - "git+https://git.openstack.org/openstack/cinder@545b8c4435469c72920d54e4a3ca3c74cbc66b95#egg=cinder&gitname=cinder"
-          - "git+https://git.openstack.org/openstack/glance@e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe#egg=glance&gitname=glance"
-          - "git+https://git.openstack.org/openstack/heat@e3f3f749a905aba302e9f0c457782d979440ee0c#egg=heat&gitname=heat"
-          - "git+https://git.openstack.org/openstack/horizon@4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116#egg=horizon&gitname=horizon"
-          - "git+https://git.openstack.org/openstack/keystone@8a56c161ee29e34e70c6334b048881e8fbbd7514#egg=keystone&gitname=keystone"
-          - "git+https://git.openstack.org/openstack/neutron-fwaas@3605570ecae8ef7f84a84627569386acc6a75e11#egg=neutron_fwaas&gitname=neutron-fwaas"
-          - "git+https://git.openstack.org/openstack/neutron-lbaas@e7ec75f61cce871c8bedff9c04345bbb14b9fda5#egg=neutron_lbaas&gitname=neutron-lbaas"
-          - "git+https://git.openstack.org/openstack/neutron-vpnaas@0067e2671d1c33e630dff947ac7090c370152225#egg=neutron_vpnaas&gitname=neutron-vpnaas"
-          - "git+https://git.openstack.org/openstack/neutron@5e48499a385b7c7e4a8384c02ae6aa0f856b24eb#egg=neutron&gitname=neutron"
-          - "git+https://git.openstack.org/openstack/nova@2bc8128d7793cc72ca2e146de3a092e1fef5033b#egg=nova&gitname=nova"
-          - "git+https://git.openstack.org/openstack/requirements@f8cf7eba898a1424549c730d6692ec4e9573c0ed#egg=requirements&gitname=requirements"
-          - "git+https://git.openstack.org/openstack/swift@62fb544224178377990752b16956ee2e13d9207c#egg=swift&gitname=swift"
-          - "git+https://git.openstack.org/openstack/tempest@5cc7ef78b4233444a4dcea1b1eb8f213c1548491#egg=tempest&gitname=tempest"
-          - "git+https://github.com/SPICE/spice-html5@ab73d009487c8afd4def39b54a422499b4c13c40#egg=spice_html5&gitname=spice-html5"
-          - "git+https://github.com/kanaka/novnc@670dbddb54264fd0082d0aca1b3acb0f1814b1d2#egg=novnc&gitname=novnc"
+          - "git+https://git.openstack.org/openstack/aodh@9d71ae4f4f7a30beb001e867ad688bf60fc23ece#egg=aodh&gitname=aodh&projectgroup=aodh_all"
+          - "git+https://git.openstack.org/openstack/ceilometer@04d91aad6315cfb1679b7a3d18474e9ebe033329#egg=ceilometer&gitname=ceilometer&projectgroup=ceilometer_all"
+          - "git+https://git.openstack.org/openstack/cinder@545b8c4435469c72920d54e4a3ca3c74cbc66b95#egg=cinder&gitname=cinder&projectgroup=cinder_all"
+          - "git+https://git.openstack.org/openstack/glance@e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe#egg=glance&gitname=glance&projectgroup=glance_all"
+          - "git+https://git.openstack.org/openstack/heat@e3f3f749a905aba302e9f0c457782d979440ee0c#egg=heat&gitname=heat&projectgroup=heat_all"
+          - "git+https://git.openstack.org/openstack/horizon@4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116#egg=horizon&gitname=horizon&projectgroup=horizon_all"
+          - "git+https://git.openstack.org/openstack/keystone@8a56c161ee29e34e70c6334b048881e8fbbd7514#egg=keystone&gitname=keystone&projectgroup=keystone_all"
+          - "git+https://git.openstack.org/openstack/neutron-fwaas@3605570ecae8ef7f84a84627569386acc6a75e11#egg=neutron_fwaas&gitname=neutron-fwaas&projectgroup=neutron_agent"
+          - "git+https://git.openstack.org/openstack/neutron-lbaas@e7ec75f61cce871c8bedff9c04345bbb14b9fda5#egg=neutron_lbaas&gitname=neutron-lbaas&projectgroup+neutron_agent"
+          - "git+https://git.openstack.org/openstack/neutron-vpnaas@0067e2671d1c33e630dff947ac7090c370152225#egg=neutron_vpnaas&gitname=neutron-vpnaas&projectgroup=neutron_agent"
+          - "git+https://git.openstack.org/openstack/neutron@5e48499a385b7c7e4a8384c02ae6aa0f856b24eb#egg=neutron&gitname=neutron&projectgroup=neutron_all"
+          - "git+https://git.openstack.org/openstack/nova@2bc8128d7793cc72ca2e146de3a092e1fef5033b#egg=nova&gitname=nova&projectgroup=nova_all"
+          - "git+https://git.openstack.org/openstack/requirements@f8cf7eba898a1424549c730d6692ec4e9573c0ed#egg=requirements&gitname=requirements&projectgroup=all"
+          - "git+https://git.openstack.org/openstack/swift@62fb544224178377990752b16956ee2e13d9207c#egg=swift&gitname=swift&projectgroup=swift_all"
+          - "git+https://git.openstack.org/openstack/tempest@5cc7ef78b4233444a4dcea1b1eb8f213c1548491#egg=tempest&gitname=tempest&projectgroup=utility_all"
+          - "git+https://github.com/SPICE/spice-html5@ab73d009487c8afd4def39b54a422499b4c13c40#egg=spice_html5&gitname=spice-html5&projectgroup=nova_all"
+          - "git+https://github.com/kanaka/novnc@670dbddb54264fd0082d0aca1b3acb0f1814b1d2#egg=novnc&gitname=novnc&projectgroup=nova_all"
         role_packages:
           galera_client:
             - MySQL-python
@@ -441,14 +476,13 @@ local_packages:
             - virtualenv
             - virtualenv-tools
           pip_install: []
-          rabbitmq_server:
-            - pycrypto
           repo_build:
             - virtualenv
             - virtualenv-tools
             - wheel
         role_requirement_files:
           default:
+            project_group: all
             txt_file_packages:
               - "netaddr!=0.7.16,>=0.7.12"
               - "prettytable<0.8,>=0.7"
@@ -459,6 +493,7 @@ local_packages:
               - "setuptools==25.1.0"
               - "wheel==0.29.0"
           global_pins:
+            project_group: all
             pinned_packages:
               - "pip==8.1.2"
               - "setuptools==25.1.0"
