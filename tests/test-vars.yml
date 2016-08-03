@@ -458,8 +458,8 @@ local_packages:
               - "pip==8.1.2"
               - "setuptools==25.1.0"
               - "wheel==0.29.0"
-            global_pins:
-              pinned_packages:
-                - "pip==8.1.2"
-                - "setuptools==25.1.0"
-                - "wheel==0.29.0"
+          global_pins:
+            pinned_packages:
+              - "pip==8.1.2"
+              - "setuptools==25.1.0"
+              - "wheel==0.29.0"

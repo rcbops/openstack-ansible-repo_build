@@ -21,7 +21,7 @@
 # Global pins set through the file global-requirement-pins.txt
 #
 {% set global_pin_packages = [] %}
-{% for global_pin in local_packages.results.0.item.role_requirement_files.default.global_pins.pinned_packages %}
+{% for global_pin in local_packages.results.0.item.role_requirement_files.global_pins.pinned_packages %}
 {%   set global_pin_package_name = global_pin | regex_replace('(<=|<|==).*$','') %}
 {%   set _ = global_pin_packages.append(global_pin_package_name) %}
 {#   we want to ensure that repo_build_upper_constraints_overrides take the highest precedence #}

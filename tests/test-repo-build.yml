@@ -88,7 +88,7 @@
       set_fact:
         global_pins_list: >
           {%- set global_pins = [] %}
-          {%- for pin in local_packages.results.0.item.role_requirement_files.default.global_pins.pinned_packages %}
+          {%- for pin in local_packages.results.0.item.role_requirement_files.global_pins.pinned_packages %}
           {%-   set name = pin | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
           {%-   set name_normalized = name | replace('-', '_') | lower %}
           {%-   set _ = global_pins.append(name_normalized) %}
@@ -105,7 +105,7 @@
     - name: Ensure that global pins have been applied
       assert:
         that: item in requirements_constraints_content
-      with_items: "{{ local_packages.results.0.item.role_requirement_files.default.global_pins.pinned_packages }}"
+      with_items: "{{ local_packages.results.0.item.role_requirement_files.global_pins.pinned_packages }}"
       when:
         - item | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') not in upper_constraints_override_list
     - name: Ensure that upper constraints overrides are applied
