@@ -47,7 +47,7 @@ local_packages:
         packages:
           - ansible-lint<=2.3.9
           - "ansible>1.9,<2.0"
-          - aodh
+          - "aodh[mysql]"
           - argparse
           - bashate==0.5.0
           - ceilometer
@@ -297,7 +297,7 @@ local_packages:
           lxc_hosts:
             - lxc-python2
           os_aodh:
-            - aodh
+            - "aodh[mysql]"
             - ceilometermiddleware
             - httplib2
             - pycrypto

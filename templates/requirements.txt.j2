@@ -11,7 +11,7 @@
 {#                                                                    #}
 {%   set all_requirements={} %}
 {%   for requirement_raw in local_packages.results.0.item.packages %}
-{%     set name = requirement_raw | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+{%     set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
 {%     set data = requirement_raw | regex_replace(name,'') %}
 {%     set name_normalized = name | replace('-', '_') | lower %}
 {%     set requirement_normalized = name_normalized + data %}
@@ -29,7 +29,7 @@
 {#   always be built.                                                 #}
 {#                                                                    #}
 {%   for requirement_raw in local_packages.results.0.item.role_requirement_files.default.txt_file_packages %}
-{%     set name = requirement_raw | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+{%     set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
 {%     set name_normalized = name | replace('-', '_') | lower %}
 {%     set requirement_normalized = all_requirements[name_normalized] %}
 {%     set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
@@ -47,7 +47,7 @@
 {%     endif %}
 {%     if (_build_wheel | bool) %}
 {%       for requirement_raw in role_requirements %}
-{%         set name = requirement_raw | regex_replace('(>=|<=|>|<|==|~=|!=).*$','') %}
+{%         set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
 {%         set name_normalized = name | replace('-', '_') | lower %}
 {%         set requirement_normalized = all_requirements[name_normalized] %}
 {%         set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
