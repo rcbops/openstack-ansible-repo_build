@@ -1,14 +1,10 @@
-repo_build Docs
-===============
+``repo_build`` docs
+===================
 
 Ansible role for building a python repository of wheels and venvs.
 
-Basic Role Example
-^^^^^^^^^^^^^^^^^^
+Basic role example
+~~~~~~~~~~~~~~~~~~
 
-Tell us how to use the role.
-
-.. code-block:: yaml
-
-    - role: "repo_build"
-      ROLE_VARS...
+.. literalinclude:: ../../examples/playbook.yml
+   :language: yaml
