@@ -51,6 +51,21 @@
     - name: Ensure that the nova venv is NOT present
       assert:
         that: "'nova-{{ repo_build_release_tag }}.tgz' not in venv_folder_content.stdout"
+    - name: List the files in the git folder
+      command: ls -1 /var/www/repo/openstackgit/
+      register: git_folder_content
+    - name: Ensure that the keystone git repo is present
+      assert:
+        that: "'keystone' in git_folder_content.stdout"
+    - name: Ensure that the tempest git repo is present
+      assert:
+        that: "'tempest' in git_folder_content.stdout"
+    - name: Ensure that the requirements git repo is present
+      assert:
+        that: "'requirements' in git_folder_content.stdout"
+    - name: Ensure that the nova git repo is NOT present
+      assert:
+        that: "'nova' not in git_folder_content.stdout"
     - name: Slurp upper constraints
       slurp:
         src: "{{ repo_build_git_dir }}/requirements/upper-constraints.txt"

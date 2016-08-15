@@ -43,14 +43,21 @@ function git_clone {
 
 PID=()
 # Run the git clone. This will loop over all of the package parts and clone all known repositories.
-#  Clone ops are done in parallel at a count of the known "ansible_processor_count" or using a default of 5.
 {% for item in local_packages.results.0.item.remote_package_parts %}
+{%   set _host_group = item['project_group'] | default('all') %}
+{%   if ((groups[_host_group] is defined) and (groups[_host_group] | length > 0)) %}
+{%     set _clone_repo = True %}
+{%   else %}
+{%     set _clone_repo = False %}
+{%   endif %}
+{%   if (not repo_build_git_selective | bool) or (_clone_repo | bool) %}
+#  Clone ops are done in parallel at a count of the known "ansible_processor_count" or using a default of 5.
 git_clone "{{ item['url'] }}" "{{ repo_build_git_dir }}/{{ item['name'] }}" "{{ item['version'] }}" &
 pid[{{ loop.index }}]=$!
-{% if loop.index is divisibleby(repo_build_concurrency | int) or loop.last %}
+{%     if loop.index is divisibleby(repo_build_concurrency | int) or loop.last %}
 for job_pid in ${!pid[@]}; do
     wait ${pid[$job_pid]} || exit 99
 done
-
-{% endif %}
+{%     endif %}
+{%   endif %}
 {% endfor %}
