@@ -2,9 +2,6 @@
 OpenStack repo build
 ====================
 
-:tags: openstack, repo, build, cloud, ansible
-:category: \*nix
-
 Role to deploy a repository build for both python packages and git sources.
 
 .. code:: yaml
