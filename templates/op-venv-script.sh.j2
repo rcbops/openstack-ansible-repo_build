@@ -34,8 +34,20 @@ function venv_create {
     # Create the archive
     tar czf "${VENV_FILE}.tgz" -C "${VENV_PATH}" .
 
+    # Create a link to the x86 archive without the arch spec in the name
+    # TODO(odyssey4me): Remove this once https://review.openstack.org/345986 merges
+    if [[ "${VENV_FILE}" =~ "x86_64" ]]; then
+      ln -sf "${VENV_FILE}.tgz" "${VENV_FILE/-x86_64/}.tgz"
+    fi
+
     # Create a checksum file for the archive
     sha1sum "${VENV_FILE}.tgz" | awk '{print $1}' > "${VENV_FILE}.checksum"
+
+    # Create a link to the x86 checksum without the arch spec in the name
+    # TODO(odyssey4me): Remove this once https://review.openstack.org/345986 merges
+    if [[ "${VENV_FILE}" =~ "x86_64" ]]; then
+      ln -sf "${VENV_FILE}.checksum" "${VENV_FILE/-x86_64/}.checksum"
+    fi
 
     # Remove the working directories
     rm -rf "${VENV_PATH}"
