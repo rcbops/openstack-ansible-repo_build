@@ -38,19 +38,30 @@
 {#   These are files which are in the roles. We only select them if   #}
 {#   their project_groups are populated.                              #}
 {#                                                                    #}
-{%   for role_name, role_requirements in local_packages.results.0.item.role_packages.items() %}
-{%     set _host_group = local_packages.results.0.item.role_project_groups[role_name] %}
+{%   for role_name, role_data in local_packages.results.0.item.role_requirements.items() %}
+{%     set _host_group = role_data['project_group'] %}
 {%     if ((groups[_host_group] is defined) and (groups[_host_group] | length > 0)) %}
 {%       set _build_wheel = True %}
 {%     else %}
 {%       set _build_wheel = False %}
 {%     endif %}
 {%     if (_build_wheel | bool) %}
-{%       for requirement_raw in role_requirements %}
-{%         set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
-{%         set name_normalized = name | replace('-', '_') | lower %}
-{%         set requirement_normalized = all_requirements[name_normalized] %}
-{%         set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
+{%       for requirement_key, requirement_data in role_data.items() %}
+{#                                                                    #}
+{#         We only want to iterate through the '_pip_packages' lists  #}
+{#         as there may be other data structures in the role_data.    #}
+{#         We must also make sure we're skipping the properietary     #}
+{#         packages as they're not available for the repo server to   #}
+{#         download/build.                                            #}
+{#                                                                    #}
+{%         if '_pip_packages' in requirement_key and 'proprietary' not in requirement_key %}
+{%           for requirement_raw in requirement_data %}
+{%             set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
+{%             set name_normalized = name | replace('-', '_') | lower %}
+{%             set requirement_normalized = all_requirements[name_normalized] %}
+{%             set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
+{%           endfor %}
+{%         endif %}
 {%       endfor %}
 {%     endif %}
 {%   endfor %}
