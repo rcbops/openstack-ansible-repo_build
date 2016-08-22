@@ -109,6 +109,14 @@
           {%-   set _ = global_pins.append(name_normalized) %}
           {%- endfor %}
           {{- global_pins -}}
+    - name: Set facts for packages built from git sources
+      set_fact:
+        git_package_list: >
+          {%- set git_packages = [] %}
+          {%- for remote_package_part in local_packages.results.0.item.remote_package_parts %}
+          {%-   set _ = git_packages.append(remote_package_part['egg_name']) %}
+          {%- endfor %}
+          {{- git_packages -}}
     - name: Ensure that upper constraints from the OpenStack requirements repo are complete
       assert:
         that: item in requirements_constraints_content
@@ -117,6 +125,7 @@
         - repo_build_use_upper_constraints | bool
         - item | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') not in upper_constraints_override_list
         - item | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') not in global_pins_list
+        - item | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') not in git_package_list
     - name: Ensure that global pins have been applied
       assert:
         that: item in requirements_constraints_content
