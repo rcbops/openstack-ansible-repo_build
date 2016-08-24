@@ -1,11 +1,9 @@
-repo_build
-########
+===================================================
+OpenStack-Ansible repo_build contributor guidelines
+===================================================
 
-contributor guidelines
-^^^^^^^^^^^^^^^^^^^^^^
-
-Filing Bugs
------------
+Filing bugs
+~~~~~~~~~~~
 
 Bugs should be filed on Launchpad, not GitHub: "https://bugs.launchpad.net/openstack-ansible"
 
@@ -18,8 +16,8 @@ When submitting a bug, or working on a bug, please ensure the following criteria
     * Steps to reproduce the problem if possible.
 
 
-Submitting Code
----------------
+Submitting code
+~~~~~~~~~~~~~~~
 
 Changes to the project should be submitted for review via the Gerrit tool, following
 the workflow documented at: "http://docs.openstack.org/infra/manual/developers.html#development-workflow"
@@ -28,7 +26,7 @@ Pull requests submitted through GitHub will be ignored and closed without regard
 
 
 Extra
------
+~~~~~
 
 Tags:
     If it's a bug that needs fixing in a branch in addition to Master, add a '\<release\>-backport-potential' tag (eg ``juno-backport-potential``).  There are predefined tags that will autocomplete.
@@ -41,7 +39,7 @@ Importance:
 
 
 Style guide
------------
+~~~~~~~~~~~
 
 When creating tasks and other roles for use in Ansible please create them using the YAML dictionary format.
 
@@ -71,7 +69,7 @@ Usage of the ">" and "|" operators should be limited to Ansible conditionals and
 
 
 Issues
-------
+~~~~~~
 
 When submitting an issue, or working on an issue please ensure the following criteria are met:
     * The description clearly states or describes the original problem or root cause of the problem.

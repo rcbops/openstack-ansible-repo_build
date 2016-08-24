@@ -1,6 +1,6 @@
-================================
- OpenStack-Ansible Release Notes
-================================
+==========================================
+OpenStack-Ansible repo_build release notes
+==========================================
 
 .. toctree::
    :maxdepth: 1

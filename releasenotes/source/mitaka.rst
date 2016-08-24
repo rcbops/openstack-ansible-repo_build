@@ -1,6 +1,6 @@
-=============================
- Mitaka Series Release Notes
-=============================
+===========================
+Mitaka series release notes
+===========================
 
 .. release-notes::
    :branch: origin/stable/mitaka

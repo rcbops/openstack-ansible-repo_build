@@ -1,5 +1,5 @@
-==============================
- Current Series Release Notes
-==============================
+============================
+Current series release notes
+============================
 
 .. release-notes::

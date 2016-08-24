@@ -1,13 +1,12 @@
-====================
-OpenStack repo build
-====================
+============================
+OpenStack-Ansible repo_build
+============================
 
-Role to deploy a repository build for both python packages and git sources.
+Ansible role that builds a repository of Git repositories, Python
+wheels, and virtualenvs.
 
-.. code:: yaml
+Documentation for the project can be found at:
+  http://docs.openstack.org/developer/openstack-ansible-repo_build
 
-   - name: Setup repo builds
-      hosts: repo_all
-      user: root
-      roles:
-        - { role: "repo_build", tags: [ "repo-build" ] }
+The project home is at:
+  http://launchpad.net/openstack-ansible
