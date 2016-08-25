@@ -46,13 +46,17 @@ function venv_create {
 #  NOTE: this is a Jinja loop and will not be rendered within the script. For debugging
 #        purposes the group data will be rendered as a comment.
 {% set os_group = {} %}
-{% for key, value in local_packages.results.0.item.role_packages.items() %}
-{%   set _host_group = local_packages.results.0.item.role_project_groups[key] %}
-{% if ("os_" in key) and (not repo_build_venv_selective | bool) or ((groups[_host_group] is defined) and (groups[_host_group] | length > 0)) %}
-# venv to build {{ key }}
-#   * packages within the {{ key }} venv: {{ value }}
-{% set _ = os_group.update({key: value}) %}
-{% endif %}
+{% for role_name, role_data in local_packages.results.0.item.role_requirements.items() %}
+{%   set _host_group = role_data['project_group'] %}
+{%   if ("os_" in role_name) and ((not repo_build_venv_selective | bool) or ((groups[_host_group] is defined) and (groups[_host_group] | length > 0))) %}
+{%     for requirement_key, requirement_data in role_data.items() %}
+{%       if '_pip_packages' in requirement_key and 'optional' not in requirement_key and 'proprietary' not in requirement_key %}
+# venv to build {{ role_name }}
+#   * packages within the {{ role_name }} venv: {{ requirement_data }}
+{%         set _ = os_group.update({role_name: requirement_data}) %}
+{%       endif %}
+{%     endfor %}
+{%   endif %}
 {% endfor %}
 
 PID=()
