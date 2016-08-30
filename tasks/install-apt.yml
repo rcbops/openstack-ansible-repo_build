@@ -63,6 +63,6 @@
   until: install_packages|success
   retries: 5
   delay: 2
-  with_items: "{{ repo_build_packages | deprecated(repo_build_apt_packages, 'repo_build_apt_packages', 'repo_build_packages', 'Ocata') }}"
+  with_items: "{{ repo_build_distro_packages }}"
   tags:
     - repo-build-apt-packages

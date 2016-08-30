@@ -21,7 +21,7 @@ uca_openstack_release: newton
 uca_repo_dist: "{{ ansible_lsb.codename }}-updates/{{ uca_openstack_release }}"
 uca_repo: "deb {{ uca_apt_repo_url }} {{ uca_repo_dist }} main"
 
-repo_build_packages:
+repo_build_distro_packages:
   - build-essential
   - cmake
   - git

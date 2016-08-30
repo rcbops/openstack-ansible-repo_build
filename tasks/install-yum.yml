@@ -32,6 +32,6 @@
   until: install_packages | success
   retries: 5
   delay: 2
-  with_items: "{{ repo_build_packages }}"
+  with_items: "{{ repo_build_distro_packages }}"
   tags:
     - repo-build-yum-packages

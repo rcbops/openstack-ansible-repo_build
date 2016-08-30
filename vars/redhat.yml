@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-repo_build_packages:
+repo_build_distro_packages:
   - '@Development Tools'
   - cmake
   - git
