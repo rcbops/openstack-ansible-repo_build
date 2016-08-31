@@ -14,22 +14,6 @@
 # limitations under the License.
 
 
-- name: Set stripped local requirement names
-  set_fact:
-    local_requirement_names_stripped: "{% for req in local_packages.results.0.item.packages %}{{ req.split('#')[0].strip().replace('-', '_') }}{% if not loop.last %}||{% endif %}{% endfor %}"
-  tags:
-    - repo-set-requirement-names-filtered
-    - repo-set-requirement-names
-    - repo-set-requirements
-
-- name: Set local normalized requirement names
-  set_fact:
-    local_requirement_normalized: "{{ local_requirement_names_stripped.split('||') }}"
-  tags:
-    - repo-set-requirement-names-filtered
-    - repo-set-requirement-names
-    - repo-set-requirements
-
 - name: Retrieve upper constraints content
   slurp:
     src: "{{ repo_build_git_dir }}/requirements/upper-constraints.txt"
