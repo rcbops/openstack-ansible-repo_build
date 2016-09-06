@@ -17,6 +17,8 @@ openstack_release: testing
 repo_build_release_tag: "{{ openstack_release }}"
 galera_client_drop_config_file: false
 
+repo_build_service_user_name: "nginx"
+
 # Test data input for upper constraints validation
 repo_build_upper_constraints_overrides:
   - elasticsearch<2.1.0
