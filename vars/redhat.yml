@@ -32,6 +32,7 @@ repo_build_distro_packages:
   - sqlite-devel            # required to build pysqlite
   - swig
   - which
+  - tar                     # required for /opt/op-venv-script.sh
 
 # required for liberasurecode-devel package
 repo_build_rdo_package: "https://rdoproject.org/repos/rdo-release.rpm"
