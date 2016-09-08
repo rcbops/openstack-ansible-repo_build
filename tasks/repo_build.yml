@@ -29,6 +29,7 @@
     --build {{ repo_build_dir }}
     --log /var/log/repo/repo_builder.log
     --requirement {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt
+    {{ pip_install_options }}
   tags:
     - repo-build-local-requirement-wheels
     - repo-build-openstack-ansible-requirement-wheels

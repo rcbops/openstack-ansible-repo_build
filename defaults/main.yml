@@ -13,6 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Additional options passed to pip during package installation.
+# A common use is with the '--cert' argument for internally signed
+# SSL certificates.
+pip_install_options: ""
+
 # Use OpenStack's upper-constraints
 repo_build_use_upper_constraints: true
 
