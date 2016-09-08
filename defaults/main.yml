@@ -13,6 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Additional options passed to pip during package installation.
+# A common use is with the '--cert' argument for internally signed
+# SSL certificates.
+pip_install_options: ""
+
 # Set the package install state for distribution packages
 # Options are 'present' and 'latest'
 repo_build_package_state: "latest"
