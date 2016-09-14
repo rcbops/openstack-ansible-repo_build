@@ -29,33 +29,10 @@
           results: [
               {
                   "item": {
-                      "role_requirement_files": {
-                          "default": {
-                              "txt_file_packages": [
-                                  "netaddr>=0.7.12",
-                                  "prettytable>=0.7,<0.8",
-                                  "pycrypto>=2.6",
-                                  "pyyaml>=3.1.0",
-                                  "virtualenv",
-                                  "pip==8.1.1",
-                                  "setuptools==20.3.1",
-                                  "wheel==0.29.0"
-                              ]
-                          },
-                          "global_pins": {
-                              "pinned_packages": [
-                                  "pip==8.1.1",
-                                  "setuptools==20.3.1",
-                                  "wheel==0.29.0"
-                              ]
-                          }
-                      },
+                      "distro_packages": [],
                       "packages": [
-                          "ansible-lint<=2.3.9",
-                          "ansible>1.9,<2.0",
                           "aodh",
                           "argparse",
-                          "bashate==0.5.0",
                           "ceilometer",
                           "ceilometermiddleware",
                           "cinder",
@@ -65,15 +42,13 @@
                           "django-openstack-auth",
                           "dnspython",
                           "ecdsa",
-                          "fixtures",
-                          "flake8==2.2.4",
                           "glance",
                           "greenlet",
-                          "hacking>=0.10.0,<0.11",
                           "heat",
                           "horizon",
                           "httplib2",
-                          "jinja2>=2.6",
+                          "ironic",
+                          "jinja2>=2.8",
                           "junitxml",
                           "keystone",
                           "keystonemiddleware",
@@ -81,37 +56,34 @@
                           "libvirt-python",
                           "lxc-python2",
                           "lxml",
-                          "mccabe==0.2.1",
                           "mysql-python",
-                          "netaddr>=0.7.12",
-                          "networking-plumgrid==2015.2.1.1",
+                          "ndg-httpsclient",
+                          "netaddr>=0.7.12,!=0.7.16",
                           "neutron",
+                          "neutron-lbaas-dashboard",
                           "neutron_fwaas",
                           "neutron_lbaas",
+                          "neutron_vpnaas",
                           "nose",
                           "nova",
                           "oslo.config",
                           "oslo.log",
                           "oslo.middleware",
-                          "oslo.serialization",
-                          "oslosphinx>=2.5.0",
-                          "paramiko>=1.13.0",
+                          "paramiko>=1.16.0",
                           "pbr",
-                          "pep8==1.5.7",
-                          "pip==8.1.1",
+                          "pip>=6.0",
                           "ply",
                           "prettytable>=0.7,<0.8",
                           "pycrypto>=2.6",
                           "pyeclib",
-                          "pyflakes==0.8.1",
                           "pymongo",
                           "pymysql",
                           "pysaml2",
                           "python-ceilometerclient",
-                          "python-cephlibs",
                           "python-cinderclient",
                           "python-glanceclient",
                           "python-heatclient",
+                          "python-ironicclient",
                           "python-keystoneclient",
                           "python-ldap",
                           "python-memcached",
@@ -122,247 +94,516 @@
                           "python-swiftclient",
                           "python-troveclient",
                           "pyyaml>=3.1.0",
-                          "reno>=0.1.1",
                           "repoze.lru",
-                          "setuptools==20.3.1",
-                          "sphinx!=1.2.0,!=1.3b1,<1.3,>=1.1.2",
+                          "requests",
+                          "setuptools>=16.0,!=24.0.0",
                           "swift",
-                          "tempest-lib",
-                          "testrepository",
-                          "testscenarios",
-                          "testtools",
+                          "tempest",
                           "tooz",
                           "virtualenv",
                           "virtualenv-tools",
                           "warlock",
                           "websockify",
-                          "wheel==0.29.0"
+                          "wheel"
                       ],
                       "remote_package_parts": [
                           {
+                              "egg_name": "aodh",
+                              "fragment": null,
                               "name": "aodh",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/aodh@aa2c31369bd32c7ac07ede0ac13785c18255e8be#egg=aodh&gitname=aodh&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/aodh",
-                              "version": "9d71ae4f4f7a30beb001e867ad688bf60fc23ece",
-                              "original": "git+https://git.openstack.org/openstack/aodh@9d71ae4f4f7a30beb001e867ad688bf60fc23ece#egg=aodh&gitname=aodh",
-                              "egg_name": "aodh"
+                              "version": "aa2c31369bd32c7ac07ede0ac13785c18255e8be"
                           },
                           {
+                              "egg_name": "ceilometer",
+                              "fragment": null,
                               "name": "ceilometer",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/ceilometer@10639a4299fdedbb8b6dcd5e82e795d573edb6d0#egg=ceilometer&gitname=ceilometer&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/ceilometer",
-                              "version": "04d91aad6315cfb1679b7a3d18474e9ebe033329",
-                              "original": "git+https://git.openstack.org/openstack/ceilometer@04d91aad6315cfb1679b7a3d18474e9ebe033329#egg=ceilometer&gitname=ceilometer",
-                              "egg_name": "ceilometer"
+                              "version": "10639a4299fdedbb8b6dcd5e82e795d573edb6d0"
                           },
                           {
+                              "egg_name": "cinder",
+                              "fragment": null,
                               "name": "cinder",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/cinder@de954d04c2accb6b2f8aa9e9a59f5c64fe0109bc#egg=cinder&gitname=cinder&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/cinder",
-                              "version": "545b8c4435469c72920d54e4a3ca3c74cbc66b95",
-                              "original": "git+https://git.openstack.org/openstack/cinder@545b8c4435469c72920d54e4a3ca3c74cbc66b95#egg=cinder&gitname=cinder",
-                              "egg_name": "cinder"
+                              "version": "de954d04c2accb6b2f8aa9e9a59f5c64fe0109bc"
                           },
                           {
+                              "egg_name": "glance",
+                              "fragment": null,
                               "name": "glance",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/glance@9a6014148d2737448dfde1b419668393ee2a08b2#egg=glance&gitname=glance&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/glance",
-                              "version": "e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe",
-                              "original": "git+https://git.openstack.org/openstack/glance@e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe#egg=glance&gitname=glance",
-                              "egg_name": "glance"
+                              "version": "9a6014148d2737448dfde1b419668393ee2a08b2"
                           },
                           {
+                              "egg_name": "heat",
+                              "fragment": null,
                               "name": "heat",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/heat@ed46562157d2f9983f5665394ec47d2e27aad0df#egg=heat&gitname=heat&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/heat",
-                              "version": "e3f3f749a905aba302e9f0c457782d979440ee0c",
-                              "original": "git+https://git.openstack.org/openstack/heat@e3f3f749a905aba302e9f0c457782d979440ee0c#egg=heat&gitname=heat",
-                              "egg_name": "heat"
+                              "version": "ed46562157d2f9983f5665394ec47d2e27aad0df"
                           },
                           {
+                              "egg_name": "horizon",
+                              "fragment": null,
                               "name": "horizon",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/horizon@4ca41467d648ba17f6a8dfe3efb95bc3b1140e50#egg=horizon&gitname=horizon&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/horizon",
-                              "version": "4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116",
-                              "original": "git+https://git.openstack.org/openstack/horizon@4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116#egg=horizon&gitname=horizon",
-                              "egg_name": "horizon"
+                              "version": "4ca41467d648ba17f6a8dfe3efb95bc3b1140e50"
                           },
                           {
+                              "egg_name": "ironic",
+                              "fragment": null,
+                              "name": "ironic",
+                              "original": "git+https://git.openstack.org/openstack/ironic@a632e9be06ccac382adaade0aafe6340ebe98099#egg=ironic&gitname=ironic&projectgroup=all",
+                              "project_group": "all",
+                              "url": "https://git.openstack.org/openstack/ironic",
+                              "version": "a632e9be06ccac382adaade0aafe6340ebe98099"
+                          },
+                          {
+                              "egg_name": "keystone",
+                              "fragment": null,
                               "name": "keystone",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/keystone@3a1e41fecfe9e4b7dfa8391476202c3113456c89#egg=keystone&gitname=keystone&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/keystone",
-                              "version": "8a56c161ee29e34e70c6334b048881e8fbbd7514",
-                              "original": "git+https://git.openstack.org/openstack/keystone@8a56c161ee29e34e70c6334b048881e8fbbd7514#egg=keystone&gitname=keystone",
-                              "egg_name": "keystone"
+                              "version": "3a1e41fecfe9e4b7dfa8391476202c3113456c89"
                           },
                           {
+                              "egg_name": "neutron",
+                              "fragment": null,
                               "name": "neutron",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/neutron@c73269fa480a8a955f440570fc2fa6c347e3bb3c#egg=neutron&gitname=neutron&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/neutron",
-                              "version": "5e48499a385b7c7e4a8384c02ae6aa0f856b24eb",
-                              "original": "git+https://git.openstack.org/openstack/neutron@5e48499a385b7c7e4a8384c02ae6aa0f856b24eb#egg=neutron&gitname=neutron",
-                              "egg_name": "neutron"
+                              "version": "c73269fa480a8a955f440570fc2fa6c347e3bb3c"
                           },
                           {
+                              "egg_name": "neutron_fwaas",
+                              "fragment": null,
                               "name": "neutron-fwaas",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/neutron-fwaas@cbe18b5de196e8edb9b2528a257206c9463c714c#egg=neutron_fwaas&gitname=neutron-fwaas&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/neutron-fwaas",
-                              "version": "3605570ecae8ef7f84a84627569386acc6a75e11",
-                              "original": "git+https://git.openstack.org/openstack/neutron-fwaas@3605570ecae8ef7f84a84627569386acc6a75e11#egg=neutron_fwaas&gitname=neutron-fwaas",
-                              "egg_name": "neutron_fwaas"
+                              "version": "cbe18b5de196e8edb9b2528a257206c9463c714c"
                           },
                           {
+                              "egg_name": "neutron_lbaas",
+                              "fragment": null,
                               "name": "neutron-lbaas",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/neutron-lbaas@3cf4a7cffd5f76b9f8a3eed649d04075714dcd9c#egg=neutron_lbaas&gitname=neutron-lbaas&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/neutron-lbaas",
-                              "version": "e7ec75f61cce871c8bedff9c04345bbb14b9fda5",
-                              "original": "git+https://git.openstack.org/openstack/neutron-lbaas@e7ec75f61cce871c8bedff9c04345bbb14b9fda5#egg=neutron_lbaas&gitname=neutron-lbaas",
-                              "egg_name": "neutron_lbaas"
+                              "version": "3cf4a7cffd5f76b9f8a3eed649d04075714dcd9c"
                           },
                           {
+                              "egg_name": "neutron_lbaas_dashboard",
+                              "fragment": null,
+                              "name": "neutron-lbaas-dashboard",
+                              "original": "git+https://github.com/openstack/neutron-lbaas-dashboard@b85927dad8169ac672ab2daa111a2b8a113464c0#egg=neutron_lbaas_dashboard&gitname=neutron-lbaas-dashboard&projectgroup=all",
+                              "project_group": "all",
+                              "url": "https://github.com/openstack/neutron-lbaas-dashboard",
+                              "version": "b85927dad8169ac672ab2daa111a2b8a113464c0"
+                          },
+                          {
+                              "egg_name": "neutron_vpnaas",
+                              "fragment": null,
                               "name": "neutron-vpnaas",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/neutron-vpnaas@ea355d1bc6e173cd56c6a975b88e5d5e1f901b5c#egg=neutron_vpnaas&gitname=neutron-vpnaas&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/neutron-vpnaas",
-                              "version": "0067e2671d1c33e630dff947ac7090c370152225",
-                              "original": "git+https://git.openstack.org/openstack/neutron-vpnaas@0067e2671d1c33e630dff947ac7090c370152225#egg=neutron_vpnaas&gitname=neutron-vpnaas",
-                              "egg_name": "neutron_vpnaas"
+                              "version": "ea355d1bc6e173cd56c6a975b88e5d5e1f901b5c"
                           },
                           {
+                              "egg_name": "nova",
+                              "fragment": null,
                               "name": "nova",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/nova@611efbe77c712d9ac35904f659d28dd0f0c1b3ff#egg=nova&gitname=nova&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/nova",
-                              "version": "2bc8128d7793cc72ca2e146de3a092e1fef5033b",
-                              "original": "git+https://git.openstack.org/openstack/nova@2bc8128d7793cc72ca2e146de3a092e1fef5033b#egg=nova&gitname=nova",
-                              "egg_name": "nova"
+                              "version": "611efbe77c712d9ac35904f659d28dd0f0c1b3ff"
                           },
                           {
+                              "egg_name": "novnc",
+                              "fragment": null,
                               "name": "novnc",
-                              "fragment": null,
+                              "original": "git+https://github.com/kanaka/novnc@da82b3426c27bf1a79f671c5825d68ab8c0c5d9f#egg=novnc&gitname=novnc&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://github.com/kanaka/novnc",
-                              "version": "670dbddb54264fd0082d0aca1b3acb0f1814b1d2",
-                              "original": "git+https://github.com/kanaka/novnc@670dbddb54264fd0082d0aca1b3acb0f1814b1d2#egg=novnc&gitname=novnc",
-                              "egg_name": "novnc"
+                              "version": "da82b3426c27bf1a79f671c5825d68ab8c0c5d9f"
                           },
                           {
+                              "egg_name": "requirements",
+                              "fragment": null,
                               "name": "requirements",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/requirements@5cc4e35e177b91bf2f2a6f4e4671719e9cb1aba5#egg=requirements&gitname=requirements&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/requirements",
-                              "version": "f8cf7eba898a1424549c730d6692ec4e9573c0ed",
-                              "original": "git+https://git.openstack.org/openstack/requirements@f8cf7eba898a1424549c730d6692ec4e9573c0ed#egg=requirements&gitname=requirements",
-                              "egg_name": "requirements"
+                              "version": "5cc4e35e177b91bf2f2a6f4e4671719e9cb1aba5"
                           },
                           {
+                              "egg_name": "spice_html5",
+                              "fragment": null,
                               "name": "spice-html5",
-                              "fragment": null,
+                              "original": "git+https://github.com/SPICE/spice-html5@54cc41299bea8cd681ed0262735e0fd821cd774a#egg=spice_html5&gitname=spice-html5&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://github.com/SPICE/spice-html5",
-                              "version": "ab73d009487c8afd4def39b54a422499b4c13c40",
-                              "original": "git+https://github.com/SPICE/spice-html5@ab73d009487c8afd4def39b54a422499b4c13c40#egg=spice_html5&gitname=spice-html5",
-                              "egg_name": "spice_html5"
+                              "version": "54cc41299bea8cd681ed0262735e0fd821cd774a"
                           },
                           {
+                              "egg_name": "swift",
+                              "fragment": null,
                               "name": "swift",
-                              "fragment": null,
+                              "original": "git+https://git.openstack.org/openstack/swift@d75e6d39789e1cc83ac0614f5f4697e1df2f1f57#egg=swift&gitname=swift&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/swift",
-                              "version": "62fb544224178377990752b16956ee2e13d9207c",
-                              "original": "git+https://git.openstack.org/openstack/swift@62fb544224178377990752b16956ee2e13d9207c#egg=swift&gitname=swift",
-                              "egg_name": "swift"
+                              "version": "d75e6d39789e1cc83ac0614f5f4697e1df2f1f57"
                           },
                           {
-                              "name": "tempest",
+                              "egg_name": "tempest",
                               "fragment": null,
+                              "name": "tempest",
+                              "original": "git+https://git.openstack.org/openstack/tempest@c2c90574a78c7704f06e8fac279c4f1d11365993#egg=tempest&gitname=tempest&projectgroup=all",
+                              "project_group": "all",
                               "url": "https://git.openstack.org/openstack/tempest",
-                              "version": "5cc7ef78b4233444a4dcea1b1eb8f213c1548491",
-                              "original": "git+https://git.openstack.org/openstack/tempest@5cc7ef78b4233444a4dcea1b1eb8f213c1548491#egg=tempest&gitname=tempest",
-                              "egg_name": "tempest"
+                              "version": "c2c90574a78c7704f06e8fac279c4f1d11365993"
                           }
                       ],
                       "remote_packages": [
-                          "git+https://git.openstack.org/openstack/aodh@9d71ae4f4f7a30beb001e867ad688bf60fc23ece#egg=aodh&gitname=aodh",
-                          "git+https://git.openstack.org/openstack/ceilometer@04d91aad6315cfb1679b7a3d18474e9ebe033329#egg=ceilometer&gitname=ceilometer",
-                          "git+https://git.openstack.org/openstack/cinder@545b8c4435469c72920d54e4a3ca3c74cbc66b95#egg=cinder&gitname=cinder",
-                          "git+https://git.openstack.org/openstack/glance@e0ba0c4fd030d42d03ad1586c32b5925b0b6c6fe#egg=glance&gitname=glance",
-                          "git+https://git.openstack.org/openstack/heat@e3f3f749a905aba302e9f0c457782d979440ee0c#egg=heat&gitname=heat",
-                          "git+https://git.openstack.org/openstack/horizon@4a5eb9644d36e3063b3ddcff03cdbdfadc0f1116#egg=horizon&gitname=horizon",
-                          "git+https://git.openstack.org/openstack/keystone@8a56c161ee29e34e70c6334b048881e8fbbd7514#egg=keystone&gitname=keystone",
-                          "git+https://git.openstack.org/openstack/neutron-fwaas@3605570ecae8ef7f84a84627569386acc6a75e11#egg=neutron_fwaas&gitname=neutron-fwaas",
-                          "git+https://git.openstack.org/openstack/neutron-lbaas@e7ec75f61cce871c8bedff9c04345bbb14b9fda5#egg=neutron_lbaas&gitname=neutron-lbaas",
-                          "git+https://git.openstack.org/openstack/neutron-vpnaas@0067e2671d1c33e630dff947ac7090c370152225#egg=neutron_vpnaas&gitname=neutron-vpnaas",
-                          "git+https://git.openstack.org/openstack/neutron@5e48499a385b7c7e4a8384c02ae6aa0f856b24eb#egg=neutron&gitname=neutron",
-                          "git+https://git.openstack.org/openstack/nova@2bc8128d7793cc72ca2e146de3a092e1fef5033b#egg=nova&gitname=nova",
-                          "git+https://git.openstack.org/openstack/requirements@f8cf7eba898a1424549c730d6692ec4e9573c0ed#egg=requirements&gitname=requirements",
-                          "git+https://git.openstack.org/openstack/swift@62fb544224178377990752b16956ee2e13d9207c#egg=swift&gitname=swift",
-                          "git+https://git.openstack.org/openstack/tempest@5cc7ef78b4233444a4dcea1b1eb8f213c1548491#egg=tempest&gitname=tempest",
-                          "git+https://github.com/SPICE/spice-html5@ab73d009487c8afd4def39b54a422499b4c13c40#egg=spice_html5&gitname=spice-html5",
-                          "git+https://github.com/kanaka/novnc@670dbddb54264fd0082d0aca1b3acb0f1814b1d2#egg=novnc&gitname=novnc"
+                          "git+https://git.openstack.org/openstack/aodh@aa2c31369bd32c7ac07ede0ac13785c18255e8be#egg=aodh&gitname=aodh&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/ceilometer@10639a4299fdedbb8b6dcd5e82e795d573edb6d0#egg=ceilometer&gitname=ceilometer&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/cinder@de954d04c2accb6b2f8aa9e9a59f5c64fe0109bc#egg=cinder&gitname=cinder&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/glance@9a6014148d2737448dfde1b419668393ee2a08b2#egg=glance&gitname=glance&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/heat@ed46562157d2f9983f5665394ec47d2e27aad0df#egg=heat&gitname=heat&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/horizon@4ca41467d648ba17f6a8dfe3efb95bc3b1140e50#egg=horizon&gitname=horizon&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/ironic@a632e9be06ccac382adaade0aafe6340ebe98099#egg=ironic&gitname=ironic&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/keystone@3a1e41fecfe9e4b7dfa8391476202c3113456c89#egg=keystone&gitname=keystone&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/neutron-fwaas@cbe18b5de196e8edb9b2528a257206c9463c714c#egg=neutron_fwaas&gitname=neutron-fwaas&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/neutron-lbaas@3cf4a7cffd5f76b9f8a3eed649d04075714dcd9c#egg=neutron_lbaas&gitname=neutron-lbaas&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/neutron-vpnaas@ea355d1bc6e173cd56c6a975b88e5d5e1f901b5c#egg=neutron_vpnaas&gitname=neutron-vpnaas&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/neutron@c73269fa480a8a955f440570fc2fa6c347e3bb3c#egg=neutron&gitname=neutron&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/nova@611efbe77c712d9ac35904f659d28dd0f0c1b3ff#egg=nova&gitname=nova&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/requirements@5cc4e35e177b91bf2f2a6f4e4671719e9cb1aba5#egg=requirements&gitname=requirements&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/swift@d75e6d39789e1cc83ac0614f5f4697e1df2f1f57#egg=swift&gitname=swift&projectgroup=all",
+                          "git+https://git.openstack.org/openstack/tempest@c2c90574a78c7704f06e8fac279c4f1d11365993#egg=tempest&gitname=tempest&projectgroup=all",
+                          "git+https://github.com/SPICE/spice-html5@54cc41299bea8cd681ed0262735e0fd821cd774a#egg=spice_html5&gitname=spice-html5&projectgroup=all",
+                          "git+https://github.com/kanaka/novnc@da82b3426c27bf1a79f671c5825d68ab8c0c5d9f#egg=novnc&gitname=novnc&projectgroup=all",
+                          "git+https://github.com/openstack/neutron-lbaas-dashboard@b85927dad8169ac672ab2daa111a2b8a113464c0#egg=neutron_lbaas_dashboard&gitname=neutron-lbaas-dashboard&projectgroup=all"
                       ],
+                      "role_distro_packages": {
+                          "galera_client": {
+                              "project_group": "all",
+                              "ubuntu-14.04": {
+                                  "galera_client_apt_packages": [
+                                      "libaio1",
+                                      "libc6",
+                                      "libdbd-mysql-perl",
+                                      "libgcc1",
+                                      "libgcrypt11",
+                                      "libmariadbclient-dev",
+                                      "libssl-dev",
+                                      "libstdc++6",
+                                      "mariadb-client",
+                                      "mariadb-client-core-10.0"
+                                  ]
+                              }
+                          },
+                          "galera_server": {
+                              "project_group": "all",
+                              "ubuntu-14.04": {
+                                  "galera_pre_apt_packages": [
+                                      "apt-transport-https",
+                                      "debconf-utils",
+                                      "libaio1",
+                                      "libc6",
+                                      "libdbd-mysql-perl",
+                                      "libgcc1",
+                                      "libgcrypt11",
+                                      "libstdc++6",
+                                      "python-software-properties",
+                                      "software-properties-common"
+                                  ]
+                              }
+                          },
+                          "haproxy_server": {
+                              "main": {
+                                  "haproxy_pre_apt_packages": [
+                                      "debconf-utils",
+                                      "python-software-properties",
+                                      "software-properties-common"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "lxc_hosts": {
+                              "project_group": "all",
+                              "ubuntu-14.04": {
+                                  "lxc_apt_packages": [
+                                      "apparmor",
+                                      "apparmor-utils",
+                                      "bridge-utils",
+                                      "cgmanager",
+                                      "cgroup-lite",
+                                      "debootstrap",
+                                      "dnsmasq",
+                                      "git",
+                                      "irqbalance",
+                                      "language-pack-en",
+                                      "liblxc1",
+                                      "lxc",
+                                      "lxc-dev",
+                                      "lxc-templates",
+                                      "python-dev",
+                                      "python3-lxc"
+                                  ]
+                              }
+                          },
+                          "memcached_server": {
+                              "main": {
+                                  "memcached_apt_packages": [
+                                      "memcached"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "openstack_hosts": {
+                              "main": {
+                                  "openstack_host_apt_packages": [
+                                      "apparmor-utils",
+                                      "apt-transport-https",
+                                      "bridge-utils",
+                                      "build-essential",
+                                      "cgroup-lite",
+                                      "curl",
+                                      "dmeventd",
+                                      "dstat",
+                                      "ebtables",
+                                      "htop",
+                                      "iptables",
+                                      "irqbalance",
+                                      "libkmod-dev",
+                                      "libkmod2",
+                                      "lvm2",
+                                      "python-dev",
+                                      "python-software-properties",
+                                      "rsync",
+                                      "rsyslog",
+                                      "sshpass",
+                                      "sysstat",
+                                      "time",
+                                      "vlan",
+                                      "wget"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_aodh": {
+                              "main": {
+                                  "aodh_apt_packages": [
+                                      "rpcbind"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_ceilometer": {
+                              "main": {
+                                  "ceilometer_apt_packages": [
+                                      "git",
+                                      "rpcbind",
+                                      "rsync"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_cinder": {
+                              "project_group": "all",
+                              "ubuntu-14.04": {
+                                  "cinder_volume_apt_packages": [
+                                      "qemu-utils"
+                                  ]
+                              }
+                          },
+                          "os_glance": {
+                              "project_group": "all",
+                              "ubuntu-14.04": {
+                                  "glance_apt_packages": [
+                                      "git",
+                                      "nfs-common",
+                                      "rpcbind",
+                                      "rsync"
+                                  ]
+                              }
+                          },
+                          "os_heat": {
+                              "main": {
+                                  "heat_apt_packages": [
+                                      "libxslt1.1",
+                                      "rsync"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_horizon": {
+                              "main": {
+                                  "horizon_apt_packages": [
+                                      "apache2",
+                                      "apache2-utils",
+                                      "cron",
+                                      "libapache2-mod-wsgi",
+                                      "libssl-dev",
+                                      "libxslt1.1",
+                                      "openssl",
+                                      "python-mysqldb"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_ironic": {
+                              "main": {
+                                  "ironic_api_apt_packages": [
+                                      "apache2",
+                                      "apache2-utils",
+                                      "libapache2-mod-wsgi"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_keystone": {
+                              "main": {
+                                  "keystone_sp_apt_packages": [
+                                      "libapache2-mod-shib2"
+                                  ]
+                              },
+                              "project_group": "all",
+                              "ubuntu-14.04": {
+                                  "keystone_idp_apt_packages": [
+                                      "ssl-cert",
+                                      "xmlsec1"
+                                  ]
+                              }
+                          },
+                          "os_neutron": {
+                              "main": {
+                                  "neutron_lbaas_apt_packages": [
+                                      "haproxy"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_nova": {
+                              "main": {
+                                  "nova_compute_kvm_apt_packages": [
+                                      "bridge-utils",
+                                      "dosfstools",
+                                      "dosfstools-dbg",
+                                      "genisoimage",
+                                      "kpartx",
+                                      "libvirt-bin",
+                                      "multipath-tools",
+                                      "nfs-common",
+                                      "open-iscsi",
+                                      "python-libguestfs",
+                                      "python-libvirt",
+                                      "qemu",
+                                      "qemu-utils",
+                                      "sysfsutils",
+                                      "vlan"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "os_swift": {
+                              "main": {
+                                  "swift_apt_packages": [
+                                      "curl",
+                                      "gcc",
+                                      "git-core",
+                                      "liberasurecode-dev",
+                                      "liberasurecode1",
+                                      "libffi-dev",
+                                      "openssh-server",
+                                      "python-dev",
+                                      "rsync"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "rabbitmq_server": {
+                              "main": {
+                                  "rabbitmq_apt_packages": [
+                                      "erlang-nox"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "repo_build": {
+                              "main": {
+                                  "repo_build_apt_packages": [
+                                      "build-essential",
+                                      "cmake",
+                                      "git",
+                                      "liberasurecode-dev",
+                                      "libffi-dev",
+                                      "libjpeg-dev",
+                                      "libkrb5-dev",
+                                      "libldap2-dev",
+                                      "libmariadbclient-dev",
+                                      "libpq-dev",
+                                      "libsasl2-dev",
+                                      "libsqlite3-dev",
+                                      "libssl-dev",
+                                      "libvirt-dev",
+                                      "libxslt1-dev",
+                                      "lxc-dev",
+                                      "python-dev",
+                                      "swig"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "repo_server": {
+                              "main": {
+                                  "repo_apt_packages": [
+                                      "fcgiwrap",
+                                      "lsyncd",
+                                      "nginx-extras",
+                                      "rsync"
+                                  ]
+                              },
+                              "project_group": "all"
+                          },
+                          "rsyslog_client": {
+                              "main": {
+                                  "rsyslog_client_apt_packages": [
+                                      "logrotate",
+                                      "rsyslog"
+                                  ]
+                              },
+                              "project_group": "all"
+                          }
+                      },
                       "role_packages": {
-                          "os_heat": [
-                              "PyMySQL",
-                              "heat",
-                              "httplib2",
-                              "keystonemiddleware",
-                              "pycrypto",
-                              "python-ceilometerclient",
-                              "python-cinderclient",
-                              "python-glanceclient",
-                              "python-heatclient",
-                              "python-keystoneclient",
-                              "python-memcached",
-                              "python-neutronclient",
-                              "python-novaclient",
-                              "python-openstackclient",
-                              "python-swiftclient",
-                              "python-troveclient",
-                              "virtualenv",
-                              "virtualenv-tools"
-                          ],
-                          "os_nova": [
-                              "PyMySQL",
-                              "httplib2",
-                              "keystonemiddleware",
-                              "libvirt-python",
-                              "nova",
-                              "pycrypto",
-                              "python-cephlibs",
-                              "python-keystoneclient",
-                              "python-memcached",
-                              "python-novaclient",
-                              "virtualenv",
-                              "virtualenv-tools",
-                              "websockify"
-                          ],
-                          "os_keystone": [
-                              "PyMySQL",
-                              "argparse",
-                              "httplib2",
-                              "keystone",
-                              "keystonemiddleware",
-                              "ldappool",
-                              "lxml",
-                              "oslo.log",
-                              "oslo.middleware",
-                              "pbr",
-                              "pycrypto",
-                              "pysaml2",
-                              "python-keystoneclient",
-                              "python-ldap",
-                              "python-memcached",
-                              "python-openstackclient",
-                              "repoze.lru",
-                              "virtualenv",
-                              "virtualenv-tools"
-                          ],
                           "galera_client": [
-                              "MySQL-python",
+                              "mysql-python",
                               "pycrypto",
                               "python-memcached"
                           ],
                           "galera_server": [
-                              "MySQL-python",
+                              "mysql-python",
                               "pycrypto"
                           ],
-                          "rabbitmq_server": [
-                              "pycrypto"
+                          "lxc_hosts": [
+                              "lxc-python2"
                           ],
                           "os_aodh": [
                               "aodh",
@@ -377,8 +618,120 @@
                               "virtualenv-tools",
                               "warlock"
                           ],
+                          "os_ceilometer": [
+                              "ceilometer",
+                              "ceilometermiddleware",
+                              "httplib2",
+                              "libvirt-python",
+                              "pycrypto",
+                              "pymongo",
+                              "pymysql",
+                              "python-ceilometerclient",
+                              "python-keystoneclient",
+                              "python-memcached",
+                              "tooz",
+                              "virtualenv",
+                              "virtualenv-tools",
+                              "warlock"
+                          ],
+                          "os_cinder": [
+                              "cinder",
+                              "ecdsa",
+                              "httplib2",
+                              "keystonemiddleware",
+                              "pycrypto",
+                              "pymysql",
+                              "python-cinderclient",
+                              "python-keystoneclient",
+                              "python-memcached",
+                              "virtualenv",
+                              "virtualenv-tools"
+                          ],
+                          "os_glance": [
+                              "glance",
+                              "httplib2",
+                              "keystonemiddleware",
+                              "pycrypto",
+                              "pymysql",
+                              "python-cinderclient",
+                              "python-glanceclient",
+                              "python-keystoneclient",
+                              "python-memcached",
+                              "python-swiftclient",
+                              "virtualenv",
+                              "virtualenv-tools",
+                              "warlock"
+                          ],
+                          "os_heat": [
+                              "heat",
+                              "httplib2",
+                              "keystonemiddleware",
+                              "pycrypto",
+                              "pymysql",
+                              "python-ceilometerclient",
+                              "python-cinderclient",
+                              "python-glanceclient",
+                              "python-heatclient",
+                              "python-keystoneclient",
+                              "python-memcached",
+                              "python-neutronclient",
+                              "python-novaclient",
+                              "python-openstackclient",
+                              "python-swiftclient",
+                              "python-troveclient",
+                              "virtualenv",
+                              "virtualenv-tools"
+                          ],
+                          "os_horizon": [
+                              "django-appconf",
+                              "django-openstack-auth",
+                              "greenlet",
+                              "horizon",
+                              "httplib2",
+                              "keystonemiddleware",
+                              "mysql-python",
+                              "neutron-lbaas-dashboard",
+                              "oslo.config",
+                              "ply",
+                              "pycrypto",
+                              "pymysql",
+                              "python-keystoneclient",
+                              "python-memcached",
+                              "virtualenv",
+                              "virtualenv-tools"
+                          ],
+                          "os_ironic": [
+                              "httplib2",
+                              "ironic",
+                              "pymysql",
+                              "python-ironicclient",
+                              "python-keystoneclient",
+                              "python-swiftclient",
+                              "virtualenv",
+                              "virtualenv-tools"
+                          ],
+                          "os_keystone": [
+                              "argparse",
+                              "httplib2",
+                              "keystone",
+                              "keystonemiddleware",
+                              "ldappool",
+                              "lxml",
+                              "oslo.log",
+                              "oslo.middleware",
+                              "pbr",
+                              "pycrypto",
+                              "pymysql",
+                              "pysaml2",
+                              "python-keystoneclient",
+                              "python-ldap",
+                              "python-memcached",
+                              "python-openstackclient",
+                              "repoze.lru",
+                              "virtualenv",
+                              "virtualenv-tools"
+                          ],
                           "os_neutron": [
-                              "PyMySQL",
                               "cliff",
                               "configobj",
                               "httplib2",
@@ -386,7 +739,9 @@
                               "neutron",
                               "neutron_fwaas",
                               "neutron_lbaas",
+                              "neutron_vpnaas",
                               "pycrypto",
+                              "pymysql",
                               "python-glanceclient",
                               "python-keystoneclient",
                               "python-memcached",
@@ -396,38 +751,20 @@
                               "virtualenv",
                               "virtualenv-tools"
                           ],
-                          "lxc_hosts": [
-                              "lxc-python2"
-                          ],
-                          "os_cinder": [
-                              "PyMySQL",
-                              "cinder",
-                              "ecdsa",
+                          "os_nova": [
                               "httplib2",
                               "keystonemiddleware",
+                              "libvirt-python",
+                              "nova",
                               "pycrypto",
-                              "python-cephlibs",
-                              "python-cinderclient",
+                              "pymysql",
+                              "python-ironicclient",
                               "python-keystoneclient",
                               "python-memcached",
-                              "virtualenv",
-                              "virtualenv-tools"
-                          ],
-                          "os_glance": [
-                              "PyMySQL",
-                              "glance",
-                              "httplib2",
-                              "keystonemiddleware",
-                              "pycrypto",
-                              "python-cephlibs",
-                              "python-cinderclient",
-                              "python-glanceclient",
-                              "python-keystoneclient",
-                              "python-memcached",
-                              "python-swiftclient",
+                              "python-novaclient",
                               "virtualenv",
                               "virtualenv-tools",
-                              "warlock"
+                              "websockify"
                           ],
                           "os_swift": [
                               "ceilometermiddleware",
@@ -445,17 +782,9 @@
                               "virtualenv",
                               "virtualenv-tools"
                           ],
-                          "repo_build": [
-                              "virtualenv",
-                              "virtualenv-tools",
-                              "wheel"
-                          ],
-                          "pip_install": [],
                           "os_tempest": [
-                              "fixtures",
                               "junitxml",
                               "nose",
-                              "oslo.serialization",
                               "python-ceilometerclient",
                               "python-cinderclient",
                               "python-glanceclient",
@@ -467,51 +796,393 @@
                               "python-openstackclient",
                               "python-subunit",
                               "python-swiftclient",
-                              "tempest-lib",
-                              "testrepository",
-                              "testscenarios",
-                              "testtools",
+                              "tempest",
                               "virtualenv",
                               "virtualenv-tools"
                           ],
-                          "os_horizon": [
-                              "MySQL-python",
-                              "PyMySQL",
-                              "django-appconf",
-                              "django-openstack-auth",
-                              "greenlet",
-                              "horizon",
-                              "httplib2",
-                              "keystonemiddleware",
-                              "oslo.config",
-                              "ply",
-                              "pycrypto",
-                              "python-keystoneclient",
-                              "python-memcached",
-                              "virtualenv",
-                              "virtualenv-tools"
+                          "pip_install": [
+                              "ndg-httpsclient",
+                              "pip",
+                              "requests"
                           ],
-                          "os_ceilometer": [
-                              "PyMySQL",
-                              "ceilometer",
-                              "ceilometermiddleware",
-                              "httplib2",
-                              "libvirt-python",
-                              "pycrypto",
-                              "pymongo",
-                              "python-ceilometerclient",
-                              "python-keystoneclient",
-                              "python-memcached",
-                              "tooz",
+                          "rabbitmq_server": [
+                              "pycrypto"
+                          ],
+                          "repo_build": [
                               "virtualenv",
                               "virtualenv-tools",
-                              "warlock"
+                              "wheel"
                           ]
+                      },
+                      "role_project_groups": {
+                          "galera_client": "all",
+                          "galera_server": "all",
+                          "lxc_hosts": "all",
+                          "os_aodh": "all",
+                          "os_ceilometer": "all",
+                          "os_cinder": "all",
+                          "os_glance": "all",
+                          "os_heat": "all",
+                          "os_horizon": "all",
+                          "os_ironic": "all",
+                          "os_keystone": "all",
+                          "os_neutron": "all",
+                          "os_nova": "all",
+                          "os_swift": "all",
+                          "os_tempest": "all",
+                          "pip_install": "all",
+                          "rabbitmq_server": "all",
+                          "repo_build": "all"
+                      },
+                      "role_requirement_files": {
+                          "default": {
+                              "project_group": "all",
+                              "txt_file_packages": [
+                                  "jinja2>=2.8",
+                                  "netaddr>=0.7.12,!=0.7.16",
+                                  "paramiko>=1.16.0",
+                                  "pip==8.1.2",
+                                  "pip>=6.0",
+                                  "prettytable>=0.7,<0.8",
+                                  "pycrypto>=2.6",
+                                  "pyyaml>=3.1.0",
+                                  "setuptools==26.1.1",
+                                  "setuptools>=16.0,!=24.0.0",
+                                  "wheel",
+                                  "wheel==0.29.0"
+                              ]
+                          },
+                          "global_pins": {
+                              "pinned_packages": [
+                                  "pip==8.1.2",
+                                  "setuptools==26.1.1",
+                                  "wheel==0.29.0"
+                              ],
+                              "project_group": "all"
+                          }
+                      },
+                      "role_requirements": {
+                          "galera_client": {
+                              "galera_client_pip_packages": [
+                                  "mysql-python",
+                                  "pycrypto",
+                                  "python-memcached"
+                              ],
+                              "project_group": "all"
+                          },
+                          "galera_server": {
+                              "galera_pip_packages": [
+                                  "mysql-python",
+                                  "pycrypto"
+                              ],
+                              "project_group": "all"
+                          },
+                          "lxc_hosts": {
+                              "lxc_pip_packages": [
+                                  "lxc-python2"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_aodh": {
+                              "aodh_pip_packages": [
+                                  "aodh",
+                                  "ceilometermiddleware",
+                                  "pycrypto",
+                                  "pymongo",
+                                  "python-ceilometerclient",
+                                  "python-memcached",
+                                  "warlock"
+                              ],
+                              "aodh_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_ceilometer": {
+                              "ceilometer_pip_packages": [
+                                  "ceilometer",
+                                  "ceilometermiddleware",
+                                  "libvirt-python",
+                                  "pycrypto",
+                                  "pymongo",
+                                  "pymysql",
+                                  "python-ceilometerclient",
+                                  "python-memcached",
+                                  "tooz",
+                                  "warlock"
+                              ],
+                              "ceilometer_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_cinder": {
+                              "cinder_pip_packages": [
+                                  "cinder",
+                                  "ecdsa",
+                                  "httplib2",
+                                  "keystonemiddleware",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "python-cinderclient",
+                                  "python-keystoneclient",
+                                  "python-memcached"
+                              ],
+                              "cinder_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_glance": {
+                              "glance_pip_packages": [
+                                  "glance",
+                                  "keystonemiddleware",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "python-cinderclient",
+                                  "python-glanceclient",
+                                  "python-keystoneclient",
+                                  "python-memcached",
+                                  "python-swiftclient",
+                                  "warlock"
+                              ],
+                              "glance_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_heat": {
+                              "heat_pip_packages": [
+                                  "heat",
+                                  "keystonemiddleware",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "python-ceilometerclient",
+                                  "python-cinderclient",
+                                  "python-glanceclient",
+                                  "python-heatclient",
+                                  "python-keystoneclient",
+                                  "python-memcached",
+                                  "python-neutronclient",
+                                  "python-novaclient",
+                                  "python-openstackclient",
+                                  "python-swiftclient",
+                                  "python-troveclient"
+                              ],
+                              "heat_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_horizon": {
+                              "horizon_pip_packages": [
+                                  "django-appconf",
+                                  "django-openstack-auth",
+                                  "greenlet",
+                                  "horizon",
+                                  "keystonemiddleware",
+                                  "mysql-python",
+                                  "neutron-lbaas-dashboard",
+                                  "oslo.config",
+                                  "ply",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "python-keystoneclient",
+                                  "python-memcached"
+                              ],
+                              "horizon_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_ironic": {
+                              "ironic_pip_packages": [
+                                  "ironic",
+                                  "pymysql",
+                                  "python-ironicclient",
+                                  "python-swiftclient"
+                              ],
+                              "ironic_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_keystone": {
+                              "keystone_pip_packages": [
+                                  "argparse",
+                                  "keystone",
+                                  "keystonemiddleware",
+                                  "ldappool",
+                                  "lxml",
+                                  "oslo.log",
+                                  "oslo.middleware",
+                                  "pbr",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "pysaml2",
+                                  "python-keystoneclient",
+                                  "python-ldap",
+                                  "python-memcached",
+                                  "python-openstackclient",
+                                  "repoze.lru"
+                              ],
+                              "keystone_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_neutron": {
+                              "neutron_pip_packages": [
+                                  "cliff",
+                                  "configobj",
+                                  "keystonemiddleware",
+                                  "neutron",
+                                  "neutron_fwaas",
+                                  "neutron_lbaas",
+                                  "neutron_vpnaas",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "python-glanceclient",
+                                  "python-keystoneclient",
+                                  "python-memcached",
+                                  "python-neutronclient",
+                                  "python-novaclient",
+                                  "repoze.lru"
+                              ],
+                              "neutron_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_nova": {
+                              "nova_compute_pip_packages": [
+                                  "libvirt-python",
+                                  "python-ironicclient"
+                              ],
+                              "nova_novnc_pip_packages": [
+                                  "websockify"
+                              ],
+                              "nova_pip_packages": [
+                                  "keystonemiddleware",
+                                  "nova",
+                                  "pycrypto",
+                                  "pymysql",
+                                  "python-keystoneclient",
+                                  "python-memcached",
+                                  "python-novaclient"
+                              ],
+                              "nova_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ],
+                              "project_group": "all"
+                          },
+                          "os_swift": {
+                              "project_group": "all",
+                              "swift_pip_packages": [
+                                  "ceilometermiddleware",
+                                  "dnspython",
+                                  "ecdsa",
+                                  "keystonemiddleware",
+                                  "pycrypto",
+                                  "pyeclib",
+                                  "python-cinderclient",
+                                  "python-keystoneclient",
+                                  "python-memcached",
+                                  "python-swiftclient",
+                                  "swift"
+                              ],
+                              "swift_requires_pip_packages": [
+                                  "httplib2",
+                                  "python-keystoneclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ]
+                          },
+                          "os_tempest": {
+                              "project_group": "all",
+                              "tempest_pip_packages": [
+                                  "junitxml",
+                                  "nose",
+                                  "python-ceilometerclient",
+                                  "python-cinderclient",
+                                  "python-glanceclient",
+                                  "python-heatclient",
+                                  "python-keystoneclient",
+                                  "python-memcached",
+                                  "python-neutronclient",
+                                  "python-novaclient",
+                                  "python-openstackclient",
+                                  "python-subunit",
+                                  "python-swiftclient",
+                                  "tempest"
+                              ],
+                              "tempest_requires_pip_packages": [
+                                  "python-glanceclient",
+                                  "python-keystoneclient",
+                                  "python-neutronclient",
+                                  "python-novaclient",
+                                  "virtualenv",
+                                  "virtualenv-tools"
+                              ]
+                          },
+                          "pip_install": {
+                              "pip_packages": [
+                                  "pip"
+                              ],
+                              "pip_required_pip_packages": [
+                                  "ndg-httpsclient",
+                                  "requests"
+                              ],
+                              "project_group": "all"
+                          },
+                          "rabbitmq_server": {
+                              "project_group": "all",
+                              "rabbitmq_pip_packages": [
+                                  "pycrypto"
+                              ]
+                          },
+                          "repo_build": {
+                              "project_group": "all",
+                              "repo_pip_packages": [
+                                  "virtualenv",
+                                  "virtualenv-tools",
+                                  "wheel"
+                              ]
+                          }
                       }
                   }
               }
           ]
-
   roles:
     - role: "repo_server"
     - role: "{{ rolename | basename }}"
