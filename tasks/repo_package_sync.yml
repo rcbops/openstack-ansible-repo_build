@@ -22,7 +22,7 @@
     --rsh 'ssh -l {{ repo_build_service_user_name }} -o stricthostkeychecking=no'
     --out-format='<<CHANGED>>%i %n%L'
     {{ item }}
-    {{ repo_build_service_user_name }}@{{ hostvars[groups['repo_all'][0]]['ansible_ssh_host'] }}:{{ repo_build_base_path }}
+    {{ repo_build_service_user_name }}@{{ hostvars[groups['repo_all'][0]]['ansible_host'] }}:{{ repo_build_base_path }}
   with_items:
     - "{{ repo_build_global_links_path }}"
     - "{{ repo_build_release_path }}"
