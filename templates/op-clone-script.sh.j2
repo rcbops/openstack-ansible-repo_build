@@ -25,6 +25,8 @@ function git_clone {
               # Only do a fetch if the repo doesn't have the version we need
               git fetch --all
             fi
+            git clean -f -d
+            git gc --auto
         popd
 
     # If the local target directory is not a valid git repository it will be removed and cloned.
