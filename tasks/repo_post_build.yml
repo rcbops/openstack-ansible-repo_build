@@ -38,7 +38,7 @@
 
 - name: Remove release process script
   file:
-    path: "/opt/op-clone-script.sh"
+    path: "/opt/op-release-script.sh"
     state: absent
   tags:
     - repo-create-pool
