@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ve
+set -vea
 
 # Clone a git repository / Update git repository.
 function git_clone {
@@ -33,6 +33,10 @@ function git_clone {
       git checkout $version
     popd
 }
+
+if [ -f /etc/environment ]; then
+    source /etc/environment
+fi
 
 PID=()
 # Run the git clone. This will loop over all of the package parts and clone all known repositories.
