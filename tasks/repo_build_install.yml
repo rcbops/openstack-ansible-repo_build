@@ -14,13 +14,13 @@
 # limitations under the License.
 
 - include: install-apt.yml
-  when:
-    - ansible_pkg_mgr == 'apt'
+  static: no
+  when: ansible_pkg_mgr == 'apt'
   tags:
     - install-apt
 
 - include: install-yum.yml
-  when:
-    - ansible_pkg_mgr == 'yum'
+  static: no
+  when: ansible_pkg_mgr == 'yum'
   tags:
     - install-yum
