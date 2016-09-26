@@ -38,5 +38,4 @@
     - repo-build-venvs
 
 - include: repo_package_sync.yml
-  static: no
   when: inventory_hostname != groups['repo_all'][0]
