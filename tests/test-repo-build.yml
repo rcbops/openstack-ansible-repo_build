@@ -37,7 +37,7 @@
         - ansible_pkg_mgr == 'apt'
         - nodepool.stat.exists | bool
   roles:
-    - "{{ rolename | basename }}"
+    - "repo_build"
   post_tasks:
     - name: List the files in the venv folder
       command: ls -1 /var/www/repo/venvs/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/
