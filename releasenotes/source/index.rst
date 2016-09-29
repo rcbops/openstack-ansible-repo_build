@@ -6,4 +6,5 @@ OpenStack-Ansible repo_build release notes
    :maxdepth: 1
 
    mitaka
+   newton
    unreleased
