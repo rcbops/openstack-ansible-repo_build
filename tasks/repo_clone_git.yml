@@ -17,6 +17,7 @@
   template:
     src: "op-clone-script.sh.j2"
     dest: "/opt/op-clone-script.sh"
+  register: repo_clone_script_template
   tags:
     - repo-clone-repos
 
@@ -24,12 +25,6 @@
   shell: "bash /opt/op-clone-script.sh"
   become: yes
   become_user: "{{ repo_build_service_user_name }}"
-  tags:
-    - repo-clone-repos
-
-- name: Remove clone process script
-  file:
-    path: "/opt/op-clone-script.sh"
-    state: absent
+  when: repo_clone_script_template | changed
   tags:
     - repo-clone-repos
