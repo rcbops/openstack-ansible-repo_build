@@ -94,5 +94,6 @@ repo_pip_packages:
   - wheel
   - virtualenv
   - virtualenv-tools
+  - cython
 
 repo_build_store_pip_sources: false
