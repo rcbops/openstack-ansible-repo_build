@@ -17,12 +17,7 @@
   command: "ls -1 {{ repo_build_output }}"
   register: built_wheels
   tags:
-    - repo-build-index-wheels
-    - repo-create-pool
-    - repo-copy-wheels-to-pool
-    - repo-create-release-links
-    - repo-create-links-index
-    - repo-create-release-manifest
+    - always
 
 - name: Create release process script
   template:

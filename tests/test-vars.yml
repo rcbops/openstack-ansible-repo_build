@@ -295,7 +295,7 @@ local_packages:
         - egg_name: rally
           fragment: null
           name: rally
-          original: git+https://git.openstack.org/openstack/rally@e6f4dafc9a3a788c3388abad32269a38f4809123#egg=rally&gitname=rally&projectgroup=utility_all
+          original: git+https://git.openstack.org/openstack/rally@e6f4dafc9a3a788c3388abad32269a38f4809123#egg=rally&gitname=rally&venvwithindex=True&projectgroup=utility_all
           project_group: utility_all
           url: https://git.openstack.org/openstack/rally
           version: e6f4dafc9a3a788c3388abad32269a38f4809123
@@ -337,7 +337,7 @@ local_packages:
         - egg_name: tempest
           fragment: null
           name: tempest
-          original: git+https://git.openstack.org/openstack/tempest@479bfaccf5b1db53afb9f0663de7544b25c4bca7#egg=tempest&gitname=tempest&projectgroup=utility_all
+          original: git+https://git.openstack.org/openstack/tempest@479bfaccf5b1db53afb9f0663de7544b25c4bca7#egg=tempest&gitname=tempest&venvwithindex=True&projectgroup=utility_all
           project_group: utility_all
           url: https://git.openstack.org/openstack/tempest
           version: 479bfaccf5b1db53afb9f0663de7544b25c4bca7
@@ -364,12 +364,12 @@ local_packages:
         - git+https://git.openstack.org/openstack/nova-lxd@f81277ab66bed71a9c37dc8df99eface79e6156f#egg=nova_lxd&gitname=nova-lxd&projectgroup=nova_compute
         - git+https://git.openstack.org/openstack/nova-powervm@80e413814424c679215585c7a8e5d33281a1dea0#egg=nova_powervm&gitname=nova-powervm&projectgroup=nova_compute
         - git+https://git.openstack.org/openstack/nova@110c12b4145a5a978e3dd9e99e65be1d4a86ee06#egg=nova&gitname=nova&projectgroup=nova_all
-        - git+https://git.openstack.org/openstack/rally@e6f4dafc9a3a788c3388abad32269a38f4809123#egg=rally&gitname=rally&projectgroup=utility_all
+        - git+https://git.openstack.org/openstack/rally@e6f4dafc9a3a788c3388abad32269a38f4809123#egg=rally&gitname=rally&venvwithindex=True&projectgroup=utility_all
         - git+https://git.openstack.org/openstack/requirements@4f211a5002af4b19a2f050e543b34e2212250fbf#egg=requirements&gitname=requirements&projectgroup=all
         - git+https://git.openstack.org/openstack/sahara-dashboard@2bb9843690e583bc7944a86fdb27058d3cb2e887#egg=sahara_dashboard&gitname=sahara-dashboard&projectgroup=horizon_all
         - git+https://git.openstack.org/openstack/sahara@5eeeab432b95f59b2a1c2db85f1f1a297bd22668#egg=sahara&gitname=sahara&projectgroup=sahara_all
         - git+https://git.openstack.org/openstack/swift@d5e484e692c05c5f04069b181a5e4037239bc57c#egg=swift&gitname=swift&projectgroup=swift_all
-        - git+https://git.openstack.org/openstack/tempest@479bfaccf5b1db53afb9f0663de7544b25c4bca7#egg=tempest&gitname=tempest&projectgroup=utility_all
+        - git+https://git.openstack.org/openstack/tempest@479bfaccf5b1db53afb9f0663de7544b25c4bca7#egg=tempest&gitname=tempest&venvwithindex=True&projectgroup=utility_all
         - git+https://github.com/SPICE/spice-html5@54cc41299bea8cd681ed0262735e0fd821cd774a#egg=spice_html5&gitname=spice-html5&projectgroup=nova_console
         - git+https://github.com/kanaka/novnc@7a16304e52b3fbd466337601f05a7def2493c563#egg=novnc&gitname=novnc&projectgroup=nova_console
         - git+https://github.com/projectcalico/felix@a2daf3725e33a76bdb01c0311d5827f159969a29#egg=calico&gitname=calico&projectgroup=neutron_all

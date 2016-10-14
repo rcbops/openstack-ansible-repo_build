@@ -17,15 +17,13 @@
   command: which virtualenv
   register: virtualenv_path
   tags:
-    - repo-command-bin
-    - repo-create-venv
+    - always
 
 - name: Set virtualenv command path
   set_fact:
     virtualenv_bin: "{{ virtualenv_path.stdout }}"
   tags:
-    - repo-command-bin
-    - repo-create-venv
+    - always
 
 - name: Check for created venvs
   command: >

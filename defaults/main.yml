@@ -81,7 +81,6 @@ repo_build_venv_dir: "/var/www/repo/venvs"
 repo_build_venv_pip_install_options: >
   --timeout 120
   --find-links {{ repo_build_release_path }}/{{ repo_build_release_tag }}
-  --no-index
   --log /var/log/repo/repo_venv_builder.log
 repo_build_venv_command_options: >
   {{ virtualenv_bin }}
