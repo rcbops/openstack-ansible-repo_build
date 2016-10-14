@@ -5,6 +5,8 @@ set -ev
 function venv_create {
     VENV_PATH="$1"
     VENV_FILE="$2"
+    ROLE_VENV_WITH_INDEX="$3"
+    VENV_VALUES="$4"
 
     # If the venv working directory already exists remove it
     [[ -d "/tmp/${VENV_PATH}" ]] && rm -rf "/tmp/${VENV_PATH}"
@@ -23,7 +25,31 @@ function venv_create {
 
     # Run the pip install within the venv and specify a specific build directory which
     #  resolves pip locking issues when run in parallel.
-    ${VENV_PATH}/bin/pip install --build "/tmp/${VENV_FILE}" {{ repo_build_venv_pip_install_options.split() | join(' ') }} $3
+    {% set pip_command = [] %}
+    {% set _ = pip_command.append('${VENV_PATH}/bin/pip install') %}
+    {% set _ = pip_command.append('--build "/tmp/${VENV_FILE}"') %}
+    {% set _ = pip_command.append(repo_build_venv_pip_install_options.strip()) %}
+
+    if [ "${ROLE_VENV_WITH_INDEX}" = false ]; then
+    {{ pip_command | join(' ') }} --no-index ${VENV_VALUES}
+
+    {% if repo_build_pip_default_index is defined %}
+    {% set _ = pip_command.append('--index-url ' + repo_build_pip_default_index) %}
+    {% set _ = pip_command.append('--trusted-host ' + repo_build_pip_default_index | netloc_no_port) %}
+    {% endif %}
+    {% if repo_build_pip_extra_index is defined %}
+    {% set _ = pip_command.append('--extra-index-url ' + repo_build_pip_extra_index)  %}
+    {% set _ = pip_command.append('--trusted-host ' + repo_build_pip_extra_index | netloc_no_port) %}
+    {% endif %}
+    {% if repo_build_pip_extra_indexes is defined %}
+    {% set _ = pip_command.append('--extra-index-url ' + repo_build_pip_extra_indexes | join(' --extra-index-url ')) %}
+    {% set _ = pip_command.append('--trusted-host ' + repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ')) %}
+    {% endif %}
+
+    else
+    {{ pip_command | join(' ') }} ${VENV_VALUES}
+
+    fi
 
     # Deactivate the venv for good measure
     deactivate
@@ -70,14 +96,27 @@ PID=()
 #  If the venv archive already exists the creation process will be skipped
 pushd "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
 {% for key, value in os_group.items() %}
+
+{% set venvwithindex = [] %}
+{% for clone_item in local_packages.results.0.item.remote_package_parts %}
+{%   if clone_item['name'] == (key | replace('os_', '')) and 'venvwithindex=True' in clone_item['original'] %}
+{%     set _ = venvwithindex.append(true) %}
+{%   endif %}
+{% endfor %}
+{% if venvwithindex %}
+ROLE_VENV_WITH_INDEX=true
+{% else %}
+ROLE_VENV_WITH_INDEX=false
+{% endif %}
 ROLE_VENV_PATH="{{ repo_build_venv_build_dir }}/venvs/{{ key | replace('os_', '') }}"
 ROLE_VENV_FILE="{{ key | replace('os_', '') }}-{{ repo_build_release_tag }}-{{ ansible_architecture | lower }}"
 if [ ! -f "${ROLE_VENV_FILE}.tgz" ];then
-    venv_create "${ROLE_VENV_PATH}" "${ROLE_VENV_FILE}" "{{ value | join(' ') }}" &
+    venv_create "${ROLE_VENV_PATH}" "${ROLE_VENV_FILE}" "${ROLE_VENV_WITH_INDEX}" "{{ value | join(' ') }}" &
     pid[{{ loop.index }}]=$!
 fi
 unset ROLE_VENV_PATH
 unset ROLE_VENV_FILE
+unset ROLE_VENV_WITH_INDEX
 {% if loop.index is divisibleby(repo_build_concurrency | int) or loop.last %}
 for job_pid in ${!pid[@]}; do
     wait ${pid[$job_pid]} || exit 99
@@ -86,3 +125,4 @@ done
 {% endif %}
 {% endfor %}
 popd
+

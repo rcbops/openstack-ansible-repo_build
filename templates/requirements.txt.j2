@@ -58,8 +58,10 @@
 {%           for requirement_raw in requirement_data %}
 {%             set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
 {%             set name_normalized = name | replace('-', '_') | lower %}
-{%             set requirement_normalized = all_requirements[name_normalized] %}
-{%             set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
+{%             if name_normalized in all_requirements %}
+{%               set requirement_normalized = all_requirements[name_normalized] %}
+{%               set _ = selected_requirements.update({name_normalized: requirement_normalized}) %}
+{%             endif %}
 {%           endfor %}
 {%         endif %}
 {%       endfor %}
