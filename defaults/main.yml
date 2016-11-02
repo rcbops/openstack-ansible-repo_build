@@ -18,9 +18,10 @@
 # SSL certificates.
 pip_install_options: ""
 
-# Set the package install state for distribution packages
+# Set the package install state for distribution and pip packages
 # Options are 'present' and 'latest'
 repo_build_package_state: "latest"
+repo_build_pip_package_state: "latest"
 
 # Use OpenStack's upper-constraints
 repo_build_use_upper_constraints: true

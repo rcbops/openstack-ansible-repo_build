@@ -15,6 +15,7 @@
 
 - name: Get venv command path
   command: which virtualenv
+  changed_when: false
   register: virtualenv_path
   tags:
     - always
@@ -28,6 +29,7 @@
 - name: Check for created venvs
   command: >
     ls -1 "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/"
+  changed_when: false
   register: created_venvs
   tags:
     - repo-create-venv
@@ -59,7 +61,8 @@
     - repo-create-venv
 
 - name: Run venv process script
-  shell: "bash /opt/op-venv-script.sh"
+  command: "bash /opt/op-venv-script.sh"
+  changed_when: false
   tags:
     - repo-create-venv
     - repo-venv-compress-archive

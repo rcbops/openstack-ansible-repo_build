@@ -38,7 +38,8 @@
     - repo-clone-repos
 
 - name: Run clone process script
-  shell: "bash /opt/op-clone-script.sh"
+  command: "bash /opt/op-clone-script.sh"
+  changed_when: false
   become: yes
   become_user: "{{ repo_build_service_user_name }}"
   tags:

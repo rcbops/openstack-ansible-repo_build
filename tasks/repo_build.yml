@@ -15,30 +15,30 @@
 
 - name: Download requirement pip sources
   shell: >
-    yes i | pip install --timeout {{ repo_build_timeout }} \
-                        --download {{ repo_build_output }} \
-                        --no-binary :all: \
-                        --constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt \
+    yes i | pip install --timeout {{ repo_build_timeout }}
+                        --download {{ repo_build_output }}
+                        --no-binary :all:
+                        --constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt
                         {% if repo_build_pip_default_index is defined %}
-                        --index-url {{ repo_build_pip_default_index }} \
-                        --trusted-host {{ repo_build_pip_default_index | netloc_no_port }} \
+                        --index-url {{ repo_build_pip_default_index }}
+                        --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}
                         {% endif -%}
                         {% if repo_build_pip_extra_index is defined %}
-                        --extra-index-url {{ repo_build_pip_extra_index }} \
-                        --trusted-host {{ repo_build_pip_extra_index | netloc_no_port }} \
+                        --extra-index-url {{ repo_build_pip_extra_index }}
+                        --trusted-host {{ repo_build_pip_extra_index | netloc_no_port }}
                         {% endif -%}
                         {% if repo_build_pip_extra_indexes is defined %}
-                        --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }} \
-                        --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }} \
+                        --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }}
+                        --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}
                         {% endif -%}
-                        --log /var/log/repo/repo_builder.log \
+                        --log /var/log/repo/repo_builder.log
                         --requirement {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt
   when: repo_build_store_pip_sources | bool
   tags:
     - repo-pip-download
 
 - name: Create OpenStack-Ansible requirement wheels
-  shell: >
+  command: >
     pip wheel --timeout {{ repo_build_timeout }}
     --wheel-dir {{ repo_build_output }}
     --find-links {{ repo_build_global_links_path }}
@@ -55,6 +55,7 @@
     --log /var/log/repo/repo_builder.log
     --requirement {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt
     {{ pip_install_options }}
+  changed_when: false
   tags:
     - repo-build-local-requirement-wheels
     - repo-build-openstack-ansible-requirement-wheels

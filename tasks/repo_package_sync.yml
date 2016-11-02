@@ -30,3 +30,7 @@
     - "{{ repo_build_venv_dir }}"
   become: true
   become_user: "{{ repo_build_service_user_name }}"
+  changed_when: false
+  tags:
+    # don't trigger ANSIBLE0006. remove when synchronize module is used
+    - skip_ansible_lint

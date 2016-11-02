@@ -15,6 +15,7 @@
 
 - name: Index built wheels
   command: "ls -1 {{ repo_build_output }}"
+  changed_when: false
   register: built_wheels
   tags:
     - always
@@ -27,7 +28,8 @@
     - repo-create-pool
 
 - name: Run release process script
-  shell: "bash /opt/op-release-script.sh"
+  command: "bash /opt/op-release-script.sh"
+  changed_when: false
   tags:
     - repo-create-pool
 
@@ -42,10 +44,13 @@
   shell: "ls -1 *.whl"
   args:
     chdir: "{{ repo_build_release_path}}/{{ repo_build_release_tag }}"
+  changed_when: false
   register: manifest_wheels
   tags:
     - repo-index-links
     - repo-create-release-manifest
+    # don't trigger ANSIBLE0013 as shell is indeed required here
+    - skip_ansible_lint
 
 - name: Create release manifest
   template:
@@ -63,6 +68,7 @@
 
 - name: Index built wheels
   command: "ls -1 {{ repo_build_release_path }}/{{ repo_build_release_tag }}"
+  changed_when: false
   register: indexed_links
   tags:
     - repo-index-links
@@ -77,6 +83,7 @@
 
 - name: Index general links
   command: "ls -1 {{ repo_build_global_links_path }}"
+  changed_when: false
   register: global_indexed_links
   tags:
     - repo-index-links

@@ -26,6 +26,7 @@
 
 - name: Register os-release files
   command: "find {{ repo_build_release_path }}/{{ repo_build_release_tag }} -name '{{ item }}'"
+  changed_when: false
   register: os_release_files
   with_items:
     - "*{{ ansible_architecture | lower }}.whl"
@@ -73,7 +74,7 @@
 - name: Install pip packages
   pip:
     name: "{{ repo_pip_packages | join(' ') }}"
-    state: latest
+    state: "{{ repo_build_pip_package_state }}"
     extra_args: "--constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt {{ pip_install_options }}"
   register: install_packages
   until: install_packages|success
