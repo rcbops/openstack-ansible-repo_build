@@ -45,10 +45,10 @@ repo_build_pool_dir: "/var/www/repo/pools"
 repo_build_release_tag: "untagged"
 
 # Toggle whether git repositories should be cloned selectively or not
-repo_build_git_selective: yes
+repo_build_git_selective: "{{ true if (repo_build_wheel_selective | bool and repo_build_venv_selective | bool) else false }}"
 
 # Toggle whether wheels should be built selectively or not
-repo_build_wheel_selective: yes
+repo_build_wheel_selective: "{{ true if repo_build_venv_selective | bool else false }}"
 
 # Toggle whether venvs should be built selectively or not
 repo_build_venv_selective: yes
