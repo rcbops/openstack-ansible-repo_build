@@ -73,7 +73,7 @@
 
 - name: Install pip packages
   pip:
-    name: "{{ repo_pip_packages | join(' ') }}"
+    name: "{{ repo_pip_packages }}"
     state: "{{ repo_build_pip_package_state }}"
     extra_args: "--constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt {{ pip_install_options }}"
   register: install_packages
