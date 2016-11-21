@@ -40,10 +40,18 @@
   tags:
     - repo-create-pool
 
+- name: Copy get-pip script into release folder
+  copy:
+    src: "/opt/get-pip.py"
+    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/"
+    remote_src: yes
+  tags:
+    - repo-copy-pip
+
 - name: Index all manifest wheels
   shell: "ls -1 *.whl"
   args:
-    chdir: "{{ repo_build_release_path}}/{{ repo_build_release_tag }}"
+    chdir: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
   changed_when: false
   register: manifest_wheels
   tags:
