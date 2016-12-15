@@ -394,20 +394,6 @@ local_packages:
               - mariadb-devel
               - openssl-devel
               - python-devel
-            ubuntu-14.04:
-              galera_client_distro_packages:
-              - build-essential
-              - libaio1
-              - libc6
-              - libdbd-mysql-perl
-              - libgcc1
-              - libgcrypt11
-              - libmariadbclient-dev
-              - libssl-dev
-              - libstdc++6
-              - mariadb-client
-              - mariadb-client-core-10.0
-              - python-dev
             ubuntu-16.04:
               galera_client_distro_packages:
               - build-essential
@@ -434,10 +420,6 @@ local_packages:
               - rsync
               - socat
               - which
-            ubuntu-14.04:
-              galera_server_percona_distro_packages:
-              - percona-xtrabackup
-              - qpress
             ubuntu-16.04:
               galera_server_percona_distro_packages:
               - percona-xtrabackup
@@ -450,11 +432,6 @@ local_packages:
               haproxy_distro_packages:
               - haproxy
               - rsyslog
-            ubuntu-14.04:
-              haproxy_required_distro_packages:
-              - debconf-utils
-              - python-software-properties
-              - software-properties-common
             ubuntu-16.04:
               haproxy_required_distro_packages:
               - debconf-utils
@@ -484,25 +461,6 @@ local_packages:
               - python34-libs
               - redhat-lsb
               - xz
-            ubuntu-14.04:
-              lxc_hosts_distro_packages:
-              - apparmor
-              - apparmor-utils
-              - bridge-utils
-              - cgmanager
-              - cgroup-lite
-              - debootstrap
-              - dnsmasq
-              - git
-              - irqbalance
-              - language-pack-en
-              - liblxc1
-              - lxc
-              - lxc-dev
-              - lxc-templates
-              - pxz
-              - python-dev
-              - python3-lxc
             ubuntu-16.04:
               lxc_hosts_distro_packages:
               - apparmor
@@ -559,33 +517,6 @@ local_packages:
               - time
               - vconfig
               - wget
-            ubuntu-14.04:
-              openstack_host_distro_packages:
-              - apparmor-utils
-              - apt-transport-https
-              - bridge-utils
-              - build-essential
-              - cgroup-lite
-              - curl
-              - dmeventd
-              - dstat
-              - ebtables
-              - htop
-              - iptables
-              - irqbalance
-              - libkmod-dev
-              - libkmod2
-              - linux-image-extra-virtual
-              - lvm2
-              - python-dev
-              - python-software-properties
-              - rsync
-              - rsyslog
-              - sshpass
-              - sysstat
-              - time
-              - vlan
-              - wget
             ubuntu-16.04:
               openstack_host_distro_packages:
               - apparmor-utils
@@ -620,29 +551,17 @@ local_packages:
             project_group: all
           os_ceilometer:
             project_group: all
-            ubuntu-14.04:
-              ceilometer_developer_mode_distro_packages:
-              - libvirt-dev
             ubuntu-16.04:
               ceilometer_developer_mode_distro_packages:
               - libvirt-dev
               - pkg-config
           os_cinder:
             project_group: all
-            ubuntu-14.04:
-              cinder_volume_distro_packages:
-              - qemu-utils
             ubuntu-16.04:
               cinder_volume_distro_packages:
               - qemu-utils
           os_glance:
             project_group: all
-            ubuntu-14.04:
-              glance_distro_packages:
-              - git
-              - nfs-common
-              - rpcbind
-              - rsync
             ubuntu-16.04:
               glance_distro_packages:
               - git
@@ -651,15 +570,6 @@ local_packages:
               - rsync
           os_gnocchi:
             project_group: all
-            ubuntu-14.04:
-              gnocchi_distro_packages:
-              - apache2
-              - apache2-utils
-              - build-essential
-              - git
-              - libapache2-mod-wsgi
-              - libpq-dev
-              - python-dev
             ubuntu-16.04:
               gnocchi_distro_packages:
               - apache2
@@ -671,10 +581,6 @@ local_packages:
               - python-dev
           os_heat:
             project_group: all
-            ubuntu-14.04:
-              heat_distro_packages:
-              - libxslt1.1
-              - rsync
             ubuntu-16.04:
               heat_distro_packages:
               - libxslt1.1
@@ -695,11 +601,6 @@ local_packages:
             project_group: all
           os_ironic:
             project_group: all
-            ubuntu-14.04:
-              ironic_api_distro_packages:
-              - apache2
-              - apache2-utils
-              - libapache2-mod-wsgi
             ubuntu-16.04:
               ironic_api_distro_packages:
               - apache2
@@ -709,10 +610,6 @@ local_packages:
             project_group: all
             redhat-7:
               keystone_idp_distro_packages:
-              - xmlsec1
-            ubuntu-14.04:
-              keystone_idp_distro_packages:
-              - ssl-cert
               - xmlsec1
             ubuntu-16.04:
               keystone_idp_distro_packages:
@@ -733,20 +630,11 @@ local_packages:
             project_group: all
           os_neutron:
             project_group: all
-            ubuntu-14.04:
-              neutron_remove_distro_packages:
-              - conntrackd
             ubuntu-16.04:
               neutron_remove_distro_packages:
               - conntrackd
           os_nova:
             project_group: all
-            ubuntu-14.04:
-              nova_distro_packages:
-              - genisoimage
-              - git
-              - iptables
-              - libpq-dev
             ubuntu-16.04:
               nova_distro_packages:
               - genisoimage
@@ -768,11 +656,6 @@ local_packages:
             project_group: all
           os_sahara:
             project_group: all
-            ubuntu-14.04:
-              sahara_distro_packages:
-              - git
-              - rpcbind
-              - rsync
             ubuntu-16.04:
               sahara_distro_packages:
               - git
@@ -797,9 +680,6 @@ local_packages:
             redhat-7:
               tempest_distro_packages:
               - git
-            ubuntu-14.04:
-              tempest_distro_packages:
-              - git-core
             ubuntu-16.04:
               tempest_distro_packages:
               - git-core
@@ -813,15 +693,6 @@ local_packages:
               - pyopenssl
               - python-devel
               - python-pyasn1
-            ubuntu-14.04:
-              pip_install_distro_packages:
-              - build-essential
-              - libffi-dev
-              - libssl-dev
-              - python-dev
-              - python-openssl
-              - python-pyasn1
-              - python-setuptools
             ubuntu-16.04:
               pip_install_distro_packages:
               - build-essential
@@ -854,27 +725,6 @@ local_packages:
               - swig
               - tar
               - which
-            ubuntu-14.04:
-              repo_build_distro_packages:
-              - build-essential
-              - cmake
-              - git
-              - liberasurecode-dev
-              - libffi-dev
-              - libjpeg-dev
-              - libkrb5-dev
-              - libldap2-dev
-              - libmariadbclient-dev
-              - libpq-dev
-              - libsasl2-dev
-              - libsqlite3-dev
-              - libssl-dev
-              - libvirt-dev
-              - libxslt1-dev
-              - lxc-dev
-              - pkg-config
-              - python-dev
-              - swig
             ubuntu-16.04:
               repo_build_distro_packages:
               - build-essential
