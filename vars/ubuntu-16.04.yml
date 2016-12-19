@@ -37,6 +37,7 @@ repo_build_distro_packages:
   - libssl-dev              # required to build cryptography
   - libvirt-dev             # required to build libvirt-python
   - libxslt1-dev            # required to build lxml
+  - libxml2-dev             # required to build lxml
   - lxc-dev                 # required to build lxc-python2
   - pkg-config
   - python-dev
