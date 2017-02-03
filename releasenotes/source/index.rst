@@ -8,3 +8,4 @@ OpenStack-Ansible repo_build release notes
    mitaka
    newton
    unreleased
+   ocata
