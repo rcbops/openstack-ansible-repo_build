@@ -40,6 +40,13 @@
   tags:
     - repo-create-pool
 
+- name: Create absolute requirements
+  template:
+    src: "requirements_absolute_requirements.txt.j2"
+    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_absolute_requirements.txt"
+  tags:
+    - repo-create-absolute-requirements
+
 - name: Copy get-pip script into release folder
   copy:
     src: "/opt/get-pip.py"
