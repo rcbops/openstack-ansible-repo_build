@@ -13,28 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Index all manifest wheels
-  shell: "ls -1 *.whl"
-  args:
-    chdir: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
-  changed_when: false
-  register: manifest_wheels
+- name: Index all manifest items
+  find:
+    paths:
+      - "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
+      - "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+  register: manifest_items
   tags:
-    - repo-index-links
     - repo-create-release-manifest
-    # don't trigger ANSIBLE0013 as shell is indeed required here
-    - skip_ansible_lint
-
-- name: Index all manifest venvs
-  shell: "ls -1"
-  args:
-    chdir: "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
-  register: manifest_venvs
-  tags:
-    - repo-index-links
-    - repo-create-release-manifest
-    # don't trigger ANSIBLE0013 as shell is indeed required here
-    - skip_ansible_lint
 
 - name: Create release manifest
   template:
@@ -42,13 +28,6 @@
     dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/MANIFEST.in"
   tags:
     - repo-create-release-manifest
-
-- name: Create absolute requirements
-  template:
-    src: "requirements_absolute_requirements.txt.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_absolute_requirements.txt"
-  tags:
-    - repo-create-absolute-requirements
 
 # TODO(odyssey4me): Remove this in Pike
 - name: Remove global links index file
