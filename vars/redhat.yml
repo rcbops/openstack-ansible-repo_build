@@ -37,5 +37,5 @@ repo_build_distro_packages:
 # workaround for https://github.com/pypa/virtualenv/issues/565
 repo_build_venv_command_options: >
   {{ virtualenv_bin }}
-  --extra-search-dir {{ repo_build_release_path }}/{{ repo_build_release_tag }}
+  --extra-search-dir {{ repo_build_release_path }}
   --never-download

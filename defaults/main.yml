@@ -35,14 +35,16 @@ repo_build_service_user_name: "nginx"
 repo_build_service_group_name: "www-data"
 repo_build_base_path: "/var/www/repo"
 
-repo_build_global_links_path: "/var/www/repo/links"
-repo_build_release_path: "/var/www/repo/os-releases"
-repo_build_dir: "/tmp/openstack-builder"
-repo_build_output: "/tmp/openstack-wheel-output"
-repo_build_git_dir: "/var/www/repo/openstackgit"
-repo_build_pool_dir: "/var/www/repo/pools"
+repo_build_os_distro_version: "{{ ansible_distribution | lower }}-{{ ansible_distribution_version.split('.')[:2] | join('.') }}-{{ ansible_architecture | lower }}"
 
 repo_build_release_tag: "untagged"
+repo_build_global_links_path: "{{ repo_build_base_path }}/links"
+repo_build_release_version_path: "os-releases/{{ repo_build_release_tag }}"
+repo_build_release_path: "{{ repo_build_base_path }}/{{ repo_build_release_version_path }}/{{ repo_build_os_distro_version }}"
+repo_build_dir: "/tmp/openstack-builder"
+repo_build_output: "/tmp/openstack-wheel-output"
+repo_build_git_dir: "{{ repo_build_base_path }}/openstackgit"
+repo_build_pool_dir: "{{ repo_build_base_path }}/pools/{{ repo_build_os_distro_version }}"
 
 # Toggle whether git repositories should be cloned selectively or not
 repo_build_git_selective: "{{ true if (repo_build_wheel_selective | bool and repo_build_venv_selective | bool) else false }}"
@@ -73,15 +75,15 @@ repo_build_venv_selective: yes
 repo_build_timeout: 120
 repo_build_concurrency: "{{ (((ansible_processor_vcpus|default(1)) | int) > 4) | ternary(8, 4) }}"
 repo_build_venv_build_dir: "/tmp/openstack-venv-builder"
-repo_build_venv_dir: "/var/www/repo/venvs"
+repo_build_venv_dir: "{{ repo_build_base_path }}/venvs/{{ repo_build_release_tag }}/{{ repo_build_os_distro_version }}"
 repo_build_venv_pip_install_options: >
   --timeout 120
-  --find-links {{ repo_build_release_path }}/{{ repo_build_release_tag }}
+  --find-links {{ repo_build_release_path }}
   --log /var/log/repo/repo_venv_builder.log
 repo_build_venv_command_options: >
   {{ virtualenv_bin }}
   --always-copy
-  --extra-search-dir {{ repo_build_release_path }}/{{ repo_build_release_tag }}
+  --extra-search-dir {{ repo_build_release_path }}
   --never-download
 repo_pip_packages:
   - requests
