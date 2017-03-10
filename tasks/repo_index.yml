@@ -16,8 +16,8 @@
 - name: Index all manifest items
   find:
     paths:
-      - "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
-      - "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+      - "{{ repo_build_release_path }}"
+      - "{{ repo_build_venv_dir }}"
   register: manifest_items
   tags:
     - repo-create-release-manifest
@@ -25,7 +25,7 @@
 - name: Create release manifest
   template:
     src: "manifest.in.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/MANIFEST.in"
+    dest: "{{ repo_build_release_path }}/MANIFEST.in"
   tags:
     - repo-create-release-manifest
 

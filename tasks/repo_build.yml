@@ -18,7 +18,7 @@
     yes i | pip install --timeout {{ repo_build_timeout }} \
                         --download {{ repo_build_output }} \
                         --no-binary :all: \
-                        --constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt \
+                        --constraint {{ repo_build_release_path }}/requirements_constraints.txt \
                         {% if repo_build_pip_default_index is defined %}
                         --index-url {{ repo_build_pip_default_index }} \
                         --trusted-host {{ repo_build_pip_default_index | netloc_no_port }} \
@@ -32,7 +32,7 @@
                         --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }} \
                         {% endif -%}
                         --log /var/log/repo/repo_builder.log \
-                        --requirement {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt
+                        --requirement {{ repo_build_release_path }}/requirements.txt
   when: repo_build_store_pip_sources | bool
   tags:
     - repo-pip-download
@@ -43,7 +43,7 @@
     --wheel-dir {{ repo_build_output }}
     --find-links {{ repo_build_global_links_path }}
     --find-links {{ repo_build_output }}
-    --constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt
+    --constraint {{ repo_build_release_path }}/requirements_constraints.txt
     {% if repo_build_pip_no_binary is defined %}--no-binary {{ repo_build_pip_no_binary | join(' --no-binary ') }}{% endif %}
     {% if repo_build_pip_default_index is defined %}--index-url {{ repo_build_pip_default_index }}
     --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}{% endif %}
@@ -53,7 +53,7 @@
     --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}{% endif %}
     --build {{ repo_build_dir }}
     --log /var/log/repo/repo_builder.log
-    --requirement {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt
+    --requirement {{ repo_build_release_path }}/requirements.txt
     {{ pip_install_options }}
   tags:
     - repo-build-local-requirement-wheels

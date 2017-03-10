@@ -30,10 +30,10 @@ function build_repo {
     chown "{{ repo_build_service_user_name }}" "${PKG_DIRECTORY}/${PKG_LOWER}"
 
     # link the built package to the release reference
-    ln -sf "${PKG_DIRECTORY}/${PKG_LOWER}" "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/${PKG_LOWER}"
+    ln -sf "${PKG_DIRECTORY}/${PKG_LOWER}" "{{ repo_build_release_path }}/${PKG_LOWER}"
 
     # Make sure the repo service user owns the link
-    chown -h "{{ repo_build_service_user_name }}" "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/${PKG_LOWER}"
+    chown -h "{{ repo_build_service_user_name }}" "{{ repo_build_release_path }}/${PKG_LOWER}"
 
     # link the built package to the global links reference
     ln -sf "${PKG_DIRECTORY}/${PKG_LOWER}" "{{ repo_build_global_links_path }}/${PKG_LOWER}"

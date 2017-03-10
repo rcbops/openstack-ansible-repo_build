@@ -94,7 +94,7 @@ PID=()
 #  Venv creation is done parallel at a count of the known "ansible_processor_count" or using a default of 5.
 #  This loop will enter the venv build directory and create tagged venvs in a distribution directory
 #  If the venv archive already exists the creation process will be skipped
-pushd "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+pushd "{{ repo_build_venv_dir }}"
 {% for key, value in os_group.items() %}
 
 {% set venvwithindex = [] %}

@@ -27,7 +27,7 @@
 
 - name: Check for created venvs
   command: >
-    ls -1 "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/"
+    ls -1 "{{ repo_build_venv_dir }}/"
   register: created_venvs
   tags:
     - repo-create-venv

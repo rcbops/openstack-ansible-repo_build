@@ -25,9 +25,9 @@
     - repo-create-venv-archive
 
 - name: Register arch base venvs
-  command: "find {{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/ -name '*{{ ansible_architecture | lower }}*'"
+  command: "find {{ repo_build_venv_dir }}/ -name '*{{ ansible_architecture | lower }}*'"
   args:
-    removes: "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+    removes: "{{ repo_build_venv_dir }}"
   register: base_venvs
   tags:
     - repo-create-venv-location
@@ -52,7 +52,7 @@
     mode: 02755
   with_items:
     - "{{ repo_build_venv_build_dir }}/venvs"
-    - "{{ repo_build_venv_dir }}/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}"
+    - "{{ repo_build_venv_dir }}"
   tags:
     - repo-create-venv-location
     - repo-venv-compress-archive

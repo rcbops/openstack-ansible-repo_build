@@ -26,7 +26,7 @@
 
 - name: Register os-release files
   find:
-    paths: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
+    paths: "{{ repo_build_release_path }}"
     patterns:
       - "*{{ ansible_architecture | lower }}.whl"
       - "*none-any.whl"
@@ -51,7 +51,7 @@
     state: directory
     owner: "{{ repo_build_service_user_name }}"
   with_items:
-    - "{{ repo_build_release_path }}/{{ repo_build_release_tag }}"
+    - "{{ repo_build_release_path }}"
     - "{{ repo_build_global_links_path }}"
     - "{{ repo_build_output }}"
   tags:
@@ -60,7 +60,7 @@
 - name: Build package requirements file
   template:
     src: "requirements.txt.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt"
+    dest: "{{ repo_build_release_path }}/requirements.txt"
   tags:
     - repo-build-filtered-package-files
 
@@ -70,7 +70,7 @@
 - name: Build package constraints file
   template:
     src: "requirements_constraints.txt.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt"
+    dest: "{{ repo_build_release_path }}/requirements_constraints.txt"
   tags:
     - repo-build-constraints-file
 
@@ -78,7 +78,7 @@
   pip:
     name: "{{ repo_pip_packages | join(' ') }}"
     state: latest
-    extra_args: "--constraint {{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt {{ pip_install_options }}"
+    extra_args: "--constraint {{ repo_build_release_path }}/requirements_constraints.txt {{ pip_install_options }}"
   register: install_packages
   until: install_packages|success
   retries: 5
