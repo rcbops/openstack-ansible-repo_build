@@ -40,7 +40,7 @@
 
 - name: Retrieve requirements content
   slurp:
-    src: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements.txt"
+    src: "{{ repo_build_release_path }}/requirements.txt"
   register: slurp_requirements
   tags:
     - repo-clone-repos

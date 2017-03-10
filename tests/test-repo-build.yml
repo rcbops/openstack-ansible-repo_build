@@ -40,7 +40,7 @@
     - "repo_build"
   post_tasks:
     - name: List the files in the venv folder
-      command: ls -1 /var/www/repo/venvs/{{ repo_build_release_tag }}/{{ ansible_distribution | lower }}/
+      command: ls -1 {{ repo_build_venv_dir }}/
       register: venv_folder_content
     - name: Ensure that the keystone venv is present
       assert:
@@ -72,7 +72,7 @@
       register: slurp_upper_constraints
     - name: Slurp requirements constraints
       slurp:
-        src: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_constraints.txt"
+        src: "{{ repo_build_release_path }}/requirements_constraints.txt"
       register: slurp_requirements_constraints
     - name: Set fact for requirements constraints content
       set_fact:

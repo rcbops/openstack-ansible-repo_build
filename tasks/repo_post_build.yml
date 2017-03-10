@@ -43,14 +43,14 @@
 - name: Create absolute requirements
   template:
     src: "requirements_absolute_requirements.txt.j2"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/requirements_absolute_requirements.txt"
+    dest: "{{ repo_build_release_path }}/requirements_absolute_requirements.txt"
   tags:
     - repo-create-absolute-requirements
 
 - name: Copy get-pip script into release folder
   copy:
     src: "/opt/get-pip.py"
-    dest: "{{ repo_build_release_path }}/{{ repo_build_release_tag }}/"
+    dest: "{{ repo_build_release_path }}/"
     remote_src: yes
   tags:
     - repo-copy-pip
