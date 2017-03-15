@@ -64,6 +64,9 @@
   tags:
     - repo-build-filtered-package-files
 
+- include: repo_clone_git.yml
+- include: repo_set_facts.yml
+
 - name: Build package constraints file
   template:
     src: "requirements_constraints.txt.j2"
