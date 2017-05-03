@@ -23,12 +23,19 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - xenial
+    - name: EL
+      versions:
+        - 7
   categories:
     - cloud
     - python
     - development
     - openstack
 dependencies:
-  - pip_install
-  - apt_package_pinning
-  - { role: 'galera_client', galera_client_drop_config_file: false }
+  - role: pip_install
+  - role: apt_package_pinning
+    when:
+      - ansible_pkg_mgr == 'apt'
+  - role: galera_client
+    vars:
+      galera_client_drop_config_file: false
