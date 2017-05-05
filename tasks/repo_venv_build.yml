@@ -13,8 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Create venv directories
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: "{{ repo_build_service_user_name }}"
+    mode: 02755
+  with_items:
+    - "{{ repo_build_venv_build_dir }}/venvs"
+    - "{{ repo_build_venv_dir }}"
+
 - name: Get venv command path
   command: which virtualenv
+  changed_when: false
   register: virtualenv_path
   tags:
     - always
@@ -25,20 +36,6 @@
   tags:
     - always
 
-- name: Check for created venvs
-  command: >
-    ls -1 "{{ repo_build_venv_dir }}/"
-  register: created_venvs
-  tags:
-    - repo-create-venv
-
-- name: Set existing venv fact
-  set_fact:
-    existing_venvs: "{{ created_venvs.stdout_lines }}"
-  tags:
-    - repo-command-bin
-    - repo-create-venv
-
 # This is removed so that virtual env is not installing unknown
 #  packages as assumed wheels, IE pip8
 - name: Ensure virtualenv_support is absent
@@ -48,27 +45,43 @@
   with_items:
     - "/usr/local/lib/python2.7/dist-packages/virtualenv_support"
     - "/usr/local/lib/python2.7/site-packages/virtualenv_support"
-  tags:
-    - repo-create-venv
 
-- name: Create venv process script
+- name: Create venv build script
   template:
-    src: "op-venv-script.sh.j2"
-    dest: "/opt/op-venv-script.sh"
-  tags:
-    - repo-create-venv
+    src: "venv-build-script.sh.j2"
+    dest: "/opt/venv-build-script.sh"
+    mode: "0755"
 
-- name: Run venv process script
-  shell: "bash /opt/op-venv-script.sh"
-  tags:
-    - repo-create-venv
-    - repo-venv-compress-archive
-    - repo-create-venv-archive
-    - repo-create-venv-checksum
+- name: Create venv build options files
+  template:
+    src: "venv-build-options.txt.j2"
+    dest: "{{ repo_build_release_path }}/venv-build-options-{{ item['role_name'] }}.txt"
+  with_items: "{{ filtered_venv_role_python_requirements }}"
+  register: _create_venv_options_files
 
-- name: Remove venv process script
-  file:
-    path: "/opt/op-venv-script.sh"
-    state: absent
+- name: Execute the venv build scripts asynchonously
+  shell: "/opt/venv-build-script.sh {{ repo_build_release_path }}/venv-build-options-{{ item['item']['role_name'] }}.txt"
+  args:
+    executable: "/bin/bash"
+  when: (item | changed) or (repo_build_venv_rebuild | bool)
+  with_items:
+    - "{{ _create_venv_options_files.results }}"
+  register: _build_venv
+  async: "{{ repo_build_venv_timeout * 60 }}"
+  poll: 0
+  # This task requires the use of the shell module, so we skip lint
+  # to avoid:
+  # ANSIBLE0013 Use shell only when shell functionality is required
   tags:
-    - repo-create-venv
+    - skip_ansible_lint
+
+- name: Wait for the venvs builds to complete
+  async_status:
+    jid: "{{ item['ansible_job_id'] }}"
+  register: _venv_jobs
+  until: _venv_jobs['finished'] | bool
+  delay: 10
+  retries: "{{ repo_build_venv_timeout * 6 }}"
+  with_items: "{{ _build_venv['results'] }}"
+  when:
+    - item['ansible_job_id'] is defined
