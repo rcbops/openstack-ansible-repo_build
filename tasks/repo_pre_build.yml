@@ -30,9 +30,6 @@
     patterns:
       - "*{{ ansible_architecture | lower }}.whl"
       - "*none-any.whl"
-      - "*.in"
-      - "*.html"
-      - "*.txt"
   register: os_release_files
   tags:
     - repo-clean-workspace

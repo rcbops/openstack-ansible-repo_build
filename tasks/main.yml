@@ -31,7 +31,7 @@
 - include: repo_post_build.yml
 
 # Venv building
-- include: repo_venv.yml
+- include: repo_venv_build.yml
   tags:
     - repo-build-venvs
 
