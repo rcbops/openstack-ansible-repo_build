@@ -1,0 +1,141 @@
+# The purpose of this file is to provide the configuration options to the venv
+# build script for each venv. These options are all set out in a file in order
+# to enable the idempotence of the venv build process.
+
+# The working directory for the venv build
+ROLE_VENV_PATH="{{ repo_build_venv_build_dir }}/venvs/{{ item['role_name'] | replace('os_', '') }}"
+
+# The name used for the venv working directory, and resulting compressed venv
+ROLE_VENV_FILE="{{ item['role_name'] | replace('os_', '') }}-{{ repo_build_release_tag }}-{{ ansible_architecture | lower }}"
+
+# The index options used by pip when building the venvs
+PIP_INDEX_OPTIONS=""
+{#                                                                          #}
+{# In order to build venvs with packages not generally available in the     #}
+{# repo through the wheel build, the boolean 'venvwithindex' flag provided  #}
+{# in the remote_package_parts data enables the use of additional indexes.  #}
+{# This is useful when building venvs which require different constraints.  #}
+{#                                                                          #}
+{% for clone_item in local_packages.results.0.item.remote_package_parts     %}
+{#                                                                          #}
+{#   Loop through the remote_package_parts to find the role                 #}
+{%   if clone_item['name'] == item['role_name'] | replace('os_', '')        %}
+{#                                                                          #}
+{#     Check whether there is a venvwithindex setting                       #}
+{%     if clone_item['original'] | search('venvwithindex')                  %}
+{#                                                                          #}
+{#       Check if venvwithindex is set to boolean true                      #}
+{%       set venvwithindex=clone_item['original'] | regex_replace('(?i).*venvwithindex=(true|false).*', '\\1') %}
+{%       if venvwithindex | bool                                            %}
+{#                                                                          #}
+{#         Add the extra indexes if they're defined                         #}
+{%         if repo_build_pip_default_index is defined                       %}
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --index-url {{ repo_build_pip_default_index }}"
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}"
+{%         endif                                                            %}
+{%         if repo_build_pip_extra_index is defined                         %}
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --extra-index-url {{ repo_build_pip_extra_index }}"
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --trusted-host {{ repo_build_pip_extra_index | netloc_no_port }}"
+{%         endif                                                            %}
+{%         if repo_build_pip_extra_indexes is defined                       %}
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }}"
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}"
+{%         endif                                                            %}
+{%       else                                                               %}
+{#         If not true, then venvwithindex is set to boolean false          #}
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --no-index"
+{%       endif                                                              %}
+{%     else                                                                 %}
+{#       If not set, then assume that venvwithindex is false                #}
+PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --no-index"
+{%     endif                                                                %}
+{%   endif                                                                  %}
+{% endfor                                                                   %}
+
+# The options used by pip when building the venvs
+PIP_INSTALL_OPTIONS="{{ repo_build_venv_pip_install_options }}"
+
+# The command used when creating the venv
+VENV_CREATE_COMMAND="{{ repo_build_venv_command_options }}"
+
+# The requirements list for the venv
+{#                                                                          #}
+{# Rules for inclusion:                                                     #}
+{# - The requirements are compiled from the *_pip_packages values.          #}
+{# - Any key containing the word 'requires' will be ignored as these        #}
+{#   packages are destined for installation on the host, not in the venv.   #}
+{# - Any key containing the word 'optional' will be ignored as these        #}
+{#   are destined for optional installation into the venv at run time       #}
+{#   based on the user configuration.                                       #}
+{# - Any key containing the word 'proprietary' will be ignored as these     #}
+{#   are destined for optional installation into the venv at run time       #}
+{#   based on the user configuration and are not available on pypi.         #}
+{#                                                                          #}
+{# Input Example:                                                           #}
+{#                                                                          #}
+{# role_name: os_neutron                                                    #}
+{# role_data: neutron_optional_calico_pip_packages:                         #}
+{#             - calico                                                     #}
+{#             - networking-calico                                          #}
+{#             - python-etcd                                                #}
+{#             neutron_pip_packages:                                        #}
+{#             - cliff                                                      #}
+{#             - configobj                                                  #}
+{#             - keystonemiddleware                                         #}
+{#             - neutron                                                    #}
+{#             - neutron_dynamic_routing                                    #}
+{#             - neutron_fwaas                                              #}
+{#             - neutron_lbaas                                              #}
+{#             - neutron_vpnaas                                             #}
+{#             - pycrypto                                                   #}
+{#             - pymysql                                                    #}
+{#             - python-glanceclient                                        #}
+{#             - python-keystoneclient                                      #}
+{#             - python-memcached                                           #}
+{#             - python-neutronclient                                       #}
+{#             - python-novaclient                                          #}
+{#             - repoze.lru                                                 #}
+{#             neutron_requires_pip_packages:                               #}
+{#             - httplib2                                                   #}
+{#             - python-keystoneclient                                      #}
+{#             - virtualenv                                                 #}
+{#             - virtualenv-tools                                           #}
+{#             project_group: neutron_all                                   #}
+{#                                                                          #}
+{# Output Example:                                                          #}
+{#                                                                          #}
+{# cliff                                                                    #}
+{# configobj                                                                #}
+{# keystonemiddleware                                                       #}
+{# neutron                                                                  #}
+{# neutron_dynamic_routing                                                  #}
+{# neutron_fwaas                                                            #}
+{# neutron_lbaas                                                            #}
+{# neutron_vpnaas                                                           #}
+{# pycrypto                                                                 #}
+{# pymysql                                                                  #}
+{# python-glanceclient                                                      #}
+{# python-keystoneclient                                                    #}
+{# python-memcached                                                         #}
+{# python-neutronclient                                                     #}
+{# python-novaclient                                                        #}
+{# repoze.lru                                                               #}
+{#                                                                          #}
+{# Here we loop through the data, and apply the rules to produce the list   #}
+{# of requirements.                                                         #}
+{#                                                                          #}
+{% set requirement_list = []                                                %}
+{% for requirement_key, requirement_data in item['role_data'].items()       %}
+{%   if (requirement_key | match(".*_pip_packages$")) and
+         (not requirement_key | match(".*_requires_.*")) and
+          (not requirement_key | match(".*_optional_.*")) and
+           (not requirement_key | match(".*_proprietary_.*"))               %}
+{%     for requirement in requirement_data                                  %}
+{%       set _ = requirement_list.append(requirement)                       %}
+{%     endfor                                                               %}
+{%   endif                                                                  %}
+{% endfor                                                                   %}
+{#                                                                          #}
+{# Finally, we output the alphabetically sorted requirements.               #}
+{#                                                                          #}
+ROLE_VENV_REQUIREMENTS="{{ (requirement_list | sort) | join(' ') }}"
