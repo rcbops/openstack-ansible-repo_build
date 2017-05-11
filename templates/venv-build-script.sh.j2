@@ -1,0 +1,93 @@
+#!/bin/bash
+# Copyright 2017, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+## Shell Opts ----------------------------------------------------------------
+set -e
+
+## Variables -----------------------------------------------------------------
+
+# The options file for the venv
+ROLE_VENV_REQUIREMENTS_FILE="${1}"
+
+## Functions -----------------------------------------------------------------
+
+usage() {
+    cat <<EOF
+
+    Usage:
+    ${0} <path to configuration options file>
+
+EOF
+}
+
+## Main ----------------------------------------------------------------------
+
+# Validate that an options file as been provided
+if [[ -z "${ROLE_VENV_REQUIREMENTS_FILE}" ]]; then
+  usage
+  exit 1
+fi
+
+# Source the options file
+source "${ROLE_VENV_REQUIREMENTS_FILE}"
+
+# Begin the venv build
+pushd "{{ repo_build_venv_dir }}"
+
+    # If the venv achive already exists, remove it
+    [[ -e "${ROLE_VENV_FILE}.tgz" ]] && rm -f "${ROLE_VENV_FILE}.tgz"
+
+    # If the venv checksum file already exists, remove it
+    [[ -e "${ROLE_VENV_FILE}.checksum" ]] && rm -f "${ROLE_VENV_FILE}.checksum"
+
+    # If the venv working directory already exists, remove it
+    [[ -d "${ROLE_VENV_PATH}" ]] && rm -rf "${ROLE_VENV_PATH}"
+
+    # If the pip build directory already exists, remove it
+    [[ -d "/tmp/${ROLE_VENV_FILE}" ]] && rm -rf "/tmp/${ROLE_VENV_FILE}"
+
+    # Create the virtualenv shell
+    ${VENV_CREATE_COMMAND} "${ROLE_VENV_PATH}"
+
+    # Create the pip build directory
+    mkdir -p "/tmp/${ROLE_VENV_FILE}"
+
+    # Activate the python virtual environment for good measure
+    source "${ROLE_VENV_PATH}/bin/activate"
+
+    # Install the packages into the venv
+    ${ROLE_VENV_PATH}/bin/pip install \
+        --build "/tmp/${ROLE_VENV_FILE}" \
+        ${PIP_INSTALL_OPTIONS} \
+        ${PIP_INDEX_OPTIONS} \
+        ${ROLE_VENV_REQUIREMENTS}
+
+    # Deactivate the venv for good measure
+    deactivate
+
+    # Find and remove all of the python pyc files
+    find "${ROLE_VENV_PATH}" -type f -name '*.pyc' -delete
+
+    # Create the archive
+    tar czf "${ROLE_VENV_FILE}.tgz" -C "${ROLE_VENV_PATH}" .
+
+    # Create a checksum file for the archive
+    sha1sum "${ROLE_VENV_FILE}.tgz" | awk '{print $1}' > "${ROLE_VENV_FILE}.checksum"
+
+    # Delete working directories
+    rm -rf "${ROLE_VENV_PATH}"
+    rm -rf "/tmp/${ROLE_VENV_FILE}"
+
+popd
