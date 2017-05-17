@@ -55,6 +55,12 @@ repo_build_wheel_selective: "{{ true if repo_build_venv_selective | bool else fa
 # Toggle whether venvs should be built selectively or not
 repo_build_venv_selective: yes
 
+# Toggle whether a venv rebuild should be forced
+repo_build_venv_rebuild: no
+
+# Timeout (in minutes) for a venv build
+repo_build_venv_timeout: 30
+
 # Optionally set this to change the default index from pypi to an alternative
 #repo_build_pip_default_index: "https://pypi.python.org/simple"
 
@@ -76,11 +82,11 @@ repo_build_timeout: 120
 repo_build_concurrency: "{{ (((ansible_processor_vcpus|default(1)) | int) > 4) | ternary(8, 4) }}"
 repo_build_venv_build_dir: "/tmp/openstack-venv-builder"
 repo_build_venv_dir: "{{ repo_build_base_path }}/venvs/{{ repo_build_release_tag }}/{{ repo_build_os_distro_version }}"
-repo_build_venv_pip_install_options: >
+repo_build_venv_pip_install_options: >-
   --timeout 120
   --find-links {{ repo_build_release_path }}
   --log /var/log/repo/repo_venv_builder.log
-repo_build_venv_command_options: >
+repo_build_venv_command_options: >-
   {{ virtualenv_bin }}
   --always-copy
   --extra-search-dir {{ repo_build_release_path }}

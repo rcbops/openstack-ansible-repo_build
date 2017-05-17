@@ -1,0 +1,37 @@
+---
+# Copyright 2017, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# The following rules are applied in order to determine the filtered list
+# of roles to be processed for producing venvs.
+#
+# 1. The role name must be named 'os_*'. We only want the OpenStack
+#    services to be compiled into venvs.
+# 2. If repo_build_venv_selective is disabled, then all the roles
+#    which pass rule 1 will have venvs built.
+# 3. If the 'project_group' for the role is defined and is populated
+#    then the venv will be built.
+#
+filtered_venv_role_python_requirements: |-
+  {%- set filtered_role_list = [] %}
+  {%- for role_name, role_data in local_packages.results.0.item.role_requirements.items() %}
+  {%-   if ("os_" in role_name) %}
+  {%-     set project_group = role_data['project_group'] %}
+  {%-     if (not repo_build_venv_selective | bool) or
+              ((groups[project_group] is defined) and (groups[project_group] | length > 0)) %}
+  {%-       set _ = filtered_role_list.append({'role_name': role_name, 'role_data': role_data}) %}
+  {%-     endif %}
+  {%-   endif %}
+  {%- endfor %}
+  {{- filtered_role_list }}
