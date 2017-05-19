@@ -35,7 +35,10 @@ repo_build_service_user_name: "nginx"
 repo_build_service_group_name: "www-data"
 repo_build_base_path: "/var/www/repo"
 
-repo_build_os_distro_version: "{{ ansible_distribution | lower }}-{{ ansible_distribution_version.split('.')[:2] | join('.') }}-{{ ansible_architecture | lower }}"
+# NOTE(hwoarang): ansible_distribution may return a string with spaces
+# such as "openSUSE Leap" so we need to replace the space with underscore
+# in order to create a more sensible repo name for the distro.
+repo_build_os_distro_version: "{{ (ansible_distribution | lower) | replace(' ', '_') }}-{{ ansible_distribution_version.split('.')[:2] | join('.') }}-{{ ansible_architecture | lower }}"
 
 repo_build_release_tag: "untagged"
 repo_build_global_links_path: "{{ repo_build_base_path }}/links"
