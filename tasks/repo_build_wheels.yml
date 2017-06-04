@@ -13,6 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Ensure that temporary folders from previous build failures are absent
+  file:
+    path: "{{ item }}"
+    state: "absent"
+  with_items:
+    - "{{ repo_build_dir }}"
+    - "{{ repo_build_output }}"
+
+- name: Create temporary folders
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ repo_build_service_user_name }}"
+  with_items:
+    - "{{ repo_build_dir }}"
+    - "{{ repo_build_output }}"
+
 - name: Download requirement pip sources
   shell: >
     yes i | pip install --timeout {{ repo_build_timeout }}
@@ -34,8 +51,6 @@
                         --log /var/log/repo/repo_builder.log
                         --requirement {{ repo_build_release_path }}/requirements.txt
   when: repo_build_store_pip_sources | bool
-  tags:
-    - repo-pip-download
 
 - name: Create OpenStack-Ansible requirement wheels
   command: >
@@ -56,6 +71,65 @@
     --requirement {{ repo_build_release_path }}/requirements.txt
     {{ pip_install_options }}
   changed_when: false
+
+- name: Register os-release files
+  find:
+    paths: "{{ repo_build_release_path }}"
+    patterns:
+      - "*{{ ansible_architecture | lower }}.whl"
+      - "*none-any.whl"
+  register: os_release_files
+
+- name: Ensure os-release files are cleaned up
+  file:
+    path: "{{ item['path'] }}"
+    state: "absent"
+  with_items: "{{ os_release_files.files }}"
+
+- name: Index built wheels
+  find:
+    paths: "{{ repo_build_output }}"
+  register: built_wheels
+
+- name: Create release process script
+  template:
+    src: "op-release-script.sh.j2"
+    dest: "/opt/op-release-script.sh"
+    mode: "0755"
+
+- name: Run release process script
+  shell: "/opt/op-release-script.sh"
+  args:
+    executable: "/bin/bash"
+  changed_when: false
+  # This task requires the use of the shell module, so we skip lint
+  # to avoid:
+  # ANSIBLE0013 Use shell only when shell functionality is required
   tags:
-    - repo-build-local-requirement-wheels
-    - repo-build-openstack-ansible-requirement-wheels
+    - skip_ansible_lint
+
+- name: Create absolute requirements
+  template:
+    src: "requirements_absolute_requirements.txt.j2"
+    dest: "{{ repo_build_release_path }}/requirements_absolute_requirements.txt"
+
+- name: Copy get-pip script into release folder
+  copy:
+    src: "/opt/get-pip.py"
+    dest: "{{ repo_build_release_path }}/"
+    remote_src: yes
+
+- name: Clean up temporary build folders to save space
+  file:
+    path: "{{ item }}"
+    state: "absent"
+  with_items:
+    - "{{ repo_build_dir }}"
+    - "{{ repo_build_output }}"
+
+- name: Disable the wheel build requirement now that it is complete
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: repo_build
+    option: need_wheel_build
+    value: False
