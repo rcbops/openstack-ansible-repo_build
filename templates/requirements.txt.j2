@@ -1,27 +1,56 @@
+# This is a unique, sorted list of requirements compiled by the repo
+# build process. The requirements are compiled from all the roles
+# using their *_pip_packages lists, the global-requirements-pins,
+# and the git sources provided.
+# Where a package is found to be provided from a git source, the
+# designated git repository SHA is added as a comment.
+
+{#                                                                    #}
+{# To make it easier to add the comment for each git sourced package  #}
+{# when compiling the all_requirements list, we need to put together  #}
+{# a map of the package names to the version based on the git data    #}
+{# provided by the py_pkgs lookup.                                    #}
+{#                                                                    #}
+{% set git_packages = {} %}
+{% for clone_item in local_packages.results.0.item.remote_package_parts %}
+{%   if 'ignorerequirements=true' not in clone_item['original'] %}
+{%     set name_normalized = clone_item['name'] | replace('-', '_') | lower %}
+{%     set _ = git_packages.update({name_normalized: clone_item['version']}) %}
+{%   endif %}
+{% endfor %}
+{#                                                                    #}
+{# The list provided by the py_pkgs lookup is a raw set which needs   #}
+{# some normalization. We also want to add the SHA/version as a       #}
+{# comment to anything provided from a git source to make it simple   #}
+{# for the git cloning and wheel building process to be idempotent.   #}
+{#                                                                    #}
+{% set all_requirements={} %}
+{% for requirement_raw in local_packages.results.0.item.packages %}
+{%   set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
+{%   set data = requirement_raw | regex_replace(name,'') %}
+{%   set name_normalized = name | replace('-', '_') | lower %}
+{%   if name_normalized in git_packages %}
+{%     set requirement_normalized = name_normalized ~ data ~ ' # ' ~ git_packages[name_normalized] %}
+{%   else %}
+{%     set requirement_normalized = name_normalized ~ data %}
+{%   endif %}
+{%   set _ = all_requirements.update({name_normalized: requirement_normalized}) %}
+{% endfor %}
+{#                                                                    #}
+{# Now we have a complete, normalised and commented reference set     #}
+{# to work with. Now, for a non-selective wheel build, we simply      #}
+{# output the resulting list.                                         #}
+{#                                                                    #}
 {% if not repo_build_wheel_selective | bool %}
-{%   for requirement in local_packages.results.0.item.packages %}
-{{ requirement.split('#')[0].strip().replace('-', '_') }}
+{%   for requirement_name, requirement in all_requirements.iteritems() | sort %}
+{{ requirement }}
 {%   endfor %}
 {% else %}
 {#                                                                    #}
-{#   We can't have duplicated requirements (pip wheel will fail).     #}
-{#   To combat this we will use the overall package list requirements #}
-{#   as a reference set, and pull from there for whatever each role   #}
-{#   needs.                                                           #}
-{#                                                                    #}
-{%   set all_requirements={} %}
-{%   for requirement_raw in local_packages.results.0.item.packages %}
-{%     set name = requirement_raw | regex_replace('(\[|>=|<=|>|<|==|~=|!=).*$','') %}
-{%     set data = requirement_raw | regex_replace(name,'') %}
-{%     set name_normalized = name | replace('-', '_') | lower %}
-{%     set requirement_normalized = name_normalized + data %}
-{%     set _ = all_requirements.update({name_normalized: requirement_normalized}) %}
-{%   endfor %}
-{#                                                                    #}
-{#   Now we have a complete reference set to work with. We now need   #}
-{#   to build a set of the packages we actually want to build which   #}
-{#   we need to ensure is a unique set. We will use a key:value       #}
-{#   mechanism to do this.                                            #}
+{#   For a selective wheel build, we now need to build a set of the   #}
+{#   packages we actually want to build. This list of packages must   #}
+{#   be a unique set (or pip wheel will fail). We will use a          #}
+{#   key:value mechanism to compile the set.                          #}
 {#                                                                    #}
 {%   set selected_requirements={} %}
 {#                                                                    #}

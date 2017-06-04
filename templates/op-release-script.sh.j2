@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ve
+set -e
 
 
 function build_repo {
@@ -43,16 +43,19 @@ function build_repo {
 }
 
 
-# Loop through all built wheel.
-{% for item in built_wheels.stdout_lines %}
+# Loop through all built wheels.
+{% for file_data in built_wheels['files'] %}
+{%   set file_name = file_data['path'] | basename %}
 
 # Set the PKG_DIRECTORY variable normalizing the name
 # Set the package name variable normalizing the name
-DIRECTORY="{{ repo_build_pool_dir }}/{{ item.split('-')[0] | lower }}"
-NAME_LOWER="{{ item | lower }}"
-RAW_NAME="{{ item }}"
+DIRECTORY="{{ repo_build_pool_dir }}/{{ file_name.split('-')[0] | lower }}"
+NAME_LOWER="{{ file_name | lower }}"
+RAW_NAME="{{ file_name }}"
 
+echo -n "Moving ${RAW_NAME} to repo..."
 build_repo "${DIRECTORY}" "${NAME_LOWER}" "${RAW_NAME}"
+echo "done"
 
 unset PKG_DIRECTORY
 unset PKG_LOWER
