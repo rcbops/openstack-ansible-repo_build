@@ -1,3 +1,4 @@
-{% for item in built_wheels.stdout_lines %}
-{{ item.split('-')[0] | lower }}=={{ (item.split('-')[1].split('_')) | join('.post') | lower }}
+{% for file_data in built_wheels['files'] %}
+{%   set file_name = file_data['path'] | basename %}
+{{ file_name.split('-')[0] | lower }}=={{ (file_name.split('-')[1].split('_')) | join('.post') | lower }}
 {% endfor %}

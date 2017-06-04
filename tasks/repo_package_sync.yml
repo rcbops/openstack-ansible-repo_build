@@ -18,7 +18,7 @@
 - name: Synchronize and Copy repo files
   command: >
     rsync
-    --delay-updates -F --compress  --archive
+    --delay-updates -F --compress --archive
     --rsh 'ssh -l {{ repo_build_service_user_name }} -o stricthostkeychecking=no'
     --out-format='<<CHANGED>>%i %n%L'
     {{ item }}
