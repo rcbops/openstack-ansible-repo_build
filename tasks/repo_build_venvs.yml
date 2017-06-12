@@ -27,14 +27,10 @@
   command: which virtualenv
   changed_when: false
   register: virtualenv_path
-  tags:
-    - always
 
 - name: Set virtualenv command path
   set_fact:
     virtualenv_bin: "{{ virtualenv_path.stdout }}"
-  tags:
-    - always
 
 # This is removed so that virtual env is not installing unknown
 #  packages as assumed wheels, IE pip8
@@ -63,7 +59,9 @@
   shell: "/opt/venv-build-script.sh {{ repo_build_release_path }}/venv-build-options-{{ item['item']['role_name'] }}.txt"
   args:
     executable: "/bin/bash"
-  when: (item | changed) or (repo_build_venv_rebuild | bool)
+  when:
+    - (item | changed) or
+      (ansible_local['openstack_ansible']['repo_build']['need_venv_build'] | bool)
   with_items:
     - "{{ _create_venv_options_files.results }}"
   register: _build_venv
@@ -85,3 +83,10 @@
   with_items: "{{ _build_venv['results'] }}"
   when:
     - item['ansible_job_id'] is defined
+
+- name: Disable the venv build requirement now that it is complete
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: repo_build
+    option: need_venv_build
+    value: False

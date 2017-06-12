@@ -1,0 +1,114 @@
+---
+# Copyright 2015, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- name: Initialize the wheel build local fact
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: repo_build
+    option: need_wheel_build
+    value: False
+  when:
+    - "('openstack_ansible' not in ansible_local) or
+       ('repo_build' not in ansible_local['openstack_ansible']) or
+       ('need_wheel_build' not in ansible_local['openstack_ansible']['repo_build'])"
+
+- name: Initialize the venv build local fact
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: repo_build
+    option: need_venv_build
+    value: False
+  when:
+    - "('openstack_ansible' not in ansible_local) or
+       ('repo_build' not in ansible_local['openstack_ansible']) or
+       ('need_venv_build' not in ansible_local['openstack_ansible']['repo_build'])"
+
+# TODO(odyssey4me):
+# This is to clean up files created in early Ocata. It may be removed in Pike.
+- name: Ensure old pool index file is cleaned up
+  file:
+    path: "{{ repo_build_pool_dir }}/index.html"
+    state: "absent"
+
+- name: Create package directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ repo_build_service_user_name }}"
+  with_items:
+    - "{{ repo_build_release_path }}"
+    - "{{ repo_build_global_links_path }}"
+
+- name: Build package requirements file
+  template:
+    src: "requirements.txt.j2"
+    dest: "{{ repo_build_release_path }}/requirements.txt"
+  register: _wheel_build_requirements
+
+- include: repo_clone_git.yml
+  when:
+    - (repo_build_git_reclone | bool) or
+      (_wheel_build_requirements | changed)
+  tags:
+    - repo-clone-repos
+
+- name: Retrieve upper constraints content
+  slurp:
+    src: "{{ repo_build_git_dir }}/requirements/upper-constraints.txt"
+  register: slurp_upper_constraints
+
+- name: Decode the upper constraints content
+  set_fact:
+    upper_constraints: "{{ slurp_upper_constraints.content | b64decode | splitlines }}"
+
+- name: Build package constraints file
+  template:
+    src: "requirements_constraints.txt.j2"
+    dest: "{{ repo_build_release_path }}/requirements_constraints.txt"
+  register: _wheel_build_constraints
+
+- name: Record whether a wheel build is required
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: repo_build
+    option: need_wheel_build
+    value: True
+  when:
+    - (_wheel_build_requirements | changed) or
+      (_wheel_build_constraints | changed) or
+      (repo_build_wheel_rebuild | bool)
+
+- name: Record whether a venv build is required
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: repo_build
+    option: need_venv_build
+    value: True
+  when:
+    - (_wheel_build_requirements | changed) or
+      (_wheel_build_constraints | changed) or
+      (repo_build_venv_rebuild | bool)
+
+- name: Install pip packages
+  pip:
+    name: "{{ repo_pip_packages }}"
+    state: "{{ repo_build_pip_package_state }}"
+    extra_args: "--constraint {{ repo_build_release_path }}/requirements_constraints.txt {{ pip_install_options }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 5
+  tags:
+    - repo-build-install

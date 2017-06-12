@@ -18,15 +18,11 @@
   file:
     path: "/opt/op-clone-script.sh"
     state: absent
-  tags:
-    - repo-clone-repos
 
 - name: Check if the git folder exists already
   stat:
     path: "{{ repo_build_git_dir }}"
   register: _git_folder
-  tags:
-    - repo-clone-repos
 
 - name: Git service data folder setup
   file:
@@ -35,15 +31,11 @@
     owner: "{{ repo_build_service_user_name }}"
     group: "{{ repo_build_service_group_name }}"
     recurse: true
-  tags:
-    - repo-clone-repos
 
 - name: Retrieve requirements content
   slurp:
     src: "{{ repo_build_release_path }}/requirements.txt"
   register: slurp_requirements
-  tags:
-    - repo-clone-repos
 
 - name: Clone git repositories asynchronously
   become: yes
@@ -61,8 +53,6 @@
   register: _git_clone
   async: 1800
   poll: 0
-  tags:
-    - repo-clone-repos
 
 - name: Wait for git clones to complete
   become: yes
@@ -70,7 +60,7 @@
   async_status:
     jid: "{{ item['ansible_job_id'] }}"
   register: _git_jobs
-  until: "{{ _git_jobs['finished'] | bool }}"
+  until: _git_jobs['finished'] | bool
   delay: 5
   retries: 360
   with_items: "{{ _git_clone['results'] }}"

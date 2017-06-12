@@ -24,20 +24,35 @@
   tags:
     - always
 
-# Wheel building
 - include: repo_build_install.yml
-- include: repo_pre_build.yml
-- include: repo_build.yml
-- include: repo_post_build.yml
+  tags:
+    - repo-build-install
 
-# Venv building
-- include: repo_venv_build.yml
+- include: repo_build_prepare.yml
+  tags:
+    - always
+
+- name: refresh local facts
+  setup:
+    filter: ansible_local
+    gather_subset: "!all"
+  tags:
+    - always
+
+- include: repo_build_wheels.yml
+  when:
+    - ansible_local['openstack_ansible']['repo_build']['need_wheel_build'] | bool
+  tags:
+    - repo-build-wheels
+
+- include: repo_build_venvs.yml
   tags:
     - repo-build-venvs
 
-- include: repo_index.yml
+- include: repo_build_index.yml
   tags:
     - repo-build-index
 
+# Synchronize all built packages back to the repo master
 - include: repo_package_sync.yml
   when: inventory_hostname != groups['repo_all'][0]

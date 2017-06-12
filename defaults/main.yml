@@ -52,8 +52,14 @@ repo_build_pool_dir: "{{ repo_build_base_path }}/pools/{{ repo_build_os_distro_v
 # Toggle whether git repositories should be cloned selectively or not
 repo_build_git_selective: "{{ true if (repo_build_wheel_selective | bool and repo_build_venv_selective | bool) else false }}"
 
+# Toggle whether a git clone should be forced
+repo_build_git_reclone: no
+
 # Toggle whether wheels should be built selectively or not
 repo_build_wheel_selective: "{{ true if repo_build_venv_selective | bool else false }}"
+
+# Toggle whether a wheel rebuild should be forced
+repo_build_wheel_rebuild: no
 
 # Toggle whether venvs should be built selectively or not
 repo_build_venv_selective: yes

@@ -43,8 +43,14 @@ fi
 # Source the options file
 source "${ROLE_VENV_REQUIREMENTS_FILE}"
 
+# Output the beginning of the build
+echo -n "Building venv ${ROLE_VENV_FILE}..."
+
+# Set the log file path
+ROLE_VENV_LOG="/var/log/repo/venv_build_${ROLE_VENV_FILE}.log"
+
 # Begin the venv build
-pushd "{{ repo_build_venv_dir }}"
+pushd "{{ repo_build_venv_dir }}" &>/dev/null
 
     # If the venv achive already exists, remove it
     [[ -e "${ROLE_VENV_FILE}.tgz" ]] && rm -f "${ROLE_VENV_FILE}.tgz"
@@ -59,7 +65,7 @@ pushd "{{ repo_build_venv_dir }}"
     [[ -d "/tmp/${ROLE_VENV_FILE}" ]] && rm -rf "/tmp/${ROLE_VENV_FILE}"
 
     # Create the virtualenv shell
-    ${VENV_CREATE_COMMAND} "${ROLE_VENV_PATH}"
+    ${VENV_CREATE_COMMAND} "${ROLE_VENV_PATH}" &>${ROLE_VENV_LOG}
 
     # Create the pip build directory
     mkdir -p "/tmp/${ROLE_VENV_FILE}"
@@ -69,25 +75,32 @@ pushd "{{ repo_build_venv_dir }}"
 
     # Install the packages into the venv
     ${ROLE_VENV_PATH}/bin/pip install \
+        --disable-pip-version-check \
+        --quiet --quiet \
         --build "/tmp/${ROLE_VENV_FILE}" \
         ${PIP_INSTALL_OPTIONS} \
         ${PIP_INDEX_OPTIONS} \
-        ${ROLE_VENV_REQUIREMENTS}
+        ${ROLE_VENV_REQUIREMENTS} \
+        --log "${ROLE_VENV_LOG}"
 
     # Deactivate the venv for good measure
     deactivate
 
     # Find and remove all of the python pyc files
-    find "${ROLE_VENV_PATH}" -type f -name '*.pyc' -delete
+    find "${ROLE_VENV_PATH}" -type f -name '*.pyc' -delete 2>>${ROLE_VENV_LOG}
 
     # Create the archive
-    tar czf "${ROLE_VENV_FILE}.tgz" -C "${ROLE_VENV_PATH}" .
+    tar czf "${ROLE_VENV_FILE}.tgz" -C "${ROLE_VENV_PATH}" . 2>>${ROLE_VENV_LOG}
 
     # Create a checksum file for the archive
-    sha1sum "${ROLE_VENV_FILE}.tgz" | awk '{print $1}' > "${ROLE_VENV_FILE}.checksum"
+    sha1sum "${ROLE_VENV_FILE}.tgz" | awk '{print $1}' > "${ROLE_VENV_FILE}.checksum" 2>>${ROLE_VENV_LOG}
 
     # Delete working directories
     rm -rf "${ROLE_VENV_PATH}"
     rm -rf "/tmp/${ROLE_VENV_FILE}"
 
-popd
+popd &>/dev/null
+
+# Output the end of the build
+echo "done"
+

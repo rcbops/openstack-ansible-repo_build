@@ -26,7 +26,3 @@
   until: install_packages | success
   retries: 5
   delay: 2
-  tags:
-    - repo-build-apt-packages
-    - repo-build-yum-packages
-    - repo-build-zypper-packages
