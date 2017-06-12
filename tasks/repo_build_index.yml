@@ -28,9 +28,3 @@
     dest: "{{ repo_build_release_path }}/MANIFEST.in"
   tags:
     - repo-create-release-manifest
-
-# TODO(odyssey4me): Remove this in Pike
-- name: Remove global links index file
-  file:
-    path: "{{ repo_build_global_links_path }}/index.html"
-    state: absent
