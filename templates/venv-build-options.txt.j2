@@ -33,10 +33,6 @@ PIP_INDEX_OPTIONS=""
 PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --index-url {{ repo_build_pip_default_index }}"
 PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}"
 {%         endif                                                            %}
-{%         if repo_build_pip_extra_index is defined                         %}
-PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --extra-index-url {{ repo_build_pip_extra_index }}"
-PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --trusted-host {{ repo_build_pip_extra_index | netloc_no_port }}"
-{%         endif                                                            %}
 {%         if repo_build_pip_extra_indexes is defined                       %}
 PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }}"
 PIP_INDEX_OPTIONS="${PIP_INDEX_OPTIONS} --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}"

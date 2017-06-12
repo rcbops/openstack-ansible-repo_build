@@ -13,12 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO (odyssey4me): Remove in Pike
-- name: Remove clone process script (from Newton and before)
-  file:
-    path: "/opt/op-clone-script.sh"
-    state: absent
-
 - name: Check if the git folder exists already
   stat:
     path: "{{ repo_build_git_dir }}"

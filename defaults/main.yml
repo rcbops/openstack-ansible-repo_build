@@ -83,10 +83,6 @@ repo_build_venv_timeout: 30
 #repo_build_pip_no_binary:
 #  - libvirt-python
 
-# TODO(odyssey4me): Deprecate this var for Mitaka & mark for removal
-#                   in Newton.
-# repo_build_pip_extra_index: "https://pypi.python.org/simple"
-
 repo_build_timeout: 120
 repo_build_concurrency: "{{ (((ansible_processor_vcpus|default(1)) | int) > 4) | ternary(8, 4) }}"
 repo_build_venv_build_dir: "/tmp/openstack-venv-builder"

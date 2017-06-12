@@ -35,13 +35,6 @@
        ('repo_build' not in ansible_local['openstack_ansible']) or
        ('need_venv_build' not in ansible_local['openstack_ansible']['repo_build'])"
 
-# TODO(odyssey4me):
-# This is to clean up files created in early Ocata. It may be removed in Pike.
-- name: Ensure old pool index file is cleaned up
-  file:
-    path: "{{ repo_build_pool_dir }}/index.html"
-    state: "absent"
-
 - name: Create package directories
   file:
     path: "{{ item }}"
