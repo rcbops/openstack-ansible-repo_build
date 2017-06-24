@@ -13,27 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Initialize the wheel build local fact
+- name: Initialize local facts
   ini_file:
     dest: "/etc/ansible/facts.d/openstack_ansible.fact"
     section: repo_build
-    option: need_wheel_build
+    option: "{{ item }}"
     value: False
+  with_items:
+    - "need_wheel_build"
+    - "need_venv_build"
   when:
-    - "('openstack_ansible' not in ansible_local) or
+    - "('ansible_local' is not defined) or
+       ('openstack_ansible' not in ansible_local) or
        ('repo_build' not in ansible_local['openstack_ansible']) or
        ('need_wheel_build' not in ansible_local['openstack_ansible']['repo_build'])"
-
-- name: Initialize the venv build local fact
-  ini_file:
-    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
-    section: repo_build
-    option: need_venv_build
-    value: False
-  when:
-    - "('openstack_ansible' not in ansible_local) or
-       ('repo_build' not in ansible_local['openstack_ansible']) or
-       ('need_venv_build' not in ansible_local['openstack_ansible']['repo_build'])"
 
 # TODO(odyssey4me):
 # This is to clean up files created in early Ocata. It may be removed in Pike.
@@ -79,27 +72,19 @@
     dest: "{{ repo_build_release_path }}/requirements_constraints.txt"
   register: _wheel_build_constraints
 
-- name: Record whether a wheel build is required
+- name: Record whether a wheel/venv build is required
   ini_file:
     dest: "/etc/ansible/facts.d/openstack_ansible.fact"
     section: repo_build
-    option: need_wheel_build
+    option: "{{ item }}"
     value: True
+  with_items:
+    - "need_wheel_build"
+    - "need_venv_build"
   when:
     - (_wheel_build_requirements | changed) or
       (_wheel_build_constraints | changed) or
       (repo_build_wheel_rebuild | bool)
-
-- name: Record whether a venv build is required
-  ini_file:
-    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
-    section: repo_build
-    option: need_venv_build
-    value: True
-  when:
-    - (_wheel_build_requirements | changed) or
-      (_wheel_build_constraints | changed) or
-      (repo_build_venv_rebuild | bool)
 
 - name: Install pip packages
   pip:
