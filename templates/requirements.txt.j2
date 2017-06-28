@@ -42,7 +42,7 @@
 {# output the resulting list.                                         #}
 {#                                                                    #}
 {% if not repo_build_wheel_selective | bool %}
-{%   for requirement_name, requirement in all_requirements.iteritems() | sort %}
+{%   for requirement_name, requirement in all_requirements.items() | sort %}
 {{ requirement }}
 {%   endfor %}
 {% else %}
@@ -99,7 +99,7 @@
 {#                                                                    #}
 {#   Now that we have a complete set of requirements, we output them. #}
 {#                                                                    #}
-{%   for requirement_name, requirement in selected_requirements.iteritems() | sort %}
+{%   for requirement_name, requirement in selected_requirements.items() | sort %}
 {{ requirement }}
 {%   endfor %}
 {% endif %}
