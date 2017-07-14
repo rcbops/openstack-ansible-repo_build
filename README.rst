@@ -15,7 +15,7 @@ Ansible role that builds a repository of Git repositories, Python
 wheels, and virtualenvs.
 
 Documentation for the project can be found at:
-  http://docs.openstack.org/developer/openstack-ansible-repo_build
+  https://docs.openstack.org/openstack-ansible-repo_build/latest
 
 The project home is at:
   http://launchpad.net/openstack-ansible
