@@ -21,12 +21,16 @@
     --delay-updates -F --compress --archive
     --rsh 'ssh -l {{ repo_build_service_user_name }} -o stricthostkeychecking=no'
     --out-format='<<CHANGED>>%i %n%L'
-    {{ item }}
-    {{ repo_build_service_user_name }}@{{ hostvars[groups['repo_all'][0]]['ansible_host'] }}:{{ repo_build_base_path }}
+    {{ item.src }}
+    {{ repo_build_service_user_name }}@{{ hostvars[groups['repo_all'][0]]['ansible_host'] }}:{{ item.dest }}
   with_items:
-    - "{{ repo_build_global_links_path }}"
-    - "{{ repo_build_release_path }}"
-    - "{{ repo_build_pool_dir }}"
-    - "{{ repo_build_venv_dir }}"
+    - src: "{{ repo_build_global_links_path }}"
+      dest: "{{ repo_build_base_path }}"
+    - src: "{{ repo_build_release_path }}"
+      dest: "{{ repo_build_base_path }}/{{ repo_build_release_version_path }}"
+    - src: "{{ repo_build_pool_dir }}"
+      dest: "{{ repo_build_base_path }}/pools"
+    - src: "{{ repo_build_venv_dir }}"
+      dest: "{{ repo_build_base_path }}/venvs/{{ repo_build_release_tag }}"
   become: true
   become_user: "{{ repo_build_service_user_name }}"
