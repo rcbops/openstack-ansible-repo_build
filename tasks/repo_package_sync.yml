@@ -21,6 +21,7 @@
     --delay-updates -F --compress --archive
     --rsh 'ssh -l {{ repo_build_service_user_name }} -o stricthostkeychecking=no'
     --out-format='<<CHANGED>>%i %n%L'
+    --rsync-path='mkdir -p {{ item.dest }} && rsync'
     {{ item.src }}
     {{ repo_build_service_user_name }}@{{ hostvars[groups['repo_all'][0]]['ansible_host'] }}:{{ item.dest }}
   with_items:
