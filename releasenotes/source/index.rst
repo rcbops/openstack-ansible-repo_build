@@ -5,7 +5,8 @@ OpenStack-Ansible repo_build release notes
 .. toctree::
    :maxdepth: 1
 
-   mitaka
-   newton
    unreleased
+   pike
    ocata
+   newton
+   mitaka
