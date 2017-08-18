@@ -14,8 +14,8 @@
 # limitations under the License.
 
 repo_build_distro_packages:
-  - '@Development Tools'
   - cmake
+  - gcc
   - git
   - krb5-devel              # required to build pykerberos
   - liberasurecode-devel    # required to build pyeclib
