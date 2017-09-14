@@ -55,6 +55,9 @@ repo_build_git_selective: "{{ true if (repo_build_wheel_selective | bool and rep
 # Toggle whether a git clone should be forced
 repo_build_git_reclone: no
 
+# Toggle the git clone depth
+repo_build_git_depth: 1
+
 # Toggle whether wheels should be built selectively or not
 repo_build_wheel_selective: "{{ true if repo_build_venv_selective | bool else false }}"
 
