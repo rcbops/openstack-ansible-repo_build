@@ -34,7 +34,7 @@
 - name: Clone git repositories asynchronously
   become: yes
   become_user: "{{ repo_build_service_user_name }}"
-  environment: "{{ global_environment_variables | default(omit) }}"
+  environment: "{{ global_environment_variables | default({}) }}"
   git:
     repo: "{{ item['url'] }}"
     dest: "{{ repo_build_git_dir }}/{{ item['name'] }}"
