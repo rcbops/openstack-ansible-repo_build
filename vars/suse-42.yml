@@ -15,7 +15,7 @@
 # limitations under the License.
 
 repo_build_distro_packages:
-  - patterns-openSUSE-devel_basis
+  - gcc
   - cmake
   - git-core
   - krb5-devel              # required to build pykerberos
