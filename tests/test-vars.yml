@@ -85,6 +85,7 @@ local_packages:
         - pyasn1-modules
         - pycrypto>=2.6
         - pyeclib
+        - pyldap
         - pylxd
         - pymongo
         - pymysql
@@ -97,7 +98,6 @@ local_packages:
         - python-heatclient
         - python-ironicclient
         - python-keystoneclient
-        - python-ldap
         - python-memcached>=1.56
         - python-neutronclient
         - python-novaclient
@@ -914,10 +914,10 @@ local_packages:
           - oslo.middleware
           - pbr
           - pycrypto
+          - pyldap
           - pymysql
           - pysaml2
           - python-keystoneclient
-          - python-ldap
           - python-memcached
           - python-openstackclient
           - repoze.lru
@@ -1253,10 +1253,10 @@ local_packages:
             - oslo.middleware
             - pbr
             - pycrypto
+            - pyldap
             - pymysql
             - pysaml2
             - python-keystoneclient
-            - python-ldap
             - python-memcached
             - python-openstackclient
             - repoze.lru

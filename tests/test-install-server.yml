@@ -45,6 +45,8 @@
       when:
         - _local_git_cache.stat is defined
         - not _local_git_cache.stat.exists
+      tags:
+        - skip_ansible_lint
 
     - name: Pre-cache the tempest git repository (from git source)
       git:
@@ -54,11 +56,15 @@
         update: yes
       become: yes
       become_user: "{{ repo_build_service_user_name }}"
+      tags:
+        - skip_ansible_lint
 
     - name: Intentionally set the keystone repo remote origin to github
-      shell: "git remote set-url origin https://github.com/openstack/keystone.git"
+      command: "git remote set-url origin https://github.com/openstack/keystone.git"
       args:
         chdir: "/var/www/repo/openstackgit/keystone"
+      tags:
+        - skip_ansible_lint
 
   vars_files:
     - test-vars.yml

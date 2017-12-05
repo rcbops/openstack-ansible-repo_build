@@ -42,6 +42,7 @@
     - name: List the files in the venv folder
       command: ls -1 {{ repo_build_venv_dir }}/
       register: venv_folder_content
+      changed_when: false
     - name: Ensure that the keystone venv is present
       assert:
         that: "'keystone-{{ repo_build_release_tag }}-{{ ansible_architecture | lower }}.tgz' in venv_folder_content.stdout"
@@ -54,6 +55,7 @@
     - name: List the files in the git folder
       command: ls -1 /var/www/repo/openstackgit/
       register: git_folder_content
+      changed_when: false
     - name: Ensure that the keystone git repo is present
       assert:
         that: "'keystone' in git_folder_content.stdout"
