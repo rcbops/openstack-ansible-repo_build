@@ -17,9 +17,6 @@
   package:
     name: "{{ repo_build_distro_packages }}"
     state: "{{ repo_build_package_state }}"
-    # We switch vendors in a few SUSE packages so we need to force the
-    # installation
-    force: "{{ (ansible_pkg_mgr == 'zypper' ) | ternary('yes', omit) }}"
     update_cache: "{{ (ansible_pkg_mgr == 'apt' or ansible_pkg_mgr == 'zypper') | ternary('yes', omit) }}"
     cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
   register: install_packages
