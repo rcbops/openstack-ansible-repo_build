@@ -90,3 +90,8 @@
   delay: 5
   tags:
     - repo-build-install
+
+- name: Create repo log directory
+  file:
+    path: /var/log/repo
+    state: directory

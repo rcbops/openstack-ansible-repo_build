@@ -39,6 +39,7 @@ repo_build_distro_packages:
   - libxslt1-dev            # required to build lxml
   - libxml2-dev             # required to build lxml
   - lxc-dev                 # required to build lxc-python2
+  - moreutils               # provides `ts` command to timestamp pip logs
   - pkg-config
   - python-dev
   - swig

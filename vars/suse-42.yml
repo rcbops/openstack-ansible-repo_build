@@ -27,6 +27,7 @@ repo_build_distro_packages:
   - libxslt-devel           # required to build lxml
   - lxc-devel               # required to build lxc-python2
   - libmysqlclient-devel    # required to build MySQL-python
+  - moreutils               # provides `ts` command to timestamp pip logs
   - cyrus-sasl-devel        # required to build python-ldap
   - openldap2-devel         # required to build python-ldap
   - postgresql-devel        # required to build psycopg2
