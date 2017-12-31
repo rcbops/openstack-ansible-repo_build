@@ -32,6 +32,7 @@ repo_build_distro_packages:
   - libldap2-dev            # required to build python-ldap
   - libmariadbclient-dev    # required to build MySQL-python
   - libpq-dev               # required to build psycopg2
+  - librados-dev            # required to build cradox
   - libsasl2-dev            # required to build python-ldap
   - libsqlite3-dev          # required to build pysqlite
   - libssl-dev              # required to build cryptography

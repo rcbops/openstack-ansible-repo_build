@@ -21,6 +21,7 @@ repo_build_distro_packages:
   - liberasurecode-devel    # required to build pyeclib
   - libffi-devel            # required to build xattr
   - libjpeg-turbo-devel     # required to build pillow
+  - librados2-devel         # required to build cradox
   - libvirt-devel           # required to build libvirt-python
   - libxslt-devel           # required to build lxml
   - lxc-devel               # required to build lxc-python2
