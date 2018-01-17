@@ -32,6 +32,7 @@ repo_build_distro_packages:
   - cyrus-sasl-devel        # required to build python-ldap
   - openldap2-devel         # required to build python-ldap
   - postgresql-devel        # required to build psycopg2
+  - pcre-devel              # required to build uwsgi
   - python-devel
   - libopenssl-devel        # required to build cryptography
   - sqlite2-devel           # required to build pysqlite

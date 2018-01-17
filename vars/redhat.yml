@@ -28,6 +28,7 @@ repo_build_distro_packages:
   - MariaDB-devel           # required to build MySQL-python
   - moreutils               # provides `ts` command to timestamp pip logs
   - openldap-devel          # required to build python-ldap
+  - pcre-devel              # required to build uwsgi
   - postgresql-devel        # required to build psycopg2
   - python2-devel
   - openssl-devel           # required to build cryptography
