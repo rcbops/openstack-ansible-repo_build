@@ -64,6 +64,7 @@
 
 - name: Register os-release files
   find:
+    file_type: any
     paths: "{{ repo_build_release_path }}"
     patterns:
       - "*{{ ansible_architecture | lower }}.whl"
