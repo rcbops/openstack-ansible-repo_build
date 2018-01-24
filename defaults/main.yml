@@ -93,7 +93,6 @@ repo_build_venv_dir: "{{ repo_build_base_path }}/venvs/{{ repo_build_release_tag
 repo_build_venv_pip_install_options: >-
   --timeout 120
   --find-links {{ repo_build_release_path }}
-  --log /var/log/repo/repo_venv_builder.log
 repo_build_venv_command_options: >-
   {{ virtualenv_bin }}
   --always-copy
