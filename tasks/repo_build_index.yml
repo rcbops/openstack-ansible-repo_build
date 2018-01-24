@@ -13,13 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Index all manifest items
+- name: Index all os-releases/venvs files
   find:
     file_type: any
     paths:
       - "{{ repo_build_release_path }}"
       - "{{ repo_build_venv_dir }}"
   register: manifest_items
+  tags:
+    - repo-create-release-manifest
+
+- name: Index all openstackgit directories
+  find:
+    file_type: directory
+    paths:
+      - "{{ repo_build_git_dir }}"
+  register: manifest_git_items
   tags:
     - repo-create-release-manifest
 
