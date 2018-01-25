@@ -26,7 +26,7 @@ repo_build_distro_packages:
   - libxslt1
   - libxslt-devel           # required to build lxml
   - lxc-devel               # required to build lxc-python2
-  - libmysqlclient-devel    # required to build MySQL-python
+  - MariaDB-devel           # required to build MySQL-python
   - cyrus-sasl-devel        # required to build python-ldap
   - openldap2-devel         # required to build python-ldap
   - postgresql-devel        # required to build psycopg2
