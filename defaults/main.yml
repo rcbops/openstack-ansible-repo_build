@@ -90,14 +90,25 @@ repo_build_timeout: 120
 repo_build_concurrency: "{{ (((ansible_processor_vcpus|default(1)) | int) > 4) | ternary(8, 4) }}"
 repo_build_venv_build_dir: "/tmp/openstack-venv-builder"
 repo_build_venv_dir: "{{ repo_build_base_path }}/venvs/{{ repo_build_release_tag }}/{{ repo_build_os_distro_version }}"
+
+# We use find-links here in order to prefer the locally
+# built wheels.
 repo_build_venv_pip_install_options: >-
   --timeout 120
   --find-links {{ repo_build_release_path }}
+
+# Rather than allow virtualenv to decide which version
+# of pip/setuptools/wheel we use, we create the virtualenv
+# without them and use get-pip.py later to install them
+# into the venv. This prevents messy upgrade/downgrade
+# failures when trying to install the versions we want.
 repo_build_venv_command_options: >-
   {{ virtualenv_bin }}
   --always-copy
-  --extra-search-dir {{ repo_build_release_path }}
-  --never-download
+  --no-pip
+  --no-setuptools
+  --no-wheel
+
 repo_pip_packages:
   - requests
   - urllib3

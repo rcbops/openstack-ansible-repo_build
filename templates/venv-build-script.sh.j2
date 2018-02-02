@@ -73,6 +73,20 @@ pushd "{{ repo_build_venv_dir }}" &>/dev/null
     # Activate the python virtual environment for good measure
     source "${ROLE_VENV_PATH}/bin/activate"
 
+    # Install pip, setuptools, wheel into it
+    # Rather than allow virtualenv to decide which version
+    # of pip/setuptools/wheel we use, we create the virtualenv
+    # without them and use get-pip.py later to install them
+    # into the venv. This prevents messy upgrade/downgrade
+    # failures when trying to install the versions we want.
+    # We also inform get-pip.py using the --find-links option
+    # that there are local wheels available so that it uses
+    # them instead of reaching out to the internet unnecessarily.
+    ${ROLE_VENV_PATH}/bin/python {{ repo_build_release_path }}/get-pip.py \
+                                 pip setuptools wheel \
+                                 --find-links {{ repo_build_release_path }} \
+                                 ${PIP_INSTALL_OPTIONS} &>${ROLE_VENV_LOG}
+
     # Install the packages into the venv
     ${ROLE_VENV_PATH}/bin/pip install \
         --disable-pip-version-check \

@@ -29,16 +29,6 @@
   set_fact:
     virtualenv_bin: "{{ virtualenv_path.stdout }}"
 
-# This is removed so that virtual env is not installing unknown
-#  packages as assumed wheels, IE pip8
-- name: Ensure virtualenv_support is absent
-  file:
-    path: "{{ item }}"
-    state: "absent"
-  with_items:
-    - "/usr/local/lib/python2.7/dist-packages/virtualenv_support"
-    - "/usr/local/lib/python2.7/site-packages/virtualenv_support"
-
 - name: Create venv build script
   template:
     src: "venv-build-script.sh.j2"
