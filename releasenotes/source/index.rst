@@ -6,6 +6,7 @@ OpenStack-Ansible repo_build release notes
    :maxdepth: 1
 
    unreleased
+   queens
    pike
    ocata
    newton
