@@ -102,9 +102,12 @@ repo_build_venv_pip_install_options: >-
 # without them and use get-pip.py later to install them
 # into the venv. This prevents messy upgrade/downgrade
 # failures when trying to install the versions we want.
+# NOTE(odyssey4me):
+# Not using --always-copy for CentOS/SuSE due to
+# https://github.com/pypa/virtualenv/issues/565
 repo_build_venv_command_options: >-
   {{ virtualenv_bin }}
-  --always-copy
+  {{ (ansible_pkg_mgr == 'apt') | ternary('--always-copy', '') }}
   --no-pip
   --no-setuptools
   --no-wheel
