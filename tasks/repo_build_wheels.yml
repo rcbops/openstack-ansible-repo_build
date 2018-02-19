@@ -31,34 +31,50 @@
     - "{{ repo_build_output }}"
 
 - name: Download requirement pip sources
-  shell: >
+  shell: >-
     yes i | pip install --timeout {{ repo_build_timeout }}
-                        --download {{ repo_build_output }}
-                        --no-binary :all:
-                        --constraint {{ repo_build_release_path }}/requirements_constraints.txt
-                        {% if repo_build_pip_default_index is defined %}
-                        --index-url {{ repo_build_pip_default_index }}
-                        --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}
-                        {% endif -%}
-                        {% if repo_build_pip_extra_indexes is defined %}
-                        --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }}
-                        --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}
-                        {% endif -%}
-                        --log /var/log/repo/repo_builder.log
-                        --requirement {{ repo_build_release_path }}/requirements.txt
-  when: repo_build_store_pip_sources | bool
-
-- name: Create wheel build script
-  template:
-    src: "wheel-build-script.sh.j2"
-    dest: "/opt/wheel-build-script.sh"
-    mode: "0755"
-
-- name: Create OpenStack-Ansible requirement wheels
-  shell: "/opt/wheel-build-script.sh"
+    --download {{ repo_build_output }}
+    --no-binary :all:
+    --constraint {{ repo_build_release_path }}/requirements_constraints.txt
+    {% if repo_build_pip_default_index is defined %}
+    --index-url {{ repo_build_pip_default_index }}
+    --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}
+    {% endif %}
+    {% if repo_build_pip_extra_indexes is defined %}
+    --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }}
+    --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}
+    {% endif %}
+    --requirement {{ repo_build_release_path }}/requirements.txt
+    {{ pip_install_options }}
+    2>&1 | ts > /var/log/repo/source_download.log
   args:
     executable: "/bin/bash"
-  changed_when: false
+  when: repo_build_store_pip_sources | bool
+
+- name: Create OpenStack-Ansible requirement wheels
+  shell: >-
+    pip wheel --timeout {{ repo_build_timeout }}
+    --wheel-dir {{ repo_build_output }}
+    --find-links {{ repo_build_global_links_path }}
+    --find-links {{ repo_build_output }}
+    --constraint {{ repo_build_release_path }}/requirements_constraints.txt
+    {% if repo_build_pip_no_binary is defined %}
+    --no-binary {{ repo_build_pip_no_binary | join(' --no-binary ') }}
+    {% endif %}
+    {% if repo_build_pip_default_index is defined %}
+    --index-url {{ repo_build_pip_default_index }}
+    --trusted-host {{ repo_build_pip_default_index | netloc_no_port }}
+    {% endif %}
+    {% if repo_build_pip_extra_indexes is defined %}
+    --extra-index-url {{ repo_build_pip_extra_indexes | join(' --extra-index-url ') }}
+    --trusted-host {{ repo_build_pip_extra_indexes | map('netloc_no_port') | join(' --trusted-host ') }}
+    {% endif %}
+    --build {{ repo_build_dir }}
+    --requirement {{ repo_build_release_path }}/requirements.txt
+    {{ pip_install_options }}
+    2>&1 | ts > /var/log/repo/wheel_build.log
+  args:
+    executable: "/bin/bash"
   tags:
     - skip_ansible_lint
 
