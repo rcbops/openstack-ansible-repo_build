@@ -1284,8 +1284,6 @@ local_packages:
               keystone_developer_mode_distro_packages:
               - build-essential
               keystone_distro_packages:
-              - debhelper
-              - dh-apparmor
               - docutils-common
               - git
               - libffi-dev
