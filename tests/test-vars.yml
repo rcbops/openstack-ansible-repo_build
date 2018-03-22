@@ -1541,7 +1541,8 @@ local_packages:
               - multipath-tools
               - nfs-common
               - open-iscsi
-              - python-libguestfs
+              - python-guestfs
+              - libguestfs-tools
               - python-libvirt
               - qemu
               - qemu-block-extra
@@ -1566,7 +1567,8 @@ local_packages:
               - multipath-tools
               - nfs-common
               - open-iscsi
-              - python-libguestfs
+              - python-guestfs
+              - libguestfs-tools
               - sysfsutils
               - thin-provisioning-tools
               - vlan
@@ -1580,7 +1582,7 @@ local_packages:
               - nfs-common
               - open-iscsi
               - pvm-novalink
-              - python-libguestfs
+              - python-guestfs
               - sysfsutils
               - vlan
               nova_distro_packages:
