@@ -113,10 +113,11 @@ repo_build_venv_command_options: >-
   --no-wheel
 
 repo_pip_packages:
+  - cython
+  - pbr
   - requests
   - urllib3
-  - wheel
   - virtualenv
-  - cython
+  - wheel
 
 repo_build_store_pip_sources: false
