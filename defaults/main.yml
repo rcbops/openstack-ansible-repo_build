@@ -96,11 +96,12 @@ repo_build_venv_command_options: >-
   --extra-search-dir {{ repo_build_release_path }}
   --never-download
 repo_pip_packages:
+  - cython
+  - pbr
   - requests
   - urllib3
-  - wheel
   - virtualenv
   - virtualenv-tools
-  - cython
+  - wheel
 
 repo_build_store_pip_sources: false
